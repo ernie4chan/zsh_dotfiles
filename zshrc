@@ -44,8 +44,8 @@ export HOMEBREW_GITHUB_API_TOKEN=c2f5a5d8a2437becdb7b8f8a902101b760d777c1
 export HOMEBREW_NO_ANALYTICS=1
 
 # Golang programming language.
-#export GOPATH=$HOME/Projects/Go-workspace
-#export GOROOT=$(brew --prefix golang)/libexec
+export GOPATH=$HOME/Projects/Go-workspace
+export GOROOT=$(brew --prefix golang)/libexec
 
 # Preferred editor for local and remote sessions.
 if [[ -n $SSH_CONNECTION ]]; then
