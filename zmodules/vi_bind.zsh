@@ -1,4 +1,9 @@
-#!/usr/bin/env zsh
+#!/usr/local/bin/zsh
+
+# Return if requirements are not found.
+if [[ "$TERM" == 'dumb' ]]; then
+  return 1
+fi
 
 # Beep on error in line editor.
 setopt BEEP
@@ -47,6 +52,35 @@ key_info=(
 	'BackTab'      "$terminfo[kcbt]"
 )
 
+# Set empty $key_info values to an invalid UTF-8 sequence to induce silent
+# bindkey failure.
+for key in "${(k)key_info[@]}"; do
+	if [[ -z "$key_info[$key]" ]]; then
+		key_info[$key]='�'
+	fi
+done
+
+# ---------------
+# External editor
+# ---------------
+
+# Allow command line editing in an external editor.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+# Functions
+# ---------
+# Runs bindkey but for all of the keymaps. Running it with no arguments will
+# print out the mappings for all of the keymaps.
+function bindkey-all {
+  local keymap=''
+  for keymap in $(bindkey -l); do
+    [[ "$#" -eq 0 ]] && printf "#### %s\n" "${keymap}" 1>&2
+    bindkey -M "${keymap}" "$@"
+  done
+}
+
+
 local -a unbound_keys
 unbound_keys=(
 	"${key_info[F1]}"
@@ -66,18 +100,6 @@ unbound_keys=(
 	"${key_info[ControlPageUp]}"
 	"${key_info[ControlPageDown]}"
 )
-
-# Set empty $key_info values to an invalid UTF-8 sequence to induce silent
-# bindkey failure.
-for key in "${(k)key_info[@]}"; do
-	if [[ -z "$key_info[$key]" ]]; then
-		key_info[$key]='�'
-	fi
-done
-
-# Allow command line editing in an external editor.
-autoload -Uz edit-command-line
-zle -N edit-command-line
 
 # Enable terminal application mode.
 # Update editor information when the keymap changes.
