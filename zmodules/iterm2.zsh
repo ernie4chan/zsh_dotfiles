@@ -1,0 +1,1 @@
+/Users/ernie4chan/.iterm2_shell_integration.zsh
