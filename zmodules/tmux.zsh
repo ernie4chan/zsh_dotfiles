@@ -14,15 +14,9 @@ fi
 # Ways to exit.
 function quit() {
 	if [[ -n $TMUX ]]; then
-		osascript -e 'tell application "Terminal" to quit' && \
+		osascript -e 'tell application "iTerm2" to quit' && \
 			tmux kill-server
 	else
 		builtin exit
-	fi
-}
-
-function exit() {
-	if [[ -n $TMUX ]]; then
-		osascript -e 'tell application "Terminal" to quit'
 	fi
 }

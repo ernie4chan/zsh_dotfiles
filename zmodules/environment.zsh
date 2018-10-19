@@ -1,15 +1,13 @@
-#!/usr/bin/env zsh
+#!/usr/local/bin/zsh
 
-#
-# Shell environment variables
-#
+# More shell environment options
 
-# Prompt preferences
-setopt COMBINING_CHARS      # Combine zero-length punctuation characters (accents)
-                            #   with the base character.
-setopt INTERACTIVE_COMMENTS # Enable comments in interactive shell.
-setopt RC_QUOTES		        # Al:low 'Henry''s Garage' instead of 'Henry'\''s Garage'.
-unsetopt MAIL_WARNING	      # Don't print a warning message if a mail file has been accessed.
+# General options
+setopt COMBINING_CHARS			# Combine zero-length punctuation characters (accents)
+														# with the base character.
+setopt INTERACTIVE_COMMENTS	# Enable comments in interactive shell.
+setopt RC_QUOTES		        # Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'.
+unsetopt MAIL_WARNING				# Don't print a warning message if a mail file has been accessed.
 
 # Jobs
 setopt AUTO_RESUME          # Attempt to resume existing job before creating a new process.
@@ -19,20 +17,7 @@ unsetopt BG_NICE			      # Don't run all background jobs at a lower priority.
 unsetopt CHECK_JOBS			    # Don't report on jobs when shell exit.
 unsetopt HUP				        # Don't kill jobs on shell exit.
 
-# Directory options
-setopt AUTO_CD              # Auto changes to a directory without typing cd.
-setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
-setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
-setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
-setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
-setopt CDABLE_VARS          # Change directory to a path stored in a variable.
-setopt MULTIOS              # Write to multiple descriptors.
-setopt EXTENDED_GLOB        # Use extended globbing syntax.
-unsetopt CLOBBER            # Do not overwrite existing files with > and >>, \
-                            #   use >! and >>! to bypass.
-
 # History options
-HISTFILE=$HOME/.zhistory    # The path to the history file.
 HISTSIZE=10000				      # The maximum number of events to save in the internal history.
 SAVEHIST=10000              # The maximum number of events to save in the history file.
 setopt BANG_HIST			      # Treat the '!' character specially during expansion.
@@ -49,10 +34,22 @@ setopt INC_APPEND_HISTORY   # Write to the history file immediately, not when th
 setopt SHARE_HISTORY        # Share history between all sessions.
 
 # Less options
-export LESSCHARSET="UTF-8"
-export LESSHISTFILE=$HOME/.less_history
-export LESSEDIT='vim ?km+%lm. %f'
-#export LESS='-F -g -i -M -R -S -w -X -z-4'
-# '-X or --no-init'
-# '-F or --quit-if-one-screen'
-export LESS='-g -i -M -R -S -w -z-4'
+export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
+export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
+export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
+export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
+export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
+export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
+export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
+
+# Directory options
+setopt AUTO_CD              # Auto changes to a directory without typing cd.
+setopt AUTO_PUSHD           # Push the old directory onto the stack on cd.
+setopt PUSHD_IGNORE_DUPS    # Do not store duplicates in the stack.
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
+setopt CDABLE_VARS          # Change directory to a path stored in a variable.
+setopt MULTIOS              # Write to multiple descriptors.
+setopt EXTENDED_GLOB        # Use extended globbing syntax.
+unsetopt CLOBBER            # Do not overwrite existing files with > and >>,
+                            # use >! and >>! to bypass.

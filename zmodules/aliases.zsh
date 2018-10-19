@@ -17,7 +17,8 @@ alias ln='nocorrect ln'
 alias man='nocorrect man'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
-alias py3='nocorrect bpython'			    # Redifining python3 shell
+alias py3='nocorrect python3'			    # Redifining python3 shell
+alias bpy='nocorrect bpython'			    # Redifining python3 shell
 alias rm='nocorrect rm'
 
 # Directory aliases.

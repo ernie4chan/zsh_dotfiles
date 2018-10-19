@@ -1,9 +1,9 @@
-#!/usr/bin/env zsh
+#!/usr/local/bin/zsh
 
-# Fixme - the load process here seems a bit bizarre.
-zmodload -i zsh/complist
+# Add zsh-completions to $fpath.
+fpath=($HOME/.zsh/zsh-completions/src $fpath)
 
-# Completion.
+# Completion options.
 setopt ALWAYS_TO_END       # Move cursor to the end of a completed word
 setopt AUTO_LIST           # Automatically list choices on ambiguous completion
 setopt AUTO_MENU           # Show completion menu on a successive tab press
@@ -14,22 +14,13 @@ setopt PATH_DIRS           # Perform path search even on command names with slas
 unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor
 unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry
 
-# Load and initialize the completion system ignoring insecure directories with a
-# cache time of 20 hours, so it should almost always regenerate the first time a
-# shell is opened each day.
-#autoload -Uz compinit
-#_comp_files=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-20))
-#if (( $#_comp_files )); then
-#  compinit -i -C
-#else
-#  compinit -i
-#fi
-#unset _comp_files
+# ------
+# Styles
+# ------
 
 # Use caching to make completion for commands such as dpkg and apt usable.
 zstyle ':completion::complete:*' use-cache on
-#zstyle ':completion::complete:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
-zstyle ':completion::complete:*' cache-path "${ZDOTDIR:-$HOME}/zcompcache"
+zstyle ':completion::complete:*' cache-path $HOME/zcompcache
 
 # Case-insensitive (all), partial-word, and then substring completion.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -64,20 +55,20 @@ zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec))'
 # Array completion element sorting.
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
-# Directories.
+# Directories completion options.
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
 zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
 zstyle ':completion:*' squeeze-slashes true
 
-# History.
+# History completion options.
 zstyle ':completion:*:history-words' stop yes
 zstyle ':completion:*:history-words' remove-all-dups yes
 zstyle ':completion:*:history-words' list false
 zstyle ':completion:*:history-words' menu yes
 
-# Environmental Variables.
+# Environmental variables.
 zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
 
 # Populate hostname completion. But allow ignoring custom entries
@@ -100,7 +91,7 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
   operator pcap postfix postgres privoxy pulse pvm quagga radvd \
   rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
 
-# ... unless we really want to ...
+# ... unless we really want to.
 zstyle '*' single-ignored show
 
 # Ignore multiple entries.
@@ -123,6 +114,12 @@ zstyle ':completion:*:*:mpg123:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):di
 zstyle ':completion:*:*:mpg321:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
 zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG|flac):ogg\ files *(-/):directories'
 zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):ogg\ files *(-/):directories'
+
+# Mutt client.
+#if [[ -s "$HOME/.mutt/aliases" ]]; then
+#  zstyle ':completion:*:*:mutt:*' menu yes select
+#  zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
+#fi
 
 # SSH/SCP/RSYNC
 zstyle ':completion:*:(ssh|scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
