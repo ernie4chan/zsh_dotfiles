@@ -1,3 +1,3 @@
-prezto/modules/prompt/external/powerlevel9k/*
+prezto/modules/prompt/external/powerlevel9k/
 *.zwc
-modules/private_tokens/*
+modules/private_tokens/
