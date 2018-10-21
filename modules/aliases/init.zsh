@@ -19,7 +19,7 @@ alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias po='popd'
 alias pu='pushd'
 alias dv='dirs -v'						# List last used directories
-for index ({1..9}) alias "\`${index}"="cd +${index}"; unset index
+for index ({1..9}) alias "d${index}"="cd +${index}"; unset index
 
 # Customize some aliases.
 alias b='${(z)BROWSER}'
