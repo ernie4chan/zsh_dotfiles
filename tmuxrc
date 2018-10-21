@@ -41,7 +41,7 @@ bind-key X confirm-before -p "kill-window #W (y/n)?" kill-window
 bind-key C switch-client -l
 
 # Easy config reload
-bind-key R source-file ~/.tmuxrc \; display-message 'Config file reloaded'
+bind-key R source-file ~/.zsh/tmuxrc \; display-message 'Config file reloaded'
 
 # Some extra key bindings to select higher numbered windows
 bind-key 0 select-window -t:10
