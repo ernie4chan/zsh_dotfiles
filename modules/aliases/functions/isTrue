@@ -1,0 +1,5 @@
+# vim:et sts=2 sw=2 ft=zsh
+# Checks a boolean variable for "true".
+# Case insensitive: "1", "y", "yes", "t", "true", "o", and "on".
+
+[[ -n "$1" && "$1" == (1|[Yy]([Ee][Ss]|)|[Tt]([Rr][Uu][Ee]|)|[Oo]([Nn]|)) ]]
