@@ -1,18 +1,3 @@
-# Load and initialize the completion system ignoring insecure directories
-# with a cache time of a day.
-autoload -Uz compinit
-_comp_files=$HOME/.zcompdump(Nm-24)
-if (( $#_comp_files )); then
-  compinit -i -C
-else
-  compinit -i
-fi
-unset _comp_files
-
-# Use smart URL pasting and escaping.
-autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
-autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
-
 # Execute code that does not affect the current session in the background.
 {
   local _dir _file

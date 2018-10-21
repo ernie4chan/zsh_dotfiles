@@ -9,6 +9,21 @@
 # Set input mode before loading the module.
 bindkey -v
 
+# Load and initialize the completion system ignoring insecure directories
+# with a cache time of a day.
+autoload -Uz compinit
+_comp_files=$HOME/.zcompdump(Nm-24)
+if (( $#_comp_files )); then
+  compinit -i -C
+else
+  compinit -i
+fi
+unset _comp_files
+
+# Use smart URL pasting and escaping.
+autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+
 # Color output (auto set to 'no' on dumb terminals).
 if [[ "${TERM}" == 'dumb' ]]; then
   zstyle ':zmodule:*:*' color 'no'
@@ -33,16 +48,16 @@ zstyle ':zmodule:completion:*:hosts' etc-host-ignores '0.0.0.0' '127.0.0.1'	# Se
 #zstyle ':zmodule:history-substring-search:color' not-found ''				# Set colors for not found
 #zstyle ':zmodule:history-substring-search' globbing-flags ''					# Set search globbing flags
 
+# Syntax highlighters.
+#zstyle ':zmodule:syntax-highlighting' highlighters \
+#   'main' 'brackets' 'pattern' 'line' 'cursor' 'root'								# Enable main highlighters
+#zstyle ':zmodule:syntax-highlighting' styles \
+#   'builtin' 'bg=blue' 'command' 'bg=blue' 'function' 'bg=blue'			# Set highlighting styles
+#zstyle ':zmodule:syntax-highlighting' pattern \
+#   'rm*-rf*' 'fg=white,bold,bg=red'																	# Set syntax patterns
+
 # SSH.
 zstyle ':zmodule:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
-
-# Syntax highlighters.
- zstyle ':zmodule:syntax-highlighting' highlighters \
-   'main' 'brackets' 'pattern' 'line' 'cursor' 'root'								# Enable main highlighters
-zstyle ':zmodule:syntax-highlighting' styles \
-   'builtin' 'bg=blue' 'command' 'bg=blue' 'function' 'bg=blue'			# Set highlighting styles
-zstyle ':zmodule:syntax-highlighting' pattern \
-   'rm*-rf*' 'fg=white,bold,bg=red'																	# Set syntax patterns
 
 # Tmux.
 zstyle ':zmodule:tmux:auto-start' local 'yes'												# Launch Tmux
@@ -58,8 +73,9 @@ zmodules=(
 	private_tokens
 	iterm2_integration
 	autosuggestions
-	hist_sub_search
 	completions
+	syn_highlight
+	hist_sub_search
 	tmux
 )
 
