@@ -37,12 +37,8 @@ manpath=(
 )
 
 # Language.
-if [[ -z $LC_ALL ]]; then
-	export LC_ALL='en_US.UTF-8'
-fi
-if [[ -z $LANG ]]; then
-	export LANG='en_US.UTF-8'
-fi
+export LC_ALL='en_US.UTF-8'
+export LANG='en_US.UTF-8'
 
 # Browser.
 if [[ $OSTYPE == "darwin*" ]]; then
