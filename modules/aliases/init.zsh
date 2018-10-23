@@ -4,9 +4,7 @@ setopt CORRECT
 # Disable correction.
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
-alias top='nocorrect sudo htop'     # Run 'sudo' because there are no PROC files in macOS
-
-# Move to Tmux zsh module folder.
+alias top='nocorrect sudo htop'       # Run 'sudo' because there are no PROC files in macOS
 alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
 
 # Disable globbing.
@@ -28,12 +26,8 @@ alias p='${(z)PAGER}'
 alias df='df -kh'							# More human readable
 alias du='du -kh'							# More human readable
 alias ftty='stty sane'				# Restore terminal settings when screwed up
-alias pbc='pbcopy'						# macOS console copy
-alias pbp='pbpaste'						# macOS console paste
 alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT
 alias shu='tree -N'						# Fix tree
-alias topc='htop --sort-key=PERCENT_CPU'	# Sort with CPU usage
-alias topm='htop --sort-key=PERCENT_MEM'	# Sort with MEM usage
 alias py3='python3'						# Redifining python3 shell
 alias bpy='bpython'						# Redifining python3 shell
 
@@ -82,18 +76,6 @@ else
   fi
 fi
 
-if isCallable 'dircolors'; then
-	alias ls='ls --group-directories-first --color=auto'
-  # Call dircolors to define colors if they're missing.
-	if [[ -z $LS_COLORS ]]; then
-		if [[ -s $HOME/.dir_colors ]]; then
-			eval $(dircolors --sh "$HOME/.dir_colors")
-		else
-			eval $(dircolors --sh)
-		fi
-	fi
-fi
-
 # - ...more of ls -
 alias l='ls -1A'         # Lists in one column, hidden files
 alias ll='ls -lh'        # Lists human readable sizes
@@ -119,4 +101,40 @@ if (( $+commands[curl] )); then
 	alias get='curl --continue-at - --location --progress-bar --remote-name --remote-time'
 elif (( $+commands[wget] )); then
 	alias get='wget --continue --progress=bar --timestamping'
+fi
+
+# Top 
+if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
+  if isCallable 'htop'; then
+    alias topc='htop --sort-key=PERCENT_CPU'	# Sort with CPU usage
+    alias topm='htop --sort-key=PERCENT_MEM'	# Sort with MEM usage
+  else
+    alias topc='top -o cpu'
+    alias topm='top -o vsize'
+  fi
+
+else
+  alias topc='top -o %CPU'
+  alias topm='top -o %MEM'
+fi
+
+# Copy N Paste
+if [[ "$OSTYPE" == darwin* ]]; then
+  alias o='open'
+  alias pbc='pbcopy'
+  alias pbp='pbpaste'
+elif [[ "$OSTYPE" == cygwin* ]]; then
+  alias o='cygstart'
+  alias pbcopy='tee > /dev/clipboard'
+  alias pbpaste='cat /dev/clipboard'
+else
+  alias o='xdg-open'
+
+  if (( $+commands[xclip] )); then
+    alias pbcopy='xclip -selection clipboard -in'
+    alias pbpaste='xclip -selection clipboard -out'
+  elif (( $+commands[xsel] )); then
+    alias pbcopy='xsel --clipboard --input'
+    alias pbpaste='xsel --clipboard --output'
+  fi
 fi
