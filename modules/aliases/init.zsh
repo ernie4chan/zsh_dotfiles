@@ -4,10 +4,10 @@ setopt CORRECT
 # Disable correction.
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
-alias top='nocorrect sudo htop'										# Run 'sudo' because there are no PROC files in macOS
+alias top='nocorrect sudo htop'     # Run 'sudo' because there are no PROC files in macOS
 
 # Move to Tmux zsh module folder.
-alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"	# Load tmux with specific config file
+alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
 
 # Disable globbing.
 alias find='noglob find'
