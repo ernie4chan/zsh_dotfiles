@@ -1,0 +1,4 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# Pops an entry off the directory stack and lists its contents.
+builtin popd "$argv[-1]" && ls "${(@)argv[1,-2]}"
