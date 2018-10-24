@@ -3,7 +3,7 @@ setopt CORRECT
 
 # Disable correction.
 alias mv='nocorrect mv'
-alias rm='nocorrect rm'
+alias rm='nocorrect rm -i'
 alias top='nocorrect sudo htop'       # Run 'sudo' because there are no PROC files in macOS
 alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
 
@@ -18,6 +18,9 @@ alias po='popd'
 alias pu='pushd'
 alias dv='dirs -v'						# List last used directories
 for index ({1..9}) alias "d${index}"="cd +${index}"; unset index
+alias ..='cd ../'						  # Go back 1 level
+alias ...='cd ../../'					# Go back 2 levels
+alias ....='cd ../../../'			# Go back 3 levels
 
 # Customize some aliases.
 alias b='${(z)BROWSER}'
@@ -25,15 +28,21 @@ alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias p='${(z)PAGER}'
 alias df='df -kh'							# More human readable
 alias du='du -kh'							# More human readable
-alias ftty='stty sane'				# Restore terminal settings when screwed up
-alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT
-alias shu='tree -N'						# Fix tree
-alias py3='python3'						# Redifining python3 shell
 alias bpy='bpython'						# Redifining python3 shell
-
-# Some sh aliases.
-alias mc=". ~/.local/bin/mc-wrapper-zsh.sh"
+alias ftty='stty sane'				# Restore terminal settings when screwed up
 alias itun=". ~/.local/bin/itunes.sh"
+alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
+alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT
+alias py3='python3'						# Redifining python3 shell
+alias ql="qlmanage -p $@ 2>/dev/null"                     # View images
+alias shu='tree -N'						# Fix tree
+alias ofd='open .'            # Open current directory in Finder
+alias sfd='sync_with_finder'  # Sync current directory in Terminal
+
+# Search files using macOS Spotlight's metadata:
+# w: the comparison is word-based and detects transitions from lower-case to upper-case.
+# c: the comparison is case insensitive.
+locate () { mdfind "kMDItemDisplayName == '$@'wc"; }
 
 # - ls -
 if isCallable 'dircolors'; then
@@ -103,7 +112,7 @@ elif (( $+commands[wget] )); then
 	alias get='wget --continue --progress=bar --timestamping'
 fi
 
-# Top 
+# Top.
 if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
   if isCallable 'htop'; then
     alias topc='htop --sort-key=PERCENT_CPU'	# Sort with CPU usage
@@ -118,7 +127,7 @@ else
   alias topm='top -o %MEM'
 fi
 
-# Copy N Paste
+# Copy N Paste.
 if [[ "$OSTYPE" == darwin* ]]; then
   alias o='open'
   alias pbc='pbcopy'
@@ -137,4 +146,14 @@ else
     alias pbcopy='xsel --clipboard --input'
     alias pbpaste='xsel --clipboard --output'
   fi
+fi
+
+# Midnight Commander.
+if [[ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]]; then
+  alias mc="source ~/.local/bin/mc-wrapper-zsh.sh"
+elif [[ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]]; then
+  alias mc="SHELL=/bin/bash LANG=en_US.UTF-8 \
+    source ~/.local/bin/mc-wrapper.sh -x -S featured"
+else
+  alias mc="source ~/.local/bin/mc-wrapper.sh"
 fi
