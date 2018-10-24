@@ -1,0 +1,7 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# Recursively delete Apple files.
+list=( .DS_Store ._.* .fseventsd .Spotlight-V100 )
+for i in $list; do
+  find . -type f -name $i -ls -delete
+done

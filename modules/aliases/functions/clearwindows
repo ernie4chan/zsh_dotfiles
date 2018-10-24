@@ -1,0 +1,7 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# Recursively delete Windows files.
+list=( desktop.ini Thumbs.db )
+for i in $list; do
+  find . -type f -name $i -ls -delete
+done
