@@ -149,9 +149,9 @@ else
 fi
 
 # Midnight Commander.
-if [[ -n "`$SHELL -c 'echo $ZSH_VERSION'`" ]]; then
+if [[ $0 == *zsh ]]; then
   alias mc="source ~/.local/bin/mc-wrapper-zsh.sh"
-elif [[ -n "`$SHELL -c 'echo $BASH_VERSION'`" ]]; then
+elif [[ $0 == *bash ]]; then
   alias mc="SHELL=/bin/bash LANG=en_US.UTF-8 \
     source ~/.local/bin/mc-wrapper.sh -x -S featured"
 else
