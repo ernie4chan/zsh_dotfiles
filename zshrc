@@ -4,7 +4,7 @@
 #zsh -x 2> ${HOME}/zsh-error.log
 
 # Show an illustrative output on Zsh startup loading. 
-zmodload zsh/zprof
+#zmodload zsh/zprof
 
 # Set input mode before loading the module.
 bindkey -v
