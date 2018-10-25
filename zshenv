@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
 
 # Shell environment variables, which are executed before zshrc.
 

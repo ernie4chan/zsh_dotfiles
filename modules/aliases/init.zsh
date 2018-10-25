@@ -1,3 +1,5 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
 # Correct commands.
 setopt CORRECT
 
@@ -26,18 +28,20 @@ alias ....='cd ../../../'			# Go back 3 levels
 alias b='${(z)BROWSER}'
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias p='${(z)PAGER}'
+alias bpy='bpython'						# Redifining python3 shell
 alias df='df -kh'							# More human readable
 alias du='du -kh'							# More human readable
-alias bpy='bpython'						# Redifining python3 shell
+alias eject="diskutil unmount $@"     # Unmount external devices
+alias inject="diskutil mount $@"      # Mount external devices
 alias ftty='stty sane'				# Restore terminal settings when screwed up
 alias itun=". ~/.local/bin/itunes.sh"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
+alias ofd='open .'            # Open current directory in Finder
 alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT
 alias py3='python3'						# Redifining python3 shell
 alias ql="qlmanage -p $@ 2>/dev/null"                     # View images
-alias shu='tree -N'						# Fix tree
-alias ofd='open .'            # Open current directory in Finder
 alias sfd='sync_with_finder'  # Sync current directory in Terminal
+alias shu='tree -N'						# Fix tree
 
 # Search files using macOS Spotlight's metadata:
 # w: the comparison is word-based and detects transitions from lower-case to upper-case.

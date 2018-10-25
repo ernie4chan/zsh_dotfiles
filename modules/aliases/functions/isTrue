@@ -1,4 +1,4 @@
-# vim:et sts=2 sw=2 ft=zsh
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
 
 # Checks a boolean variable for "true".
 # Case insensitive: "1", "y", "yes", "t", "true", "o", and "on".

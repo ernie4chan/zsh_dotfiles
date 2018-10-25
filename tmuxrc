@@ -1,3 +1,5 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
 # Adding Powerline-status to tmux
 #run-shell 'powerline-daemon -q'
 #source ~/.local/lib/powerline/bindings/tmux/powerline.conf
@@ -22,10 +24,11 @@ set-window-option -g pane-base-index 1
 set-option -g bell-action none
 
 # Add the prefix key to C-a
-set-option -g prefix2 C-a
+unbind-key C-b
+set-option -g prefix C-a
 
 # Send the prefix "-2" to client inside window
-bind-key C-a send-prefix -2
+bind-key C-a send-prefix
 
 # Use vi mode
 set-window-option -g mode-keys vi
@@ -41,7 +44,7 @@ bind-key X confirm-before -p "kill-window #W (y/n)?" kill-window
 bind-key C switch-client -l
 
 # Easy config reload
-bind-key R source-file ~/.zsh/tmuxrc \; display-message 'Config file reloaded'
+#bind-key R source-file ~/.zsh/tmuxrc \; display-message 'Config file reloaded'
 
 # Some extra key bindings to select higher numbered windows
 bind-key 0 select-window -t:10
@@ -57,7 +60,7 @@ bind-key F9 select-window -t:19
 bind-key F10 select-window -t:20
 
 # Split windows equally when creating
-bind-key \ split-window -h\; select-layout even-horizontal
+bind-key \ split-window -h \; select-layout even-horizontal
 bind-key a last-window
 
 # *** Vim-like keys ***

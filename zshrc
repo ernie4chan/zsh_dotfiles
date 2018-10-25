@@ -1,5 +1,5 @@
-#!/usr/local/bin/zsh
-
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+#
 # Failsafe test purposes and debugging.
 #zsh -x 2> ${HOME}/zsh-error.log
 
@@ -26,7 +26,7 @@ autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
 
 # Load all the modules you want!
 zmodules=(
-	zstyle
+	zstyles
 	gnu_utility
 	aliases
 	power_theme

@@ -1,3 +1,5 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
 #
 # Provides for an easier use of GPG by setting up gpg-agent.
 #

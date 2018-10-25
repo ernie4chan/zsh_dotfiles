@@ -1,3 +1,5 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
 # Execute code that does not affect the current session in the background.
 {
   local _dir _file

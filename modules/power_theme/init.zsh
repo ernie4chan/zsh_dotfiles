@@ -1,3 +1,5 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
 # Load Powerline-status theme.
 #POWERLINE_SCRIPT=${HOME}/.local/lib/powerline/bindings/zsh/powerline.zsh 
 #[[ -f ${POWERLINE_SCRIPT} ]] && source ${POWERLINE_SCRIPT}

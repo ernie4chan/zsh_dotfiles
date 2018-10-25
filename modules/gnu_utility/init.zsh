@@ -1,3 +1,5 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
 #
 # Provides for the interactive use of GNU utilities on BSD systems.
 #
