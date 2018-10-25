@@ -41,7 +41,7 @@ export LC_ALL='en_US.UTF-8'
 export LANG='en_US.UTF-8'
 
 # Browser.
-if [[ $OSTYPE == "darwin*" ]]; then
+if [[ $OSTYPE == darwin* ]]; then
 	export BROWSER='open'
 fi
 
@@ -57,4 +57,4 @@ fi
 
 # Golang programming language.
 export GOPATH=$HOME/Projects/Go-workspace
-export GOROOT=$(brew --prefix golang)/libexec
+export GOROOT=/usr/local/opt/go/libexec
