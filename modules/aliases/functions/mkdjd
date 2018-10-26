@@ -1,0 +1,4 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
+# Makes a directory and changes to it.
+[[ -n "$1" ]] && mkdir -p "$1" && builtin cd "$1"
