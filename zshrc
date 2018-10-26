@@ -27,6 +27,7 @@ autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
 # Load all the modules you want!
 zmodules=(
 	zstyles
+	environment
 	gnu_utility
 	aliases
 	power_theme
