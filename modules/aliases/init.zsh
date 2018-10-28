@@ -5,9 +5,10 @@ setopt CORRECT
 
 # Disable correction.
 alias mv='nocorrect mv'
-alias rm='nocorrect rm -i'
+alias rm='nocorrect rm'
 alias top='nocorrect sudo htop'       # Run 'sudo' because there are no PROC files in macOS
 alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
+alias ranger="nocorrect ranger --confdir=~/.ranger --datadir=~/.ranger"
 
 # Disable globbing.
 alias find='noglob find'
@@ -119,8 +120,8 @@ fi
 # Top.
 if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
   if isCallable 'htop'; then
-    alias topc='htop --sort-key=PERCENT_CPU'	# Sort with CPU usage
-    alias topm='htop --sort-key=PERCENT_MEM'	# Sort with MEM usage
+    alias topc="${aliases[top]:-sudo htop} --sort-key=PERCENT_CPU"	# Sort with CPU usage
+    alias topm="${aliases[top]:-sudo htop} --sort-key=PERCENT_MEM"	# Sort with MEM usage
   else
     alias topc='top -o cpu'
     alias topm='top -o vsize'
