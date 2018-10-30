@@ -8,9 +8,8 @@ typeset -U cdpath fpath infopath manpath path
 
 # List directories that searches for shell functions.
 path=(
-  /usr/local/{,s}bin
-	$HOME/.Perl5/bin
   $HOME/.bin
+  /usr/local/{,s}bin
   $GOPATH/bin
   $GOROOT/bin
   $path
@@ -58,14 +57,8 @@ else
 fi
 
 # Golang programming language.
-export GOPATH=$HOME/Projects/Go-workspace
+export GOPATH=$HOME/Projects/ws-Go
 export GOROOT=/usr/local/opt/go/libexec
-
-# Perl CPAN configuration.
-PERL5LIB="$HOME/.Perl5/lib/perl5"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="$HOME/.Perl5"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"$HOME/.Perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=$HOME/.Perl5"; export PERL_MM_OPT;
 
 # fzf
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'

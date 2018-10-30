@@ -8,7 +8,7 @@ alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 alias top='nocorrect sudo htop'       # Run 'sudo' because there are no PROC files in macOS
 alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
-alias ranger="nocorrect ranger --confdir=~/.ranger --datadir=~/.ranger"
+alias ranger="nocorrect ranger --confdir=$HOME/.ranger --datadir=$HOME/.ranger"
 
 # Disable globbing.
 alias find='noglob find'

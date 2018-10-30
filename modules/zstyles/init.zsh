@@ -14,7 +14,7 @@ zstyle ':zmodule:*:*' case-sensitive 'yes'
 zstyle ':zmodule:gnu-utility' prefix 'g'
 
 # SSH.
-zstyle ':zmodule:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
+#zstyle ':zmodule:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 # Tmux.
 zstyle ':zmodule:tmux:auto-start' local 'yes'										# Launch Tmux
