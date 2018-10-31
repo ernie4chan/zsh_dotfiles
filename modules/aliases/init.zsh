@@ -7,8 +7,6 @@ setopt CORRECT
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 alias top='nocorrect sudo htop'       # Run 'sudo' because there are no PROC files in macOS
-alias tmux="nocorrect tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
-alias ranger="nocorrect ranger --confdir=$HOME/.ranger --datadir=$HOME/.ranger"
 
 # Disable globbing.
 alias find='noglob find'
@@ -43,6 +41,8 @@ alias py3='python3'						# Redifining python3 shell
 alias ql="qlmanage -p $@ 2>/dev/null"                     # View images
 alias sfd='sync_with_finder'  # Sync current directory in Terminal
 alias shu='tree -N'						# Fix tree
+alias tmux="tmux -f $HOME/.zsh/tmuxrc"      # Load tmux with specific config file
+alias ranger="ranger --confdir=$HOME/.ranger --datadir=$HOME/.ranger"
 
 # Search files using macOS Spotlight's metadata:
 # w: the comparison is word-based and detects transitions from lower-case to upper-case.

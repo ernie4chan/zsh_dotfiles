@@ -45,5 +45,5 @@ if [[ -z "$TMUX" && -z "$EMACS" && -z "$VIM" && -z "$INSIDE_EMACS" && -z "$VSCOD
 fi
 
 # Aliases.
-alias tmuxa="tmux $_tmux_iterm_integration new-session -A"
-alias tmuxl='tmux list-sessions'
+#alias tmuxa="tmux $_tmux_iterm_integration new-session -A"
+#alias tmuxl='tmux list-sessions'

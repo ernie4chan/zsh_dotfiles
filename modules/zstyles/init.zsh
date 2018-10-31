@@ -1,11 +1,25 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
-# Color output (auto set to 'no' on dumb terminals).
-if [[ "${TERM}" == 'dumb' ]]; then
+# Disable color and theme in dumb terminals.
+if [[ "$TERM" == 'dumb' ]]; then
   zstyle ':zmodule:*:*' color 'no'
-else
-	zstyle ':zmodule:*:*' color 'yes'
+  #zstyle ':prezto:module:prompt' theme 'off'
 fi
+
+# Load Zsh modules.
+zstyle -a ':zmodule:load' zmodule 'zmodules'
+for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
+unset zmodule{s,}
+
+# Autoload Zsh functions.
+zstyle -a ':zmodule:load' zfunction 'zfunctions'
+for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
+unset zfunction{s,}
+
+# Load modules.
+zstyle -a ':zmodule:load' pmodule 'pmodules'
+pmodload "$pmodules[@]"
+unset pmodules
 
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':zmodule:*:*' case-sensitive 'yes'
