@@ -3,29 +3,6 @@
 # Failsafe test purposes and debugging.
 #zsh -x 2> ${HOME}/zsh-error.log
 
-# Set input mode before loading the module.
-bindkey -v
-
-# Load 'pmodload'.
-if [[ -s "$HOME/.zsh/pmodload.zsh" ]]; then
-  source "$HOME/.zsh/pmodload.zsh"
-fi
-
-# Load and initialize the completion system ignoring insecure directories
-# with a cache time of a day.
-autoload -Uz compinit
-_comp_files=$HOME/.zcompdump(Nm-24)
-if (( $#_comp_files )); then
-  compinit -i -C
-else
-  compinit -i
-fi
-unset _comp_files
-
-# Use smart URL pasting and escaping.
-autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
-autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
-
 # Disable color and theme in dumb terminals.
 if [[ "$TERM" == 'dumb' ]]; then
   zstyle ':zmodule:*:*' color 'no'
@@ -56,6 +33,7 @@ zstyle ':zmodule:tmux:auto-start' local 'yes'					# Launch Tmux
 zstyle ':zmodule:tmux:auto-start' remote 'yes'				# Launch Tmux in SSH connections
 zstyle ':zmodule:tmux:iterm' integrate 'no'						# Integrate iTerm2
 zstyle ':zmodule:tmux:session' name 'ernie4chan'			# Default session name
+
 # Completions.
 zstyle ':zmodule:completion:*:hosts' etc-host-ignores \
 	'0.0.0.0' '127.0.0.1'																# Set entries to ignore
@@ -94,17 +72,25 @@ zstyle ':zmodule:load' pmodule \
 	'gpg' \
 	'tmux'
 
-# Load Zsh modules.
-zstyle -a ':zmodule:load' zmodule 'zmodules'
-for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
-unset zmodule{s,}
+# Set input mode before loading the module.
+bindkey -v
 
-# Autoload Zsh functions.
-zstyle -a ':zmodule:load' zfunction 'zfunctions'
-for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
-unset zfunction{s,}
+# Load 'pmodload'.
+if [[ -s "$HOME/.zsh/pmodload.zsh" ]]; then
+  source "$HOME/.zsh/pmodload.zsh"
+fi
 
-# Load modules.
-zstyle -a ':zmodule:load' pmodule 'pmodules'
-pmodload "$pmodules[@]"
-unset pmodules
+# Load and initialize the completion system ignoring insecure directories
+# with a cache time of a day.
+autoload -Uz compinit
+_comp_files=$HOME/.zcompdump(Nm-24)
+if (( $#_comp_files )); then
+  compinit -i -C
+else
+  compinit -i
+fi
+unset _comp_files
+
+# Use smart URL pasting and escaping.
+autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
