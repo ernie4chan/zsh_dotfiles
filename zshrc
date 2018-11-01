@@ -51,34 +51,14 @@ zstyle ':zmodule:history-substring-search' globbing-flags \
 
 # Syntax highlighters.
 zstyle ':zmodule:syntax-highlighting' highlighters \
-   'main' 'brackets' 'pattern' 'line' 'cursor' 'root'						# Enable main highlighters
+	'main' 'brackets' 'pattern' 'line' 'cursor' 'root'	# Enable main highlighters
 zstyle ':zmodule:syntax-highlighting' styles \
-   'builtin' 'bg=blue' 'command' 'bg=blue' 'function' 'bg=blue'	# Set highlighting styles
+	'function' 'fg=green,bold'													# Set highlighting styles
 zstyle ':zmodule:syntax-highlighting' pattern \
-   'rm*-rf*' 'fg=white,bold,bg=red'															# Set syntax patterns
-
-# Load all the modules you want!
-zstyle ':zmodule:load' pmodule \
-	'environment' \
-	'power_theme' \
-	'private_tokens' \
-	'gnu_utility' \
-	'aliases' \
-	'iterm2_integration' \
-	'autosuggestions' \
-	'completions' \
-	'syn_highlight' \
-	'hist_sub_search' \
-	'gpg' \
-	'tmux'
+	'rm*-rf*' 'fg=white,bold,bg=red'										# Set syntax patterns
 
 # Set input mode before loading the module.
 bindkey -v
-
-# Load 'pmodload'.
-if [[ -s "$HOME/.zsh/pmodload.zsh" ]]; then
-  source "$HOME/.zsh/pmodload.zsh"
-fi
 
 # Load and initialize the completion system ignoring insecure directories
 # with a cache time of a day.
@@ -94,3 +74,23 @@ unset _comp_files
 # Use smart URL pasting and escaping.
 autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
 autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+
+# Load all the modules you want!
+zstyle ':zmodule:load' pmodule \
+	'environment' \
+	'power_theme' \
+	'private_tokens' \
+	'gnu_utility' \
+	'aliases' \
+	'iterm2_integration' \
+	'gpg' \
+	'tmux' \
+	'autosuggestions' \
+	'completions' \
+	'syn_highlight' \
+	'hist_sub_search'
+
+# Load 'pmodload'.
+if [[ -s "$HOME/.zsh/pmodload.zsh" ]]; then
+  source "$HOME/.zsh/pmodload.zsh"
+fi
