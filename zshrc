@@ -84,6 +84,7 @@ zstyle ':zmodule:load' pmodule \
 	'aliases' \
 	'iterm2_integration' \
 	'gpg' \
+	'fzf' \
 	'tmux' \
 	'autosuggestions' \
 	'completions' \

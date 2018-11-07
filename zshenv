@@ -59,7 +59,3 @@ fi
 # Golang programming language.
 export GOPATH=$HOME/Projects/ws-Go
 export GOROOT=/usr/local/opt/go/libexec
-
-# fzf
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden --follow --glob "!.git/*"'
-export FZF_DEFAULT_OPTS='--border --height 80% --layout=reverse --inline-info'
