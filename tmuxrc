@@ -15,7 +15,8 @@ set-option -sa terminal-overrides ",xterm*:Tc"
 
 # Change the default $TERM to tmux-256color.
 #set-option -g default-terminal "tmux-256color"
-set-option -g default-terminal "screen-256color"
+#set-option -g default-terminal "screen-256color"
+set-option -g default-terminal "xterm-256color"
 
 # Start windows and panes at 1, not 0.
 set-option -g base-index 1

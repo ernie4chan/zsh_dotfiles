@@ -6,13 +6,21 @@
 
 # Load Powerlevel9k theme (replacing Powerline-status).
 if [[ "$TERM" == dumb ]]; then
+	# Do nothing.
 	:
 else
-	POWERLEVEL_SCRIPT=${HOME}/.zsh/powerlevel9k/powerlevel9k.zsh-theme
+	# Load Nerd Fonts with Powerlevel9k theme for Zsh.
+	POWERLEVEL_SCRIPT=$HOME/.zsh/powerlevel9k/powerlevel9k.zsh-theme
+	[[ -f $POWERLEVEL_SCRIPT ]] && source $POWERLEVEL_SCRIPT
+
+	# Customize the Powerlevel9k prompts
 	POWERLEVEL9K_MODE='nerdfont-complete'
 	#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv vcs)
 	#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
-	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir rbenv vcs)
+	POWERLEVEL9K_ALWAYS_SHOW_USER=true
+	POWERLEVEL9K_CONTEXT_TEMPLATE="%m"
+	POWERLEVEL9K_STATUS_OK=false
+	POWERLEVEL9K_STATUS_HIDE_SIGNAME=true
+	POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context vi_mode dir rbenv vcs)
 	POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history)
-	[[ -f ${POWERLEVEL_SCRIPT} ]] && source ${POWERLEVEL_SCRIPT}
 fi
