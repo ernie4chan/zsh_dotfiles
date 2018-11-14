@@ -32,7 +32,7 @@ zstyle ':zmodule:ssh:load' identities 'id_rsa'
 zstyle ':zmodule:tmux:auto-start' local 'yes'					# Launch Tmux
 zstyle ':zmodule:tmux:auto-start' remote 'yes'				# Launch Tmux in SSH connections
 zstyle ':zmodule:tmux:iterm' integrate 'no'						# Integrate iTerm2
-zstyle ':zmodule:tmux:session' name 'ernie4chan'			# Default session name
+zstyle ':zmodule:tmux:session' name 'Scorpii18'				# Default session name
 
 # Completions.
 zstyle ':zmodule:completion:*:hosts' etc-host-ignores \
