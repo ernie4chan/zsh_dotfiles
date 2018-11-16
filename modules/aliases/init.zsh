@@ -43,6 +43,7 @@ alias ranger="ranger --confdir=$HOME/.ranger --datadir=$HOME/.ranger"
 alias sfd='sync_with_finder'		# Sync current directory in Terminal
 alias shu='tree -N'							# Fix tree
 alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"	# Load tmux with specific config file
+alias lynx="lynx -cfg=$HOME/.lynx/lynxrc"
 
 # Search files using macOS Spotlight's metadata:
 # w: the comparison is word-based and detects transitions from lower-case to upper-case.
