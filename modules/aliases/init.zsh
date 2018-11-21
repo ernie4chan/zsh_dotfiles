@@ -34,16 +34,17 @@ alias ftty='stty sane'					# Restore terminal settings when screwed up
 alias inject="diskutil mount $@"				# Mount external devices
 alias itun="source $HOME/.bin/itunes.sh"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
-alias ofd='open .'							# Open current directory in Finder
 alias p='${(z)PAGER}'
 alias ptt='ssh bbsu@ptt.cc'			# Open up BBS: PTT
 alias py3='python3'							# Redifining python3 shell
 alias ql="qlmanage -p $@ 2>/dev/null"   # View images
 alias ranger="ranger --confdir=$HOME/.ranger --datadir=$HOME/.ranger"
-alias sfd='sync_with_finder'		# Sync current directory in Terminal
 alias shu='tree -N'							# Fix tree
 alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"	# Load tmux with specific config file
 alias lynx="lynx -cfg=$HOME/.lynx/lynxrc"
+
+alias ofd='open .'							# Open current directory in Finder
+alias sfd='sync_with_finder'		# Sync current directory in Terminal
 
 # Search files using macOS Spotlight's metadata:
 # w: the comparison is word-based and detects transitions from lower-case to upper-case.
