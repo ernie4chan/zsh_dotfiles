@@ -25,3 +25,5 @@
     zrecompile -pq $file
   done
 } &!
+
+[[ -f $HOME/vstore.dat ]] && command rm -f $HOME/vstore.dat
