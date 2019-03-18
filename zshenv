@@ -8,7 +8,7 @@ typeset -U cdpath fpath infopath manpath path
 
 # List directories that searches for shell functions.
 path=(
-  $HOME/.bin
+  $HOME/.local/bin
   /usr/local/{,s}bin
   $GOPATH/bin
   $GOROOT/bin
