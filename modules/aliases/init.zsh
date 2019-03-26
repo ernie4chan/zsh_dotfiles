@@ -32,6 +32,7 @@ alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias eject="diskutil unmount $@"				# Unmount external devices
 alias ftty='stty sane'					# Restore terminal settings when screwed up
 alias inject="diskutil mount $@"				# Mount external devices
+alias lynx="lynx -cfg=$HOME/.local/share/lynx/lynxrc"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
 alias p='${(z)PAGER}'
 alias ptt='ssh bbsu@ptt.cc'			# Open up BBS: PTT
@@ -39,7 +40,6 @@ alias py3='python3'							# Redifining python3 shell
 alias ql="qlmanage -p $@ 2>/dev/null"   # View images
 alias shu='tree -N'							# Fix tree
 alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"	# Load tmux with specific config file
-alias lynx="lynx -cfg=$HOME/.local/share/lynx/lynxrc"
 alias mc="SHELL=/bin/bash LANG=/en_US.UTF-8 source /usr/local/Cellar/midnight-commander/4.8.22/libexec/mc/mc-wrapper.sh"
 
 alias ofd='open .'							# Open current directory in Finder
@@ -109,6 +109,8 @@ if zstyle -T ':zmodule:core:utility:grep' color; then
   export GREP_COLORS="mt=$GREP_COLOR" # GNU.
 
   alias grep="${aliases[grep]:-grep} --color=auto"
+  alias egrep="${aliases[egrep]:-egrep} --color=auto"
+  alias fgrep="${aliases[fgrep]:-fgrep} --color=auto"
 fi
 
 # File download.
