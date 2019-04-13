@@ -1,3 +1,4 @@
 prezto/modules/prompt/external/powerlevel9k/
 *.zwc
 modules/private_tokens/
+zcompcache/
