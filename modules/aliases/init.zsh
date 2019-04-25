@@ -41,6 +41,7 @@ alias ql="qlmanage -p $@ 2>/dev/null"   # View images
 alias shu='tree -N'							# Fix tree
 alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"	# Load tmux with specific config file
 alias mc="SHELL=/bin/bash LANG=/en_US.UTF-8 source /usr/local/Cellar/midnight-commander/4.8.22/libexec/mc/mc-wrapper.sh"
+alias mutt="mutt -F ~/.local/share/mutt/muttrc"
 
 alias ofd='open .'							# Open current directory in Finder
 alias sfd='sync_with_finder'		# Sync current directory in Terminal
