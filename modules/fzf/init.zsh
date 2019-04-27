@@ -9,6 +9,9 @@ fi
 # Options to fzf command.
 #export FZF_COMPLETION_OPTS='+c -x'
 
+# Changing the layout.
+export FZF_DEFAULT_OPTS="--height=50% --preview='cat {}' --preview-window=right:50%:wrap"
+
 # Use 'ripgrep' by default.
 export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
 	find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
@@ -16,9 +19,6 @@ export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
 
 # Configure fzf in command line.
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
-
-# Changing the layout.
-export FZF_DEFAULT_OPTS="--height=40% --preview='cat {}' --preview-window=right:60%:wrap"
 
 # Auto-completion
 # ---------------
