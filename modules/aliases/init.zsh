@@ -6,7 +6,7 @@ setopt CORRECT
 # Disable correction.
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
-alias top='nocorrect sudo htop'	# Run 'sudo' because there are no PROC files in macOS
+alias top='nocorrect sudo htop'			# Run 'sudo' because there are no PROC files in macOS
 
 # Disable globbing.
 alias find='noglob find'
@@ -17,34 +17,35 @@ alias rsync='noglob rsync'
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias po='popd'
 alias pu='pushd'
-alias 0='dirs -v'								# List last used directories
+alias 0='dirs -v'										# List last used directories
 for index ({1..9}) alias "${index}"="cd +${index}"; unset index
-alias ..='cd ../'								# Go back 1 level
-alias ...='cd ../../'						# Go back 2 levels
-alias ....='cd ../../../'				# Go back 3 levels
+alias ..='cd ../'										# Go back 1 level
+alias ...='cd ../../'								# Go back 2 levels
+alias ....='cd ../../../'						# Go back 3 levels
 
 # Customize some aliases.
 alias b='${(z)BROWSER}'
-alias bpy='bpython'							# Redifining python3 shell
-alias df='df -kh'								# More human readable
-alias du='du -kh'								# More human readable
+alias bpy='bpython'									# Redifining python3 shell
+alias df='df -kh'										# More human readable
+alias du='du -kh'										# More human readable
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
-alias eject="diskutil unmount $@"				# Unmount external devices
-alias ftty='stty sane'					# Restore terminal settings when screwed up
-alias inject="diskutil mount $@"				# Mount external devices
+alias eject="diskutil unmount $@"		# Unmount external devices
+alias ftty='stty sane'							# Restore terminal settings when screwed up
+alias inject="diskutil mount $@"		# Mount external devices
 alias lynx="lynx -cfg=$HOME/.local/share/lynx/lynxrc"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
 alias p='${(z)PAGER}'
-alias ptt='ssh bbsu@ptt.cc'			# Open up BBS: PTT
-alias py3='python3'							# Redifining python3 shell
-alias ql="qlmanage -p $@ 2>/dev/null"   # View images
-alias shu='tree -N'							# Fix tree
-alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"	# Load tmux with specific config file
 alias mc="SHELL=/bin/bash LANG=/en_US.UTF-8 source /usr/local/Cellar/midnight-commander/4.8.22/libexec/mc/mc-wrapper.sh"
 alias mutt="mutt -F ~/.local/share/mutt/muttrc"
+alias ptt='ssh bbsu@ptt.cc'					# Open up BBS: PTT
+alias py3='python3'									# Redifining python3 shell
+alias ql="qlmanage -p $@ 2>/dev/null"						# View images
+alias shu='tree -N'									# Fix tree
+alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"				# Load tmux with specific config file
+alias irssi="irssi --home=~/.local/share/irssi"	# irssi
 
-alias ofd='open .'							# Open current directory in Finder
-alias sfd='sync_with_finder'		# Sync current directory in Terminal
+alias ofd='open .'									# Open current directory in Finder
+alias sfd='sync_with_finder'				# Sync current directory in Terminal
 
 # Search files using macOS Spotlight's metadata:
 # w: the comparison is word-based and detects transitions from lower-case to upper-case.
