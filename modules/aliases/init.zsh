@@ -42,7 +42,7 @@ alias py3='python3'									# Redifining python3 shell
 alias ql="qlmanage -p $@ 2>/dev/null"						# View images
 alias shu='tree -N'									# Fix tree
 alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"				# Load tmux with specific config file
-alias irssi="irssi --home=~/.local/share/irssi"	# irssi
+alias irssi="TERM=screen irssi --home=~/.local/share/irssi"
 
 alias ofd='open .'									# Open current directory in Finder
 alias sfd='sync_with_finder'				# Sync current directory in Terminal
