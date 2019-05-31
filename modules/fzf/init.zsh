@@ -10,7 +10,7 @@ fi
 #export FZF_COMPLETION_OPTS='+c -x'
 
 # Changing the layout.
-export FZF_DEFAULT_OPTS="--height=50% --preview='cat {}' --preview-window=right:50%:wrap"
+export FZF_DEFAULT_OPTS="--height=40% --reverse --preview='file {}' --preview-window down:1"
 
 # Use 'ripgrep' by default.
 export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
