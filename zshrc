@@ -79,11 +79,8 @@ autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
 zstyle ':zmodule:load' pmodule \
 	'environment' \
 	'power_theme' \
-	'private_tokens' \
 	'gnu_utility' \
 	'aliases' \
-	'iterm2_integration' \
-	'gpg' \
 	'fzf' \
 	'tmux' \
 	'autosuggestions' \

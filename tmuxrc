@@ -2,7 +2,7 @@
 
 # Adding Powerline-status to tmux.
 #run-shell 'powerline-daemon -q'
-source /usr/local/lib/python3.7/site-packages/powerline/bindings/tmux/powerline.conf
+source /usr/lib/python3.8/site-packages/powerline/bindings/tmux/powerline.conf
 
 # Set up the status line.
 set-option -g status-position top
@@ -37,7 +37,7 @@ bind-key B set-option monitor-activity \; display-message 'monitor-activity #{?m
 bind-key Y set-option synchronize-panes \; display-message 'synchronize-panes #{?synchronize-panes,on,off}'
 
 # Re-binding some personal keys: kill-window and split equally. 
-bind-key \ split-window -h \; select-layout even-horizontal
+#bind-key \ split-window -h \; select-layout even-horizontal
 bind-key a last-window
 
 # Easy config reload.

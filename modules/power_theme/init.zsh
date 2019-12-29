@@ -10,7 +10,7 @@ if [[ "$TERM" == dumb ]]; then
 	:
 else
 	# Load Nerd Fonts with Powerlevel9k theme for Zsh.
-	POWERLEVEL_SCRIPT=$HOME/.zsh/powerlevel9k/powerlevel9k.zsh-theme
+	POWERLEVEL_SCRIPT=$HOME/.zsh/powerlevel10k/powerlevel10k.zsh-theme
 	[[ -f $POWERLEVEL_SCRIPT ]] && source $POWERLEVEL_SCRIPT
 
 	# Customize the Powerlevel9k prompts

@@ -35,7 +35,7 @@ alias inject="diskutil mount $@"		# Mount external devices
 alias lynx="lynx -cfg=$HOME/.local/share/lynx/lynxrc"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
 alias p='${(z)PAGER}'
-alias mc="SHELL=/bin/bash LANG=/en_US.UTF-8 source /usr/local/Cellar/midnight-commander/4.8.22_1/libexec/mc/mc-wrapper.sh"
+alias mc="SHELL=/bin/bash LANG=en_US.UTF-8 source /usr/lib/mc/mc-wrapper.sh"
 alias mutt="mutt -F ~/.local/share/mutt/muttrc"
 alias ptt='ssh bbsu@ptt.cc'					# Open up BBS: PTT
 alias py3='python3'									# Redifining python3 shell

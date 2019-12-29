@@ -1,7 +1,11 @@
 # Add fzf path.
-if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-  export PATH="$PATH:/usr/local/opt/fzf/bin"
-fi
+#if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+#  export PATH="$PATH:/usr/local/opt/fzf/bin"
+#fi
+#
+#if [ ! "$PATH" == */usr/share/fzf* ]]; then
+#  export PATH="$PATH:/usr/share/fzf"
+#fi
 
 # Use ~~ as the trigger sequence instead of the default **.
 #export FZF_COMPLETION_TRIGGER='~~'
@@ -22,8 +26,9 @@ export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "/usr/share/fzf/completion.zsh" 2> /dev/null
 
 # Key bindings
 # ------------
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+#source "/usr/share/fzf/shell/key-bindings.zsh"
+source "/usr/share/fzf/key-bindings.zsh"
