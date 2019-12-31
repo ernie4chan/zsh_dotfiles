@@ -4,7 +4,7 @@
 #zsh -x 2> ${HOME}/zsh-error.log
 
 # Disable color and theme in dumb terminals.
-if [[ "$TERM" == 'dumb' ]]; then
+if [[ "$TERM" == (dumb|linux|*bsd*) ]]; then
   zstyle ':zmodule:*:*' color 'no'
   #zstyle ':prezto:module:prompt' theme 'off'
 else
@@ -32,7 +32,7 @@ zstyle ':zmodule:ssh:load' identities 'id_rsa'
 zstyle ':zmodule:tmux:auto-start' local 'yes'					# Launch Tmux
 zstyle ':zmodule:tmux:auto-start' remote 'yes'				# Launch Tmux in SSH connections
 zstyle ':zmodule:tmux:iterm' integrate 'no'						# Integrate iTerm2
-zstyle ':zmodule:tmux:session' name 'Scorpii18'				# Default session name
+zstyle ':zmodule:tmux:session' name 'SESS'						# Default session name
 
 # Completions.
 zstyle ':zmodule:completion:*:hosts' etc-host-ignores \
