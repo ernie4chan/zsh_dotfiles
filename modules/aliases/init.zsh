@@ -32,7 +32,7 @@ alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias eject="diskutil unmount $@"		# Unmount external devices
 alias ftty='stty sane'							# Restore terminal settings when screwed up
 alias inject="diskutil mount $@"		# Mount external devices
-alias lynx="lynx -cfg=$HOME/.local/share/lynx/lynxrc"
+alias lynx="lynx -cfg=$HOME/.config/lynx/lynxrc"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
 alias p='${(z)PAGER}'
 alias mc="SHELL=/bin/bash LANG=en_US.UTF-8 source /usr/lib/mc/mc-wrapper.sh"

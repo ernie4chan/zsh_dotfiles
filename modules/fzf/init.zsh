@@ -2,19 +2,19 @@
 #if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
 #  export PATH="$PATH:/usr/local/opt/fzf/bin"
 #fi
-#
-#if [ ! "$PATH" == */usr/share/fzf* ]]; then
-#  export PATH="$PATH:/usr/share/fzf"
-#fi
+
+if [[ ! "$PATH" == */usr/share/fzf* ]]; then
+  export PATH="$PATH:/usr/share/fzf"
+fi
 
 # Use ~~ as the trigger sequence instead of the default **.
 #export FZF_COMPLETION_TRIGGER='~~'
 
 # Options to fzf command.
-#export FZF_COMPLETION_OPTS='+c -x'
+export FZF_COMPLETION_OPTS='+c -x'
 
 # Changing the layout.
-export FZF_DEFAULT_OPTS="--height=40% --reverse --preview='file {}' --preview-window down:1"
+export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border"
 
 # Use 'ripgrep' by default.
 export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
@@ -30,5 +30,4 @@ export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 
 # Key bindings
 # ------------
-#source "/usr/share/fzf/shell/key-bindings.zsh"
-source "/usr/share/fzf/key-bindings.zsh"
+[[ $- == *i* ]] && source "/usr/share/fzf/key-bindings.zsh" 2> /dev/null
