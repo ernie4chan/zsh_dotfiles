@@ -84,17 +84,17 @@ else
 fi
 
 # - ...more of ls -
-alias l1='ls -1'				 # Lists in one column
-alias l2='ls -1A'        # Lists in one column, hidden files
-alias ll='ls -lh'        # Lists human readable sizes
-alias lr='ll -R'         # Lists human readable sizes, recursively
-alias la='ll -A'         # Lists human readable sizes, hidden files
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager
-alias lx='ll -XB'        # Lists sorted by extension (GNU only)
-alias lk='ll -Sr'        # Lists sorted by size, largest last
-alias lt='ll -tr'        # Lists sorted by date, most recent last
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time
+alias ll='ls -1'							# Lists in one column
+alias lo='ls -1A'							# Lists in one column, hidden files
+alias lk='ls -lh'							# Lists human readable sizes
+alias lr='ls -lhR'						# Lists human readable sizes, recursively
+alias la='ls -lhA'						# Lists human readable sizes, hidden files
+alias lm='ls -lhA | "$PAGER"' # Lists human readable sizes, hidden files through pager
+alias lx='ls -lhXB'						# Lists sorted by extension (GNU only)
+alias lz='ls -lhSr'						# Lists sorted by size, largest last
+alias lt='ls -lhtr'						# Lists sorted by date, most recent last
+alias lc='ls -lhc'						# Lists sorted by date, most recent last, shows change time
+alias lu='ls -lhu'						# Lists sorted by date, most recent last, shows access time
 
 # - grep -
 if zstyle -T ':zmodule:core:utility:grep' color; then
@@ -115,7 +115,7 @@ fi
 # Top
 if [[ "$OSTYPE" == (darwin*|*bsd*) ]]; then
   if isCallable 'htop'; then
-		alias top='nocorrect sudo htop'			# Run 'sudo' because there are no PROC files in macOS
+	alias top='nocorrect sudo htop'			# Run 'sudo' because there are no PROC files in macOS
     alias topc="${aliases[top]:-sudo htop} --sort-key=PERCENT_CPU"	# Sort with CPU usage
     alias topm="${aliases[top]:-sudo htop} --sort-key=PERCENT_MEM"	# Sort with MEM usage
   else
