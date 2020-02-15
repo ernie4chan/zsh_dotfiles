@@ -79,10 +79,13 @@ bind-key -r > swap-window -t +1
 
 # Update default binding of 'Enter' to use copy-pipe.
 #   (macOS 10.13 seems not to need "reattach-to-user-namespace" package)
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+#bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+
 # Setup binding of 'y' to use copy
 bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
 # Turn the mouse on, but without copy mode dragging.
 set-option -g mouse on
-bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "pbcopy"
+#bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -selection clipboard -in"
