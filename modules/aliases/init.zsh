@@ -1,7 +1,7 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
 # Correct commands.
-setopt CORRECT
+unsetopt CORRECT_ALL
 
 # Disable correction.
 alias mv='nocorrect mv'

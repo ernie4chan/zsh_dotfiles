@@ -92,3 +92,5 @@ zstyle ':zmodule:load' pmodule \
 if [[ -s "$HOME/.zsh/pmodload.zsh" ]]; then
   source "$HOME/.zsh/pmodload.zsh"
 fi
+
+eval $(thefuck --alias)
