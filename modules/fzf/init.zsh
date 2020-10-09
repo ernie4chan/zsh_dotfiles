@@ -14,12 +14,15 @@ fi
 export FZF_COMPLETION_OPTS='+c -x'
 
 # Changing the layout.
-export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border"
+export FZF_DEFAULT_OPTS="--height=60% --layout=reverse --border"
+
+# Use default commands by default.
+#export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
+#	find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
+#	sed s/^..//) 2> /dev/null'
 
 # Use 'ripgrep' by default.
-export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD ||
-	find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
-	sed s/^..//) 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-ignore-vcs'
 
 # Configure fzf in command line.
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
