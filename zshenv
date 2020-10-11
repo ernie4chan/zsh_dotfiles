@@ -8,11 +8,11 @@ typeset -U cdpath fpath infopath manpath path
 
 # List directories that searches for shell functions.
 path=(
-  $HOME/.local/bin
-  /usr/local/{,s}bin
-  $GOPATH/bin
-  $GOROOT/bin
-  $path
+	$HOME/.local/bin
+	/usr/local/{,s}bin
+	$GOPATH/bin
+	$GOROOT/bin
+	$path
 )
 export PATH
 
@@ -26,14 +26,14 @@ fpath=(
 )
 
 infopath=(
-  /usr/local/share/info
-  /usr/share/info
-  $infopath
+	/usr/local/share/info
+	/usr/share/info
+	$infopath
 )
 
 manpath=(
-  /usr/local/share/man
-  /usr/share/man
+	/usr/local/share/man
+	/usr/share/man
   $manpath
 )
 

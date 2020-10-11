@@ -1,29 +1,21 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ft=tmux
 
 # Adding Powerline-status to tmux.
-#run-shell 'powerline-daemon -q'
-source /usr/lib/python3.8/site-packages/powerline/bindings/tmux/powerline.conf
+if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-config tmux setup"'
+
+# Change the default $TERM to tmux-256color / xterm-256color / screen-256color.
+set-option -g default-terminal "tmux-256color"
+
+# Enable RGB colour if running in xterm(1).
+set-option -ga terminal-overrides ",xterm*:Tc"
 
 # Set up the status line.
 set-option -g status-position top
 
-# Set the interval for the status line, already defined in Powerline with 2 seconds.
-#set-option -g status-interval 15
-
-# Enable RGB colour if running in xterm(1).
-set-option -sa terminal-overrides ",xterm*:Tc"
-
-# Change the default $TERM to tmux-256color.
-#set-option -g default-terminal "tmux-256color"
-#set-option -g default-terminal "screen-256color"
-set-option -g default-terminal "xterm-256color"
-
-# Start windows and panes at 1, not 0.
-set-option -g base-index 1
-set-window-option -g pane-base-index 1
-
 # Bells and alerts.
 set-option -g bell-action none
+
+#{{{ --- Keybindings ---------------------------------------------------------
 
 # Add the prefix key to 'C-a'.
 unbind-key C-b
@@ -32,33 +24,31 @@ set-option -g prefix C-a
 # Send the prefix to client inside window
 bind-key C-a send-prefix
 
+# Personal keybinding preferences
+unbind-key 0	# Window 0
+unbind-key l	# last-window: Move to previously selected window
+unbind-key s	# choose-tree -Zs: Select a new session for the attached client interactively
+unbind-key w	# choose-tree -Zw: Choose the current window interactively
+bind-key a last-window
+
 # Keys to toggle monitoring activity in a window, and synchronize-panes.
 bind-key B set-option monitor-activity \; display-message 'monitor-activity #{?monitor-activity,on,off}'
 bind-key Y set-option synchronize-panes \; display-message 'synchronize-panes #{?synchronize-panes,on,off}'
 
-# Re-binding some personal keys: kill-window and split equally. 
-#bind-key \ split-window -h \; select-layout even-horizontal
-bind-key a last-window
-
 # Easy config reload.
-bind-key R source-file ~/.zsh/tmuxrc \; display-message 'Config file reloaded'
+bind-key R source-file ~/.zsh/tmuxrc \; display-message 'config file reloaded...'
 
-# *** Vim-like keys ***.
-set-window-option -g mode-keys vi
-set-window-option -g status-keys vi
-
-# Vim-like pane switching.
-unbind-key l
-unbind-key s
-unbind-key w
+# Choose mode, which allows an item to be chosen from a list.
 bind-key S choose-tree -Zs
 bind-key W choose-tree -Zw
+
+# More way to splitting windows.
 bind-key s split-window -v -c "#{pane_current_path}"
 bind-key v split-window -h -c "#{pane_current_path}"
-bind-key -r h select-pane -L
-bind-key -r j select-pane -D
-bind-key -r k select-pane -U
-bind-key -r l select-pane -R
+
+# Start windows and panes at 1, not 0.
+set-option -g base-index 1
+set-window-option -g pane-base-index 1
 
 # Some extra key bindings to select higher numbered windows.
 bind-key 0 select-window -t:10
@@ -77,15 +67,43 @@ bind-key F10 select-window -t:20
 bind-key -r < swap-window -t -1
 bind-key -r > swap-window -t +1
 
-# Update default binding of 'Enter' to use copy-pipe.
-#   (macOS 10.13 seems not to need "reattach-to-user-namespace" package)
-#bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
-bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+#---------------------------------------------------------------------------}}}
 
-# Setup binding of 'y' to use copy
+#{{{ --- Vim-like keys in Tmux -----------------------------------------------
+
+# Use Vim key-bindings
+set-window-option -g mode-keys vi
+set-window-option -g status-keys vi
+
+# Vim-like pane switching. The -r flag indicates this key may repeat.
+bind-key -r h select-pane -L
+bind-key -r j select-pane -D
+bind-key -r k select-pane -U
+bind-key -r l select-pane -R
+
+# Setup binding of <y> to use copy, <Enter> has the same fn.
 bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
 # Turn the mouse on, but without copy mode dragging.
 set-option -g mouse on
-#bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "pbcopy"
-bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+if-shell '[[ $(uname -s) = Linux ]]' {
+	bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -i -sel clip > /dev/null"
+} {
+	bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "pbcopy"
+}
+
+# Update default binding of <Enter> to use copy-pipe and <P> to paste.
+#  (macOS 10.13 seems not to need "reattach-to-user-namespace" package)
+if-shell '[[ $(uname -s) = Linux ]]' {
+	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -sel clip > /dev/null"
+} {
+	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+}
+
+if-shell '[[ $(uname -s) = Linux ]]' {
+	bind-key P run "xclip -o -sel clip | tmux load-buffer - ; tmux paste-buffer"
+} {
+	bind-key P run "pbpaste | tmux load-buffer - ; tmux paste-buffer"
+}
+
+#---------------------------------------------------------------------------}}}

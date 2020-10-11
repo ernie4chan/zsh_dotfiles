@@ -1,12 +1,12 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
-#
+
 # Failsafe test purposes and debugging.
 #zsh -x 2> ${HOME}/zsh-error.log
 
 # Disable color and theme in dumb terminals.
 if [[ "$TERM" == (dumb|linux|*bsd*) ]]; then
-  zstyle ':zmodule:*:*' color 'no'
-  #zstyle ':prezto:module:prompt' theme 'off'
+	zstyle ':zmodule:*:*' color 'no'
+	#zstyle ':prezto:module:prompt' theme 'off'
 else
 	# Color output (auto set to 'no' on dumb terminals).
 	zstyle ':zmodule:*:*' color 'yes'
@@ -65,9 +65,9 @@ bindkey -v
 autoload -Uz compinit
 _comp_files=$HOME/.zcompdump(Nm-24)
 if (( $#_comp_files )); then
-  compinit -i -C
+	compinit -i -C
 else
-  compinit -i
+	compinit -i
 fi
 unset _comp_files
 
@@ -90,7 +90,7 @@ zstyle ':zmodule:load' pmodule \
 
 # Load 'pmodload'.
 if [[ -s "$HOME/.zsh/pmodload.zsh" ]]; then
-  source "$HOME/.zsh/pmodload.zsh"
+	source "$HOME/.zsh/pmodload.zsh"
 fi
 
 eval $(thefuck --alias)
