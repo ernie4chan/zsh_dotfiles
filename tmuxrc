@@ -7,7 +7,7 @@ if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-c
 set-option -g default-terminal "tmux-256color"
 
 # Enable RGB colour if running in xterm(1).
-set-option -ga terminal-overrides ",xterm*:Tc"
+set-option -as terminal-overrides ",xterm*:Tc"
 
 # Set up the status line.
 set-option -g status-position top
