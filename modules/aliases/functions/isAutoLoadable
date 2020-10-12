@@ -1,4 +1,0 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
-
-# Checks if a file can be autoloaded by trying to load it in a subshell.
-( unfunction $1 ; autoload -U +X $1 ) &> /dev/null

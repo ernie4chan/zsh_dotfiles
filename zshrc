@@ -1,10 +1,10 @@
 # vim: ft=zsh
 
-# Failsafe test purposes and debugging.
-#zsh -x 2> ${HOME}/zsh-error.log
-
-# Se base directory.
+# Set base directory.
 ZDOTDIR="$HOME/.zsh"
+
+# Failsafe test purposes and debugging.
+#zsh -x 2> "$ZDOTDIR"/zsh-error.log
 
 # Load 'zstyle'.
 [[ ! -f "$ZDOTDIR"/zstyle ]] || source "$ZDOTDIR"/zstyle

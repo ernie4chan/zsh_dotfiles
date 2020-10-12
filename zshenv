@@ -69,22 +69,3 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	export VISUAL='mvim'
 	export BROWSER='open'
 fi
-
-# Load and initialize the completion system ignoring insecure directories
-#  with a cache time of 20 hours, so it should almost always regenerate 
-#  the first time a shell is opened each day.
-autoload -Uz compinit
-_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
-# #q expands globs in conditional expressions
-if [[ $_comp_path(#qNmh-20) ]]; then
-  # -C (skip function check) implies -i (skip security check).
-  compinit -C -d "$_comp_path"
-else
-  mkdir -p "$_comp_path:h"
-  compinit -i -d "$_comp_path"
-fi
-unset _comp_path
-
-# Use smart URL pasting and escaping.
-autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
-autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
