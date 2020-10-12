@@ -1,0 +1,7 @@
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
+# Recursively delete Apple files.
+list=( .DS_Store ._.Trashes )
+for i in $list; do
+  find . -type f -name $i -ls -delete 2>/dev/null
+done
