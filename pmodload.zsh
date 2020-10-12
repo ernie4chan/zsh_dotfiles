@@ -1,6 +1,6 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ft=zsh
 
-# Borrow Prezto function.
+# Borrow Prezto pmodload function.
 function pmodload {
 	local -a pmodules
 	local -a pmodule_dirs
@@ -17,20 +17,22 @@ function pmodload {
 		fi
 	done
 
-	pmodule_dirs=("$HOME/.zsh/modules" "$user_pmodule_dirs[@]")
+	pmodule_dirs=("$ZDOTDIR/modules" "$ZDOTDIR/contrib" "$user_pmodule_dirs[@]")
 
 	# $argv is overridden in the anonymous function.
 	pmodules=("$argv[@]")
 
-	# Load Prezto modules.
+	# Load pmodules.
 	for pmodule in "$pmodules[@]"; do
 		if zstyle -t ":zmodule:$pmodule" loaded 'yes' 'no'; then
 			continue
 		else
 			locations=(${pmodule_dirs:+${^pmodule_dirs}/$pmodule(-/FN)})
 			if (( ${#locations} > 1 )); then
-				print "$0: conflicting module locations: $locations"
-				continue
+				if ! zstyle -t ':zmodule:load' pmodule-allow-overrides 'yes'; then
+					print "$0: conflicting module locations: $locations"
+					continue
+				fi
 			elif (( ${#locations} < 1 )); then
 				print "$0: no such module: $pmodule"
 				continue
@@ -40,7 +42,7 @@ function pmodload {
 			pmodule_location=${locations[1]}
 
 			# Add functions to $fpath.
-			fpath=(${pmodule_location}/functions(/FN) $fpath)
+			fpath=(${pmodule_location}/functions(-/FN) $fpath)
 
 			function {
 				local pfunction
@@ -48,7 +50,7 @@ function pmodload {
 				# Extended globbing is needed for listing autoloadable function directories.
 				setopt LOCAL_OPTIONS EXTENDED_GLOB
 
-				# Load Prezto functions.
+				# Load functions.
 				for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
 					autoload -Uz "$pfunction"
 				done
@@ -84,6 +86,12 @@ function pmodload {
 		fi
 	done
 }
+
+# This finds the directory is installed to so plugin managers don't need
+# to rely on dirty hacks to force prezto into a directory. Additionally, it
+# needs to be done here because inside the pmodload function ${0:h} evaluates to
+# the current directory of the shell rather than the prezto dir.
+ZDOTDIR=${0:h}
 
 # Load Zsh modules.
 zstyle -a ':zmodule:load' zmodule 'zmodules'

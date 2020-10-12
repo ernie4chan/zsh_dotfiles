@@ -3,12 +3,8 @@
 #
 # Provides for the interactive use of GNU utilities on BSD systems.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 # Get the prefix or use the default.
-#zstyle -s ':prezto:module:gnu-utility' prefix '_gnu_utility_p' || _gnu_utility_p='g'
 zstyle -s ':zmodule:gnu-utility' prefix '_gnu_utility_p' || _gnu_utility_p='g'
 
 # Return if requirements are not found.
@@ -59,3 +55,5 @@ for _gnu_utility_cmd in "${_gnu_utility_cmds[@]}"; do
     "
   fi
 done
+
+unset _gnu_utility_{p,cmds,cmd,pcmd}

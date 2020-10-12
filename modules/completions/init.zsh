@@ -6,7 +6,7 @@
 
 # Return if requirements are not found.
 if [[ "$TERM" == 'dumb' ]]; then
-  return 1
+	return 1
 fi
 
 # Add zsh-completions to $fpath.
@@ -23,21 +23,22 @@ setopt PATH_DIRS           # Perform path search even on command names with slas
 unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor
 unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry
 
+
 # ------
 # Styles
 # ------
 
 # Use caching to make completion for commands such as dpkg and apt usable.
 zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path ${HOME}/.zsh/zcompcache
+zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zcompcache"
 
 # Case-insensitive (all), partial-word, and then substring completion.
 if zstyle -t ':zmodule:completion:*' case-sensitive; then
-  zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  setopt CASE_GLOB
+	zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+	setopt CASE_GLOB
 else
-  zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  unsetopt CASE_GLOB
+	zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+	unsetopt CASE_GLOB
 fi
 
 # Group matches and describe.
@@ -90,20 +91,20 @@ zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-va
 zstyle -a ':zmodule:completion:*:hosts' etc-host-ignores '_etc_host_ignores'
 
 zstyle -e ':completion:*:hosts' hosts 'reply=(
-  ${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2> /dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
-  ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2> /dev/null))"}%%(\#${_etc_host_ignores:+|${(j:|:)~_etc_host_ignores}})*}
-  ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2> /dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+	${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2> /dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
+	${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2> /dev/null))"}%%(\#${_etc_host_ignores:+|${(j:|:)~_etc_host_ignores}})*}
+	${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2> /dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
 )'
 
 # Don't complete uninteresting users...
 zstyle ':completion:*:*:*:users' ignored-patterns \
-  adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
-  dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
-  hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
-  mailman mailnull mldonkey mysql nagios \
-  named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
-  operator pcap postfix postgres privoxy pulse pvm quagga radvd \
-  rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
+	adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+	dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
+	hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+	mailman mailnull mldonkey mysql nagios \
+	named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+	operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+	rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
 
 # ... unless we really want to.
 zstyle '*' single-ignored show
@@ -130,12 +131,12 @@ zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG|flac):ogg\ files *(-
 zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):ogg\ files *(-/):directories'
 
 # Mutt client.
-#if [[ -s "$HOME/.mutt/aliases" ]]; then
-#  zstyle ':completion:*:*:mutt:*' menu yes select
-#  zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
-#fi
+if [[ -s "$HOME/.mutt/aliases" ]]; then
+	zstyle ':completion:*:*:mutt:*' menu yes select
+	zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
+fi
 
-# SSH/SCP/RSYNC
+# SSH/SCP/RSYNC.
 zstyle ':completion:*:(ssh|scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
 zstyle ':completion:*:(scp|rsync):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
 zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr

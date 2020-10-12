@@ -8,12 +8,8 @@
 	autoload -Uz zrecompile
 
 # zcompile the completion cache; siginificant speedup.
-	zrecompile -pq $HOME/.zcompdump
-	[[ -f $HOME/.zcompdump.zwc.old ]] && command rm -f $HOME/.zcompdump.zwc.old
-
-# zcompile .zshrc.
-	zrecompile -pq $HOME/.zshrc
-	[[ -f $HOME/.zshrc.zwc.old ]] && command rm -f $HOME/.zshrc.zwc.old
+	zrecompile -pq $HOME/.cache/zcompdump
+	[[ -f $HOME/.cache/zcompdump.zwc.old ]] && command rm -f $HOME/.cache/zcompdump.zwc.old
 
 # zcompile enabled module autoloaded functions.
 	for dir in $HOME/.zsh/modules/${^zmodules}/functions(/FN); do

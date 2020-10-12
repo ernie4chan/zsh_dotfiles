@@ -3,9 +3,6 @@
 #
 # Provides for an easier use of GPG by setting up gpg-agent.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 # Return if requirements are not found.
 if (( ! $+commands[gpg-agent] )); then

@@ -1,6 +1,7 @@
-# vim: ft=tmux
+# vim: noet sw=2 sts=2 ts=2 ft=tmux
 
 # Adding Powerline-status to tmux.
+run-shell 'powerline-daemon -q'
 if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-config tmux setup"'
 
 # Change the default $TERM to tmux-256color / xterm-256color / screen-256color.
@@ -27,8 +28,8 @@ bind-key C-a send-prefix
 # Personal keybinding preferences
 unbind-key 0	# Window 0
 unbind-key l	# last-window: Move to previously selected window
-unbind-key s	# choose-tree -Zs: Select a new session for the attached client interactively
-unbind-key w	# choose-tree -Zw: Choose the current window interactively
+unbind-key s	# choose-tree -Zs: Select a new session for the attached client
+unbind-key w	# choose-tree -Zw: Choose the current window
 bind-key a last-window
 
 # Keys to toggle monitoring activity in a window, and synchronize-panes.
