@@ -1,0 +1,12 @@
+My Unnamed Zsh Configuration
+============================
+
+This is heavily borrowed from "Prezto - Instantly Awesome Zsh" and trim down
+to meet my requirements. I want a to know what I am using and a fast response
+SH environment. This is not finished yet so my README.md is not completed, of
+course. Still a lot of fixes are needed, but it works without many (I hope)
+errors.
+
+I have been using both macOS, which is currently broken and hard to get it
+repaired in Argentina, and Manjaro. Currently, making everythingto work in my
+very old Thinkpad T430s.
