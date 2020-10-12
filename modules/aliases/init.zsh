@@ -40,6 +40,9 @@ alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP addr
 alias ptt='ssh bbsu@ptt.cc'	# Open up BBS: PTT
 alias py3='python3'					# Redifining python3 shell
 
+# Lists the ten most used commands.
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+
 # 3rd party app aliases.
 if is-callable 'irssi'; then alias irssi="TERM=screen irssi \
 	--home=~/.local/share/irssi"; fi
@@ -52,11 +55,12 @@ if is-callable 'tmux'; then alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"; fi
 # Fix Tree with Unicode
 if is-callable 'tree'; then alias shu='tree -N'; fi
 
+# macOS aliases.
 if is-darwin; then
-	alias ofd='open .'									# Open current directory in Finder
-	alias sfd='sync_with_finder'				# Sync current directory in Terminal
-	alias inject="diskutil mount $@"		# Mount external devices
-	alias eject="diskutil unmount $@"		# Unmount external devices
+	alias ofd='open .'								# Open current directory in Finder
+	alias sfd='SyncFinder'						# Sync current directory in Terminal
+	alias inject="diskutil mount $@"	# Mount external devices
+	alias eject="diskutil unmount $@"	# Unmount external devices
 	alias ql="qlmanage -p $@ 2>/dev/null"										# View images
 	# Search files using macOS Spotlight's metadata:
 	#  w: the comparison is word-based and detects transitions from lower-case to upper-case.

@@ -32,8 +32,6 @@ bind-key C-a send-prefix
 # Personal keybinding preferences
 unbind-key 0	# Window 0
 unbind-key l	# last-window: Move to previously selected window
-unbind-key s	# choose-tree -Zs: Select a new session for the attached client
-unbind-key w	# choose-tree -Zw: Choose the current window
 bind-key a last-window
 
 # Keys to toggle monitoring activity in a window, and synchronize-panes.
@@ -43,12 +41,8 @@ bind-key Y set-option synchronize-panes \; display-message 'synchronize-panes #{
 # Easy config reload.
 bind-key R source-file ~/.zsh/tmuxrc \; display-message 'config file reloaded...'
 
-# Choose mode, which allows an item to be chosen from a list.
-bind-key S choose-tree -Zs
-bind-key W choose-tree -Zw
-
 # More way to splitting windows.
-bind-key s split-window -v -c "#{pane_current_path}"
+bind-key V split-window -v -c "#{pane_current_path}"
 bind-key v split-window -h -c "#{pane_current_path}"
 
 # Start windows and panes at 1, not 0.
@@ -101,13 +95,9 @@ if-shell '[[ $(uname -s) = Linux ]]' {
 #  (macOS 10.13 seems not to need "reattach-to-user-namespace" package)
 if-shell '[[ $(uname -s) = Linux ]]' {
 	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -sel clip > /dev/null"
-} {
-	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
-}
-
-if-shell '[[ $(uname -s) = Linux ]]' {
 	bind-key P run "xclip -o -sel clip | tmux load-buffer - ; tmux paste-buffer"
 } {
+	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 	bind-key P run "pbpaste | tmux load-buffer - ; tmux paste-buffer"
 }
 
