@@ -13,6 +13,7 @@ ZDOTDIR="$HOME/.zsh"
 zstyle ':zmodule:load' pmodule \
 	'environment' \
 	'prompt' \
+	'editor' \
 	'gnu_utility' \
 	'aliases' \
 	'fzf' \

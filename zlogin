@@ -2,22 +2,9 @@
 
 # Execute code that does not affect the current session in the background.
 {
-	local dir file
-	local function_glob='(^*test*/)#*.zsh{,-theme}(.NLk+1)'
-	setopt LOCAL_OPTIONS EXTENDED_GLOB
-	autoload -Uz zrecompile
-
-# zcompile the completion cache; siginificant speedup.
-	zrecompile -pq $HOME/.cache/zcompdump
-	[[ -f $HOME/.cache/zcompdump.zwc.old ]] && command rm -f $HOME/.cache/zcompdump.zwc.old
-
-# zcompile enabled module autoloaded functions.
-	for dir in $HOME/.zsh/modules/${^zmodules}/functions(/FN); do
-	  zrecompile -pq ${dir}.zwc $dir/^(_*|prompt_*_setup|*.*)(-.N)
-	done
-
-# zcompile enabled module scripts.
-	for file in $HOME/.zsh/modules/${^zmodules}/${~function_glob}; do
-	  zrecompile -pq $file
-	done
+	# Compile the completion dump to increase startup speed.
+	zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zcompdump"
+	if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+		zcompile "$zcompdump"
+	fi
 } &!

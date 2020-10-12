@@ -8,53 +8,60 @@ else
 	zstyle ':zmodule:*:*' color 'yes'
 fi
 
-# Allow module overrides when pmodule-dirs causes module name collisions
+# Allow module overrides when pmodule-dirs causes module name collisions.
 zstyle ':zmodule:load' pmodule-allow-overrides 'yes'
 
 # Set the Zsh modules to load (man zshmodules).
-#zstyle ':zmodule:load' zmodule 'attr' 'stat'
+zstyle ':zmodule:load' zmodule 'attr' 'stat'
 
 # Set the Zsh functions to load (man zshcontrib).
-#zstyle ':zmodule:load' zfunction 'zargs' 'zmv'
+zstyle ':zmodule:load' zfunction 'zargs' 'zmv'
 
 # GNU core utility: set the command prefix on non-GNU systems.
-#zstyle ':zmodule:gnu-utility' prefix 'g'
+if [[ "$OSTYPE" == darwin* ]]; then
+	zstyle ':zmodule:gnu-utility' prefix 'g'
+fi
 
 # SSH.
 zstyle ':zmodule:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 # Tmux.
-zstyle ':zmodule:tmux:auto-start' local 'yes'			# Launch Tmux
-zstyle ':zmodule:tmux:auto-start' remote 'yes'			# Launch Tmux in SSH connections
-zstyle ':zmodule:tmux:iterm' integrate 'no'				# Integrate iTerm2
-zstyle ':zmodule:tmux:session' name 'SESS'				# Default session name
+zstyle ':zmodule:tmux:auto-start' local 'yes'	# Launch Tmux
+zstyle ':zmodule:tmux:auto-start' remote 'yes'	# Launch Tmux in SSH connections
+zstyle ':zmodule:tmux:iterm' integrate 'no'		# Integrate iTerm2
+zstyle ':zmodule:tmux:session' name 'SESS'		# Default session name
+
+# Themes. Setting it to 'random' loads a random theme.
+#  Auto set to 'off' on dumb terminals.
+zstyle ':zmodule:prompt' theme 'powerlevel10k'
 
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':zmodule:*:*' case-sensitive 'yes'
 
-# Setting it to 'random' loads a random theme.
-# Auto set to 'off' on dumb terminals.
-zstyle ':zmodule:prompt' theme 'powerlevel10k'
+# Editor
+zstyle ':zmodule:editor' key-bindings 'vi'		# Key mapping style to 'emacs' or 'vi'
+zstyle ':zmodule:editor' dot-expansion 'no'		# Auto convert .... to ../..
+zstyle ':zmodule:editor' ps-context 'yes'		# Allow to show zsh prompt context
 
 # Completions.
 zstyle ':zmodule:completion:*:hosts' etc-host-ignores \
-	'0.0.0.0' '127.0.0.1'								# Set entries to ignore
+	'0.0.0.0' '127.0.0.1'						# Set entries to ignore
 
 # Autosuggestions.
 zstyle ':zmodule:autosuggestions:color' found 'fg=3'	# Set colors
 
 # History substring search.
 zstyle ':zmodule:history-substring-search:color' found \
-	'bg=magenta,fg=white,bold'							# Set colors
+	'bg=magenta,fg=white,bold'					# Set colors
 zstyle ':zmodule:history-substring-search:color' not-found \
-	'bg=red,fg=white,bold'								# Set colors for not found
+	'bg=red,fg=white,bold'						# Set colors for not found
 zstyle ':zmodule:history-substring-search' globbing-flags \
-	'i'													# Set search globbing flags
+	'i'											# Set search globbing flags
 
 # Syntax highlighters.
 zstyle ':zmodule:syntax-highlighting' highlighters \
 	'main' 'brackets' 'pattern' 'line' 'cursor' 'root'	# Enable main highlighters
 zstyle ':zmodule:syntax-highlighting' styles \
-	'function' 'fg=green,bold'							# Set highlighting styles
+	'function' 'fg=green,bold'					# Set highlighting styles
 zstyle ':zmodule:syntax-highlighting' pattern \
-	'rm*-rf*' 'fg=white,bold,bg=red'					# Set syntax patterns
+	'rm*-rf*' 'fg=white,bold,bg=red'			# Set syntax patterns

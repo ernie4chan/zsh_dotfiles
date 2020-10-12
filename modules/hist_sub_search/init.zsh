@@ -2,8 +2,13 @@
 
 # Integrates history-substring-search.
 
+# Load dependencies.
+pmodload 'editor'
+
 # Source module files.
-source "${0:h}/external/zsh-history-substring-search.zsh" || return 1
+if (( ! $+functions[history-substring-search-up] )); then
+	source "${0:h}/external/zsh-history-substring-search.zsh" || return 1
+fi
 
 # Search.
 zstyle -s ':zmodule:history-substring-search:color' found \
@@ -26,15 +31,21 @@ if ! zstyle -T ':zmodule:history-substring-search' color; then
   unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_{FOUND,NOT_FOUND}
 fi
 
-# Binding ^[[A/^[[B manually mean up/down works with history-substring-search both before and after zle-line-init.
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+# Key Bindings
+if [[ -n "$key_info" ]]; then
+	# Emacs
+	bindkey -M emacs "$key_info[Control]P" history-substring-search-up
+	bindkey -M emacs "$key_info[Control]N" history-substring-search-down
 
-# You might also want to bind the k and j keys for use in VI mode.
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+	# Vi
+	bindkey -M vicmd "k" history-substring-search-up
+	bindkey -M vicmd "j" history-substring-search-down
 
-# Bind up and down keys.
-zmodload -F zsh/terminfo +p:terminfo
-bindkey "${terminfo[kcuu1]}" history-substring-search-up
-bindkey "${terminfo[kcud1]}" history-substring-search-down
+	# Emacs and Vi
+	for keymap in 'emacs' 'viins'; do
+		bindkey -M "$keymap" "$key_info[Up]" history-substring-search-up
+		bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
+	done
+
+	unset keymap
+fi
