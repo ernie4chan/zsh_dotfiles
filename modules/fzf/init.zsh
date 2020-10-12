@@ -1,5 +1,9 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
+#
+# Make fuzzy file finder fun!
+#
+
 # Load dependencies.
 pmodload 'helper'
 

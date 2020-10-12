@@ -1,6 +1,8 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
+#
 # Integrates history-substring-search.
+#
 
 # Load dependencies.
 pmodload 'editor'
@@ -31,17 +33,17 @@ if ! zstyle -T ':zmodule:history-substring-search' color; then
   unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_{FOUND,NOT_FOUND}
 fi
 
-# Key Bindings
+# Key Bindings.
 if [[ -n "$key_info" ]]; then
-	# Emacs
+	# Emacs.
 	bindkey -M emacs "$key_info[Control]P" history-substring-search-up
 	bindkey -M emacs "$key_info[Control]N" history-substring-search-down
 
-	# Vi
+	# Vi.
 	bindkey -M vicmd "k" history-substring-search-up
 	bindkey -M vicmd "j" history-substring-search-down
 
-	# Emacs and Vi
+	# Emacs and Vi.
 	for keymap in 'emacs' 'viins'; do
 		bindkey -M "$keymap" "$key_info[Up]" history-substring-search-up
 		bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down

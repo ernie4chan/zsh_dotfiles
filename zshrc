@@ -1,4 +1,4 @@
-# vim: ft=zsh
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
 
 # Set base directory.
 ZDOTDIR="$HOME/.zsh"
@@ -6,7 +6,7 @@ ZDOTDIR="$HOME/.zsh"
 # Failsafe test purposes and debugging.
 #zsh -x 2> "$ZDOTDIR"/zsh-error.log
 
-# Load 'zstyle'.
+# Load 'zstyle' sheet.
 [[ ! -f "$ZDOTDIR"/zstyle ]] || source "$ZDOTDIR"/zstyle
 
 # Load all the modules you want!

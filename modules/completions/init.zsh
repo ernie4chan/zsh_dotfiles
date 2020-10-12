@@ -1,8 +1,8 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
-# -----------------------
-# Sets completion options
-# -----------------------
+#
+# Sets completion options.
+#
 
 # Return if requirements are not found.
 if [[ "$TERM" == 'dumb' ]]; then
@@ -12,7 +12,8 @@ fi
 # Add zsh-completions to $fpath.
 fpath+=(${0:h}/external/src)
 
-# Completion options.
+# {{{ --- Options ---
+
 setopt ALWAYS_TO_END       # Move cursor to the end of a completed word
 setopt AUTO_LIST           # Automatically list choices on ambiguous completion
 setopt AUTO_MENU           # Show completion menu on a successive tab press
@@ -38,13 +39,13 @@ else
 fi
 unset _comp_path
 
-# ------
-# Styles
-# ------
+# }}}
+
+# {{{ --- Styles ---
 
 # Use caching to make completion for commands such as dpkg and apt usable.
-zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zcompcache"
+zstyle ':completion:*:complete:*' use-cache on
+zstyle ':completion:*:complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zcompcache"
 
 # Case-insensitive (all), partial-word, and then substring completion.
 if zstyle -t ':zmodule:completion:*' case-sensitive; then
@@ -101,7 +102,7 @@ zstyle ':completion:*:history-words' menu yes
 zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
 
 # Populate hostname completion. But allow ignoring custom entries
-# from static */etc/hosts* which might be uninteresting.
+#  from static */etc/hosts* which might be uninteresting.
 zstyle -a ':zmodule:completion:*:hosts' etc-host-ignores '_etc_host_ignores'
 
 zstyle -e ':completion:*:hosts' hosts 'reply=(
@@ -157,3 +158,5 @@ zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hos
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
+
+# }}}

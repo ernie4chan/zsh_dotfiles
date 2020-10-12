@@ -1,11 +1,19 @@
-# vim: ft=zsh
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
+
+#
+# zstyle Spreadsheet.
+#
 
 # Disable color and theme in dumb terminals.
 if [[ "$TERM" == (dumb|linux|*bsd*) ]]; then
 	zstyle ':zmodule:*:*' color 'no'
+	zstyle ':zmodule:prompt' theme 'off'
 else
 	# Color output (auto set to 'no' on dumb terminals).
 	zstyle ':zmodule:*:*' color 'yes'
+	# Themes. Setting it to 'random' loads a random theme.
+	#  Auto set to 'off' on dumb terminals.
+	zstyle ':zmodule:prompt' theme 'powerlevel10k'
 fi
 
 # Allow module overrides when pmodule-dirs causes module name collisions.
@@ -26,42 +34,46 @@ fi
 zstyle ':zmodule:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 # Tmux.
-zstyle ':zmodule:tmux:auto-start' local 'yes'	# Launch Tmux
+zstyle ':zmodule:tmux:auto-start' local 'yes'		# Launch Tmux
 zstyle ':zmodule:tmux:auto-start' remote 'yes'	# Launch Tmux in SSH connections
-zstyle ':zmodule:tmux:iterm' integrate 'no'		# Integrate iTerm2
-zstyle ':zmodule:tmux:session' name 'SESS'		# Default session name
+zstyle ':zmodule:tmux:iterm' integrate 'no'			# Integrate iTerm2
+zstyle ':zmodule:tmux:session' name 'SESS'			# Default session name
 
-# Themes. Setting it to 'random' loads a random theme.
-#  Auto set to 'off' on dumb terminals.
-zstyle ':zmodule:prompt' theme 'powerlevel10k'
-
-# Set case-sensitivity for completion, history lookup, etc.
-zstyle ':zmodule:*:*' case-sensitive 'yes'
-
-# Editor
+# Editor Key Mapping.
 zstyle ':zmodule:editor' key-bindings 'vi'		# Key mapping style to 'emacs' or 'vi'
 zstyle ':zmodule:editor' dot-expansion 'no'		# Auto convert .... to ../..
-zstyle ':zmodule:editor' ps-context 'yes'		# Allow to show zsh prompt context
+zstyle ':zmodule:editor' ps-context 'yes'			# Allow to show zsh prompt context
+
+# Set case-sensitivity for completion, history lookup, etc.
+zstyle ':zmodule:*:*' case-sensitive 'no'
+
+# Utilities / Aliases / Functions.
+zstyle ':zmodule:utility' correct 'yes'
 
 # Completions.
-zstyle ':zmodule:completion:*:hosts' etc-host-ignores \
-	'0.0.0.0' '127.0.0.1'						# Set entries to ignore
+#  Set the entries to ignore in static */etc/hosts* for host completion.
+zstyle ':zmodule:completion:*:hosts' etc-host-ignores '0.0.0.0' '127.0.0.1'
 
-# Autosuggestions.
-zstyle ':zmodule:autosuggestions:color' found 'fg=3'	# Set colors
+# Autosuggestions. Set the query found color.
+zstyle ':zmodule:autosuggestions:color' found 'fg=3'
 
-# History substring search.
+# History Substring Search.
 zstyle ':zmodule:history-substring-search:color' found \
-	'bg=magenta,fg=white,bold'					# Set colors
+	'bg=magenta,fg=white,bold'	# Set query found colors
 zstyle ':zmodule:history-substring-search:color' not-found \
-	'bg=red,fg=white,bold'						# Set colors for not found
+	'bg=red,fg=white,bold'			# Set query not found color
 zstyle ':zmodule:history-substring-search' globbing-flags \
-	'i'											# Set search globbing flags
+	'i'													# Set search globbing flags
 
-# Syntax highlighters.
+# Syntax Highlighters.
+#  By default, only the main highlighter is enabled.
 zstyle ':zmodule:syntax-highlighting' highlighters \
-	'main' 'brackets' 'pattern' 'line' 'cursor' 'root'	# Enable main highlighters
+	'main' 'brackets' 'pattern' 'line' 'cursor' 'root'
+# Set syntax highlighting styles.
 zstyle ':zmodule:syntax-highlighting' styles \
-	'function' 'fg=green,bold'					# Set highlighting styles
+	'builtin' 'fg=green,bold' \
+	'command' 'fg=green,bold'\
+	'function' 'fg=green,bold'
+# Set syntax pattern styles.
 zstyle ':zmodule:syntax-highlighting' pattern \
-	'rm*-rf*' 'fg=white,bold,bg=red'			# Set syntax patterns
+	'rm*-rf*' 'fg=white,bold,bg=red'

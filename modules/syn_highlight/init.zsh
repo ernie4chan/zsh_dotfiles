@@ -1,10 +1,7 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
 #
-# Integrates zsh-syntax-highlighting into Prezto.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
+# Integrates zsh-syntax-highlighting.
 #
 
 # Return if requirements are not found.

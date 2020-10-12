@@ -1,5 +1,9 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
+#
+# Defines helper functions.
+#
+
 # Checks if a file can be autoloaded by trying to load it in a subshell.
 function is-autoloadable {
 	( unfunction $1 ; autoload -U +X $1 ) &> /dev/null

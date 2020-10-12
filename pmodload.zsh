@@ -1,6 +1,10 @@
-# vim: ft=zsh
+# vim: noet sw=2 sts=2 ts=2 ft=zsh
 
-# Borrow Prezto pmodload function.
+#
+# Borrow Prezto Module Loader.
+#
+
+# Loads module function.
 function pmodload {
 	local -a pmodules
 	local -a pmodule_dirs

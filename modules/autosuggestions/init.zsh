@@ -1,9 +1,13 @@
 # vim: noet sw=2 sts=2 ts=2 ft=zsh
 
+#
+# Integrates zsh-autosuggestions.
+# 
+
 # Load dependencies.
 pmodload 'editor'
 
-# Add zsh-autosuggestions.
+# Source module files.
 source ${0:h}/external/zsh-autosuggestions.zsh || return 1
 
 # Set highlight color, default 'fg=8'.

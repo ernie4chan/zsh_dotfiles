@@ -1,5 +1,9 @@
 # vim: noet sw=2 sts=2 ts=2 ft=tmux
 
+#
+# Tmux Configuration.
+#
+
 # Adding Powerline-status to tmux.
 run-shell 'powerline-daemon -q'
 if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-config tmux setup"'
@@ -16,7 +20,7 @@ set-option -g status-position top
 # Bells and alerts.
 set-option -g bell-action none
 
-#{{{ --- Keybindings ---------------------------------------------------------
+# {{{ --- Keybindings --------------------------------------------------------
 
 # Add the prefix key to 'C-a'.
 unbind-key C-b
@@ -68,9 +72,9 @@ bind-key F10 select-window -t:20
 bind-key -r < swap-window -t -1
 bind-key -r > swap-window -t +1
 
-#---------------------------------------------------------------------------}}}
+# -------------------------------------------------------------------------}}}
 
-#{{{ --- Vim-like keys in Tmux -----------------------------------------------
+# {{{ --- Vim-like keys in Tmux ----------------------------------------------
 
 # Use Vim key-bindings
 set-window-option -g mode-keys vi
@@ -107,4 +111,4 @@ if-shell '[[ $(uname -s) = Linux ]]' {
 	bind-key P run "pbpaste | tmux load-buffer - ; tmux paste-buffer"
 }
 
-#---------------------------------------------------------------------------}}}
+# -------------------------------------------------------------------------}}}
