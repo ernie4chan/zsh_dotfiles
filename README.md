@@ -1,6 +1,8 @@
 My Unnamed Zsh Configuration
 ============================
 
+Date: 20201012
+
 This is heavily borrowed from "Prezto - Instantly Awesome Zsh" and trim down
 to meet my requirements. I want a to know what I am using and a fast response
 SH environment. This is not finished yet so my README.md is not completed, of
