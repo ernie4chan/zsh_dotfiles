@@ -12,17 +12,17 @@ ZDOTDIR="$HOME/.zsh"
 # Load all the modules you want!
 zstyle ':zmodule:load' pmodule \
 	'environment' \
-	'prompt' \
-	'editor' \
 	'gnu_utility' \
 	'aliases' \
+	'editor' \
 	'fzf' \
 	'gpg' \
 	'tmux' \
-	'autosuggestions' \
 	'completions' \
 	'syn_highlight' \
-	'hist_sub_search'
+	'hist_sub_search' \
+	'autosuggestions' \
+	'prompt' 
 
 # Load 'pmodload'.
 [[ ! -f "$ZDOTDIR"/pmodload.zsh ]] || source "$ZDOTDIR"/pmodload.zsh
