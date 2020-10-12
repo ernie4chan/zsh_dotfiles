@@ -32,6 +32,10 @@ zstyle ':zmodule:tmux:session' name 'SESS'				# Default session name
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':zmodule:*:*' case-sensitive 'yes'
 
+# Setting it to 'random' loads a random theme.
+# Auto set to 'off' on dumb terminals.
+zstyle ':zmodule:prompt' theme 'powerlevel10k'
+
 # Completions.
 zstyle ':zmodule:completion:*:hosts' etc-host-ignores \
 	'0.0.0.0' '127.0.0.1'								# Set entries to ignore
