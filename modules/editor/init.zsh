@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Sets key bindings.
@@ -88,6 +88,7 @@ function bindkey-all {
 		bindkey -M "${keymap}" "$@"
 	done
 }
+
 # Exposes information about the Zsh Line Editor via the $editor_info associative
 #  array.
 function editor-info {
