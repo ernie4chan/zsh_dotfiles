@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=tmux
+# vim: ts=2 sw=2 sts=2 noet ft=tmux
 
 #
 # Tmux Configuration.
@@ -11,8 +11,8 @@ if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-c
 # Change the default $TERM to tmux-256color / xterm-256color / screen-256color.
 set-option -g default-terminal "tmux-256color"
 
-# Enable RGB colour if running in xterm(1).
-set-option -as terminal-overrides ",xterm*:Tc"
+# Enable RGB colour if running in xterm.
+set-option -sa terminal-overrides ",xterm*:Tc"
 
 # Set up the status line.
 set-option -g status-position top

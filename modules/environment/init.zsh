@@ -1,4 +1,4 @@
-# vim: noet sw=4 sts=4 ts=4 ft=zsh
+# vim: ts=4 sw=2 sts=2 noet ft=zsh
 
 # This logic comes from an old version of zim. Essentially, bracketed-paste was
 #  added as a requirement of url-quote-magic in 5.1, but in 5.1.1 bracketed

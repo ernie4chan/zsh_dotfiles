@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=4 sw=2 sts=2 noet ft=zsh
 
 #
 # Integrates history-substring-search.
@@ -15,15 +15,15 @@ fi
 # Search.
 zstyle -s ':zmodule:history-substring-search:color' found \
   'HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND' \
-    || HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+  || HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 
 zstyle -s ':zmodule:history-substring-search:color' not-found \
   'HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND' \
-    || HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
+  || HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
 
 zstyle -s ':zmodule:history-substring-search' globbing-flags \
   'HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS' \
-    || HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
+  || HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
 
 if zstyle -T ':zmodule:history-substring-search' case-sensitive; then
   HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS="${HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS//i}"
