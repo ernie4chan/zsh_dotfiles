@@ -18,10 +18,6 @@ fi
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
-# Disable globbing.
-alias find='noglob find'
-alias rsync='noglob rsync'
-
 # Directory aliases.
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias po='popd'
@@ -116,17 +112,13 @@ fi
 
 # {{{2 - ...more of ls -
 
-alias ll='ls -1'							# Lists in one column
-alias lo='ls -1A'							# Lists in one column, hidden files
-alias lk='ls -lh'							# Lists human readable sizes
-alias lr='ls -lhR'						# Lists human readable sizes, recursively
-alias la='ls -lhA'						# Lists human readable sizes, hidden files
-alias lm='ls -lhA | "$PAGER"' # Lists human readable sizes, hidden files through pager
-alias lx='ls -lhXB'						# Lists sorted by extension (GNU only)
-alias lz='ls -lhSr'						# Lists sorted by size, largest last
-alias lt='ls -lhtr'						# Lists sorted by date, most recent last
-alias lc='ls -lhc'						# Lists sorted by date, most recent last, shows change time
-alias lu='ls -lhu'						# Lists sorted by date, most recent last, shows access time
+alias ll='ls -Flh'			# List files as a long list, show size, type, human-readable
+alias la='ls -FlhA'			# List almost all files as a long list show size, type, human-readable
+alias lr='ls -FthR'			# List files recursively sorted by date, show type, human-readable
+alias lt='ls -Flht'			# List files as a long list sorted by date, show type, human-readable
+alias ld='ls -ld .*'		# List dot files as a long list
+alias lo='ls -1FSsh'		# List files showing only size and name sorted by size
+alias lz='ls -1Fcart'		# List all files sorted in reverse of create/modification time (oldest first)
 
 # }}}2
 

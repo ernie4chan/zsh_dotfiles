@@ -5,7 +5,7 @@
 #
 
 # Adding Powerline-status to tmux.
-run-shell 'powerline-daemon -q'
+#run-shell 'powerline-daemon -q'
 if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-config tmux setup"'
 
 # Change the default $TERM to tmux-256color / xterm-256color / screen-256color.

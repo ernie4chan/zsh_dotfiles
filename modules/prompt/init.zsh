@@ -14,6 +14,6 @@ else
 fi
 unset prompt_argv
 
-if [[ -f "$ZDOTDIR/p10k.zsh" ]]; then
-	source "$ZDOTDIR/p10k.zsh"
+if zstyle -T ':zmodule:prompt:p10k' running; then
+	[[ -f "$ZDOTDIR/p10k.zsh" ]] && source "$ZDOTDIR/p10k.zsh"
 fi

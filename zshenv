@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Shell environment variables, which are executed before zshrc.
@@ -11,24 +11,29 @@ typeset -gU path cdpath fpath infopath manpath
 # List directories that searches for shell functions.
 path=(
 	/usr/local/{,s}bin
-	$path)
+	$path
+)
 
 cdpath=(
 	$HOME
-	$cdpath)
+	$cdpath
+)
 
 fpath=(
-	$fpath)
+	$fpath
+)
 
 infopath=(
 	/usr/share/info
 	/usr/local/share/info
-	$infopath)
+	$infopath
+)
 
 manpath=(
 	/usr/share/man
 	/usr/local/share/man
-  $manpath)
+	$manpath
+)
 
 # Language.
 if [[ -z "$LANG" ]]; then
@@ -37,8 +42,18 @@ if [[ -z "$LANG" ]]; then
 fi
 
 # Preferred editor for local and remote sessions.
-export PAGER='less'
-export EDITOR='vim'
+if [[ -n $SSH_CONNECTION ]]; then
+	export EDITOR='vim'
+	export PAGER='less'
+else
+	export EDITOR='vim'
+	export PAGER='less'
+	if [[ "$OSTYPE" == linux* ]]; then
+		export VISUAL='gvim'
+	elif [[ "$OSTYPE" == darwin* ]]; then
+		export VISUAL='mvim'
+	fi
+fi
 
 # Less preferences.
 export LESSHISTFILE="$HOME"/.less_history
@@ -50,18 +65,23 @@ export HISTFILE="$HOME"/.zhistory
 export HISTSIZE=10000		# Maximum internal history events
 export SAVEHIST=10000		# Maximum history file size
 
+# Browser.
+if [[ -n "$DISPLAY" ]]; then
+	if [[ "$OSTYPE" == darwin* ]]; then
+		export BROWSER='open'
+	fi
+else
+	export BROWSER=lynx
+fi
+
 # Golang programming.
 if [[ -s $(which go) ]]; then
 	path=(
 		$GOPATH/bin
 		$GOROOT/bin
-		$path)
+		$path
+	)
 	export GOPATH="$HOME"/Projects/ws-Go
 	export GOROOT=/usr/local/opt/go/libexec
 fi
 
-# All macOS related.
-if [[ "$OSTYPE" == darwin* ]]; then
-	export VISUAL='mvim'
-	export BROWSER='open'
-fi

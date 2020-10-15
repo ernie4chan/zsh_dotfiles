@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Provides for an easier use of SSH by setting up ssh-agent.
@@ -13,10 +13,10 @@ fi
 _ssh_dir="$HOME/.ssh"
 
 # Set the path to the environment file if not set by another module.
-_ssh_agent_env="${_ssh_agent_env:-${XDG_CACHE_HOME:-$HOME/.cache}/ssh-agent.env}"
+_ssh_agent_env="${_ssh_agent_env:-${XDG_CACHE_HOME:-$HOME/.cache}/ssh/ssh-agent.env}"
 
 # Set the path to the persistent authentication socket.
-_ssh_agent_sock="${XDG_CACHE_HOME:-$HOME/.cache}/ssh-agent.sock"
+_ssh_agent_sock="${XDG_CACHE_HOME:-$HOME/.cache}/ssh/ssh-agent.sock"
 
 # Start ssh-agent if not started.
 if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
