@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Defines general aliases and functions.
@@ -22,19 +22,18 @@ alias rm='nocorrect rm'
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias po='popd'
 alias pu='pushd'
-alias .0='dirs -v'					# List last used directories
+alias 0='dirs -v'					# List last used directories
 for index ({1..9}) alias "${index}"="cd +${index}"; unset index
-alias .1='cd ../'						# Go back 1 level
-alias .2='cd ../../'				# Go back 2 levels
-alias .3='cd ../../../'			# Go back 3 levels
+for index ({1..9}) alias ".${index}"="cd $(printf "%0.s../" $(seq 1 ${index}))"; unset index
 
 # Customize some aliases.
-alias df='df -kh'						# More human readable
-alias du='du -kh'						# More human readable
-alias ftty='stty sane'			# Restore terminal settings when screwed up
-alias myip='echo "Current IP is $(curl -s ifconfig.co)"'	# Public facing IP address
-alias ptt='ssh bbsu@ptt.cc'	# Open up BBS: PTT
-alias py3='python3'					# Redifining python3 shell
+alias df='df -kh'					# More human readable
+alias du='du -kh'					# More human readable
+alias ftty='stty sane'		# Restore terminal settings when screwed up
+alias myip='echo "Current IP is $(curl -s ifconfig.co)"' \
+	# Public facing IP address
+alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT
+alias py3='python3'				# Redifining python3 shell
 
 # Lists the ten most used commands.
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
@@ -57,7 +56,7 @@ if is-darwin; then
 	alias sfd='SyncFinder'						# Sync current directory in Terminal
 	alias inject="diskutil mount $@"	# Mount external devices
 	alias eject="diskutil unmount $@"	# Unmount external devices
-	alias ql="qlmanage -p $@ 2>/dev/null"										# View images
+	alias ql="qlmanage -p $@ 2>/dev/null"		# View images
 	# Search files using macOS Spotlight's metadata:
 	#  w: the comparison is word-based and detects transitions from lower-case to upper-case.
 	#  c: the comparison is case insensitive.
