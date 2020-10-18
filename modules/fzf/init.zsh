@@ -1,8 +1,11 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Make fuzzy file finder fun!
 #
+
+# Return if requirements are not found.
+(( ! $+commands[fzf] )) && return 1
 
 # Load dependencies.
 pmodload 'helper'

@@ -42,17 +42,12 @@ if [[ -z "$LANG" ]]; then
 fi
 
 # Preferred editor for local and remote sessions.
-if [[ -n $SSH_CONNECTION ]]; then
-	export EDITOR='vim'
-	export PAGER='less'
-else
-	export EDITOR='vim'
-	export PAGER='less'
-	if [[ "$OSTYPE" == linux* ]]; then
-		export VISUAL='gvim'
-	elif [[ "$OSTYPE" == darwin* ]]; then
-		export VISUAL='mvim'
-	fi
+export EDITOR='vim'
+export PAGER='less'
+if [[ "$OSTYPE" == linux* ]]; then
+	export VISUAL='gvim'
+elif [[ "$OSTYPE" == darwin* ]]; then
+	export VISUAL='mvim'
 fi
 
 # Less preferences.
