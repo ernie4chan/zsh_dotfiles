@@ -4,12 +4,12 @@
 #zsh -x 2> "$ZDOTDIR"/zsh-error.log
 
 # Set base directory.
-ZDOTDIR="$HOME"/.zsh
+ZDOTDIR="$HOME/.zsh"
 
 # Load 'zstyle' sheet.
-[[ ! -f "$ZDOTDIR/zstyle" ]] || source "$ZDOTDIR/zstyle"
+[[ ! -f "$ZDOTDIR/zshstyle" ]] || source "$ZDOTDIR/zshstyle"
 
-# Load all the modules you want!
+# Load all the modules you want! Remember that order matters.
 zstyle ':zmodule:load' pmodule \
 	'environment' \
 	'gnu_utility' \

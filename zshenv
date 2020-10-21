@@ -41,42 +41,12 @@ if [[ -z "$LANG" ]]; then
 	export LANG='en_US.UTF-8'
 fi
 
-# Preferred editor for local and remote sessions.
+# Preferred editor, pager and browser. macOS does not set $BROWSER by default.
 export EDITOR='vim'
 export PAGER='less'
 if [[ "$OSTYPE" == linux* ]]; then
 	export VISUAL='gvim'
 elif [[ "$OSTYPE" == darwin* ]]; then
 	export VISUAL='mvim'
+	export BROWSER='open'
 fi
-
-# Less preferences.
-export LESSHISTFILE="$HOME"/.less_history
-export LESSEDIT='vim ?lm+%lm. %f'
-export LESS='-MRigSXw -z-4 --mouse --wheel-lines=3'
-
-# History preferences.
-export HISTFILE="$HOME"/.zhistory
-export HISTSIZE=10000		# Maximum internal history events
-export SAVEHIST=10000		# Maximum history file size
-
-# Browser.
-if [[ -n "$DISPLAY" ]]; then
-	if [[ "$OSTYPE" == darwin* ]]; then
-		export BROWSER='open'
-	fi
-else
-	export BROWSER=lynx
-fi
-
-# Golang programming.
-if [[ -s $(which go) ]]; then
-	path=(
-		$GOPATH/bin
-		$GOROOT/bin
-		$path
-	)
-	export GOPATH="$HOME"/Projects/ws-Go
-	export GOROOT=/usr/local/opt/go/libexec
-fi
-
