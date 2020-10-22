@@ -1,8 +1,16 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Borrow Prezto Module Loader.
 #
+
+# Check for the minimum supported version.
+min_zsh_version='4.3.11'
+if ! autoload -Uz is-at-least || ! is-at-least "$min_zsh_version"; then
+  printf "Old zsh detected, minimum required: %s\n" "$min_zsh_version" >&2
+  return 1
+fi
+unset min_zsh_version
 
 # Loads module function.
 function pmodload {
@@ -91,10 +99,10 @@ function pmodload {
 	done
 }
 
-# This finds the directory is installed to so plugin managers don't need
-# to rely on dirty hacks to force prezto into a directory. Additionally, it
-# needs to be done here because inside the pmodload function ${0:h} evaluates to
-# the current directory of the shell rather than the prezto dir.
+# This finds the directory is installed to so plugin managers don't need to
+#  rely on dirty hacks to force prezto into a directory. Additionally, it
+#  needs to be done here because inside the pmodload function ${0:h} evaluates
+#  to the current directory of the shell rather than the prezto dir.
 ZDOTDIR=${0:h}
 
 # Load Zsh modules.
