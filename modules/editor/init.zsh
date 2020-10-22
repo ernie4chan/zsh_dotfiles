@@ -9,15 +9,10 @@ if [[ "$TERM" == 'dumb' ]]; then
 	return 1
 fi
 
-#
-# Options
-#
-
+# Options.
 setopt BEEP		# Beep on error in line editor.
 
-#
-# Variables
-#
+# {{{ --- Variables ---
 
 # Treat these characters as part of a word.
 WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
@@ -67,17 +62,17 @@ for key in "${(k)key_info[@]}"; do
 	fi
 done
 
-#
-# External Editor
-#
+# --- }}}
+
+# {{{ --- External Editor ---
 
 # Allow command line editing in an external editor.
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-#
-# Functions
-#
+# --- }}}
+
+# {{{ --- Functions ---
 
 # Runs bindkey but for all of the keymaps. Running it with no arguments will
 #  print out the mappings for all of the keymaps.
@@ -268,9 +263,9 @@ zle -N pound-toggle
 # Reset to default key bindings.
 bindkey -d
 
-#
-# Emacs Key Bindings
-#
+# --- }}}
+
+# {{{ --- Emacs Key Bindings ---
 
 for key in "$key_info[Escape]"{B,b} "${(s: :)key_info[ControlLeft]}" \
 	"${key_info[Escape]}${key_info[Left]}"
@@ -307,10 +302,9 @@ fi
 #  being seen in iTerm.
 bindkey -M emacs "$key_info[Escape];" pound-toggle
 
+# --- }}}
 
-#
-# Vi Key Bindings
-#
+# {{{ --- Vi Key Bindings ---
 
 # Edit command in an external editor emacs style (v is used for visual mode)
 bindkey -M vicmd "$key_info[Control]X$key_info[Control]E" edit-command-line
@@ -331,9 +325,9 @@ fi
 # Toggle comment at the start of the line.
 bindkey -M vicmd "#" vi-pound-insert
 
-#
-# Emacs and Vi Key Bindings
-#
+# ---}}}
+
+# {{{ --- Emacs and Vi Key Bindings ---
 
 # Unbound keys in vicmd and viins mode will cause really odd things to happen
 #  such as the casing of all the characters you have typed changing or other
@@ -437,9 +431,9 @@ if zstyle -t ':zmodule:editor' dot-expansion; then
 	bindkey -M isearch . self-insert 2> /dev/null
 fi
 
-#
-# Layout
-#
+# --- }}}
+
+# {{{ --- Layout ---
 
 # Set the key layout.
 zstyle -s ':zmodule:editor' key-bindings 'key_bindings'
@@ -452,3 +446,5 @@ else
 fi
 
 unset key{,map,_bindings}
+
+# --- }}}

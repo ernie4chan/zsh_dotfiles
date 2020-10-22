@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Provides for the interactive use of GNU utilities on BSD systems.
@@ -13,7 +13,7 @@ if (( ! ${+commands[${_gnu_utility_p}whoami]} )); then
 fi
 
 _gnu_utility_cmds=(
-  # Coreutils
+	# Coreutils.
   '[' 'b2sum' 'base32' 'base64' 'basename' 'cat' 'chcon' 'chgrp' 'chmod' 'chown'
   'chroot' 'cksum' 'comm' 'cp' 'csplit' 'cut' 'date' 'dd' 'df'
   'dir' 'dircolors' 'dirname' 'du' 'echo' 'env' 'expand' 'expr'
@@ -28,19 +28,19 @@ _gnu_utility_cmds=(
   'tty' 'uname' 'unexpand' 'uniq' 'unlink' 'uptime' 'users' 'vdir'
   'wc' 'who' 'whoami' 'yes'
 
-  # The following utilities are not part of Coreutils but installed separately.
+	# The following utilities are not part of Coreutils but installed separately.
 
-  # Binutils
+	# Binutils.
   'addr2line' 'ar' 'c++filt' 'elfedit' 'nm' 'objcopy' 'objdump'
   'ranlib' 'readelf' 'size' 'strings' 'strip'
 
-  # Findutils
+	# Findutils.
   'find' 'locate' 'oldfind' 'updatedb' 'xargs'
 
-  # Libtool
+	# Libtool.
   'libtool' 'libtoolize'
 
-  # Miscellaneous
+	# Miscellaneous.
   'getopt' 'grep' 'indent' 'make' 'sed' 'tar' 'time' 'units' 'which'
 )
 

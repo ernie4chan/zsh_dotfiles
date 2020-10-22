@@ -23,7 +23,9 @@ if [[ ${ZSH_VERSION} != 5.1.1 && ${TERM} != "dumb" ]]; then
 	zle -N self-insert url-quote-magic
 fi
 
-# {{{ --- Less preferences ---
+# {{{ --- Less ---
+
+# Preferences.
 export LESSHISTFILE="$HOME/.less_history"
 export LESSEDIT='vim ?lm+%lm. %f'
 export LESS='-MRigSXw -z-4 --mouse --wheel-lines=3'
@@ -38,9 +40,12 @@ if zstyle -t ':zmodule:environment:termcap' color; then
 	export LESS_TERMCAP_ue=$'\E[0m'			# Ends underline.
 	export LESS_TERMCAP_us=$'\E[01;32m'		# Begins underline.
 fi
+
 # --- End --- }}}
 
-# {{{ --- History preferences ---
+# {{{ --- History ---
+
+# Preferences.
 export HISTFILE="$HOME/.zhistory"
 export HISTSIZE=100000		# Maximum history events in mem
 export SAVEHIST=10000000	# Maximum history file size
@@ -58,9 +63,11 @@ setopt HIST_SAVE_NO_DUPS	# Do not write a duplicate event to the history file.
 setopt HIST_VERIFY			# Do not execute immediately upon history expansion.
 setopt INC_APPEND_HISTORY	# Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY		# Share history between all sessions.
+
 # --- End --- }}}
 
-# {{{ --- General options ---
+# {{{ --- General Options ---
+
 # Behaviour.
 setopt COMBINING_CHARS		# Combine zero-length punctuation characters (accents) with the base character.
 setopt INTERACTIVE_COMMENTS	# Enable comments in interactive shell.
@@ -75,7 +82,7 @@ unsetopt BG_NICE			# Don't run all background jobs at a lower priority.
 unsetopt CHECK_JOBS			# Don't report on jobs when shell exit.
 unsetopt HUP				# Don't kill jobs on shell exit.
 
-# Directory options.
+# Directory.
 setopt AUTO_CD				# Auto changes to a directory without typing cd.
 setopt AUTO_PUSHD			# Push the old directory onto the stack on cd.
 setopt PUSHD_IGNORE_DUPS	# Do not store duplicates in the stack.
@@ -85,4 +92,5 @@ setopt CDABLE_VARS			# Change directory to a path stored in a variable.
 setopt MULTIOS				# Write to multiple descriptors.
 setopt EXTENDED_GLOB		# Use extended globbing syntax.
 unsetopt CLOBBER			# Do not overwrite existing files with > and >>, use >! and >>! to bypass.
+
 # --- End --- }}}
