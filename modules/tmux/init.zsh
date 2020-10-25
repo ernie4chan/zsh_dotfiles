@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 #
 # Defines tmux aliases and provides for auto launching it at start-up.
@@ -34,9 +34,6 @@ if [[ -z "$TMUX" && -z "$EMACS" && -z "$VIM" && -z "$INSIDE_EMACS" && "$TERM_PRO
 	exec tmux $_tmux_iterm_integration attach-session -d
 fi
 
-#
 # Aliases
-#
-
 alias tmuxa="tmux $_tmux_iterm_integration new-session -A"
 alias tmuxl='tmux list-sessions'

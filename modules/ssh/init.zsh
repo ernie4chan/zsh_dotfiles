@@ -43,7 +43,7 @@ if ssh-add -l 2>&1 | grep -q 'The agent has no identities'; then
 	# ssh-add has strange requirements for running SSH_ASKPASS, so we duplicate
 	# them here. Essentially, if the other requirements are met, we redirect stdin
 	# from /dev/null in order to meet the final requirement.
-	#
+
 	# From ssh-add(1):
 	# If ssh-add needs a passphrase, it will read the passphrase from the current
 	# terminal if it was run from a terminal. If ssh-add does not have a terminal

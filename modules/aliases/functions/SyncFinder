@@ -1,4 +1,4 @@
-# vim: noet sw=2 sts=2 ts=2 ft=zsh
+# vim: ts=2 sw=2 sts=2 noet ft=zsh
 
 # Change directory to the current Finder folder.
 target=`osascript -e 'tell application "Finder" to if \

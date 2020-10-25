@@ -14,7 +14,8 @@ fpath+=(${0:h}/external/src)
 
 # Load and initialize the completion system ignoring insecure directories
 #  with a cache time of 20 hours, so it should almost always regenerate
-#  the first time a shell is opened each day.
+#  the first time a shell is opened each day. 'EXTENDED_GLOB' is needed
+#  for file modification glob modifiers with compinit.
 autoload -Uz compinit
 _comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zcompcache/zcompdump"
 # #q expands globs in conditional expressions.
@@ -26,20 +27,6 @@ else
 	compinit -i -d "$_comp_path"
 fi
 unset _comp_path
-
-# {{{ --- Options ---
-
-setopt ALWAYS_TO_END       # Move cursor to the end of a completed word
-setopt AUTO_LIST           # Automatically list choices on ambiguous completion
-setopt AUTO_MENU           # Show completion menu on a successive tab press
-setopt AUTO_PARAM_SLASH    # If completed parameter is a directory, add a trailing slash
-setopt COMPLETE_IN_WORD    # Complete from both ends of a word
-setopt EXTENDED_GLOB       # Needed for file modification glob modifiers with compinit
-setopt PATH_DIRS           # Perform path search even on command names with slashes
-unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor
-unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry
-
-# }}}
 
 # {{{ --- Styles ---
 
