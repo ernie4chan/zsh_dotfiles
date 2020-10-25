@@ -4,11 +4,11 @@
 # The Fuck.
 #
 
-if [[ -z $commands[thefuck] ]]; then
-	echo 'thefuck is not installed, you should "pip install thefuck" or "brew install thefuck" first.'
-	echo 'See https://github.com/nvbn/thefuck#installation'
-	return 1
-fi
+(( ! $+commands[thefuck] )) && { \
+	echo 'thefuck is not installed'; \
+	echo 'See https://github.com/nvbn/thefuck#installation'; \
+	return 1; \
+}
 
 # Register alias
 eval "$(thefuck --alias)"
@@ -24,7 +24,5 @@ zle -N fuck-command-line
 # Defined shortcut keys: [Esc] [Esc]
 for keymap in 'emacs' 'viins' 'vicmd'; do
 	bindkey -M "$keymap" '\e\e' fuck-command-line
-
 unset keymap
 done
-
