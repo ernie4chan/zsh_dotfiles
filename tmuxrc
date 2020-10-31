@@ -42,25 +42,12 @@ bind-key Y set-option synchronize-panes \; display-message 'synchronize-panes #{
 bind-key R source-file ~/.zsh/tmuxrc \; display-message 'config file reloaded...'
 
 # More way to splitting windows.
-bind-key V split-window -v -c "#{pane_current_path}"
 bind-key v split-window -h -c "#{pane_current_path}"
+bind-key V split-window -v -c "#{pane_current_path}"
 
 # Start windows and panes at 1, not 0.
 set-option -g base-index 1
 set-window-option -g pane-base-index 1
-
-# Some extra key bindings to select higher numbered windows.
-bind-key 0 select-window -t:10
-bind-key F1 select-window -t:11
-bind-key F2 select-window -t:12
-bind-key F3 select-window -t:13
-bind-key F4 select-window -t:14
-bind-key F5 select-window -t:15
-bind-key F6 select-window -t:16
-bind-key F7 select-window -t:17
-bind-key F8 select-window -t:18
-bind-key F9 select-window -t:19
-bind-key F10 select-window -t:20
 
 # Swap window to the left or right. Use 'Prefix + {}' for panes.
 bind-key -r < swap-window -t -1
