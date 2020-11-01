@@ -61,31 +61,52 @@ bind-key -r > swap-window -t +1
 set-window-option -g mode-keys vi
 set-window-option -g status-keys vi
 
-# Vim-like pane switching. The -r flag indicates this key may repeat.
-bind-key -r h select-pane -L
-bind-key -r j select-pane -D
-bind-key -r k select-pane -U
-bind-key -r l select-pane -R
-
 # Setup binding of <y> to use copy, <Enter> has the same fn.
 bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
 # Turn the mouse on, but without copy mode dragging.
 set-option -g mouse on
 if-shell '[[ $(uname -s) = Linux ]]' {
-	bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -i -sel clip > /dev/null"
+	bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel \
+		"xclip -i -sel clip > /dev/null"
 } {
-	bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "pbcopy"
+	bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel \
+		"pbcopy"
 }
 
 # Update default binding of <Enter> to use copy-pipe and <P> to paste.
 #  (macOS 10.13 seems not to need "reattach-to-user-namespace" package)
 if-shell '[[ $(uname -s) = Linux ]]' {
-	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "xclip -i -sel clip > /dev/null"
+	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel \
+		"xclip -i -sel clip > /dev/null"
 	bind-key P run "xclip -o -sel clip | tmux load-buffer - ; tmux paste-buffer"
 } {
 	bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
 	bind-key P run "pbpaste | tmux load-buffer - ; tmux paste-buffer"
 }
+
+# Smart pane switching with awareness of Vim splits.
+#  See: https://github.com/christoomey/vim-tmux-navigator
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
+bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
+bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
+bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
+tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
+    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
+if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
+    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+
+# Left, down, up, right and previous split.
+bind-key -T copy-mode-vi 'C-h' select-pane -L
+bind-key -T copy-mode-vi 'C-j' select-pane -D
+bind-key -T copy-mode-vi 'C-k' select-pane -U
+bind-key -T copy-mode-vi 'C-l' select-pane -R
+bind-key -T copy-mode-vi 'C-p' select-pane -l
+
+# Restoring Clear Screen (C-l).
+bind C-l send-keys 'C-l'
 
 # -------------------------------------------------------------------------}}}
