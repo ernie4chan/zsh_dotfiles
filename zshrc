@@ -18,6 +18,7 @@ zstyle ':zmodule:load' pmodule \
 	'fzf' \
 	'gpg' \
 	'tmux' \
+	'vim-tmux-navigator' \
 	'thefuck' \
 	'completions' \
 	'syn_highlight' \
