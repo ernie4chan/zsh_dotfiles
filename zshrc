@@ -26,5 +26,6 @@ zstyle ':zmodule:load' pmodule \
 	'autosuggestions' \
 	'prompt' 
 
+
 # Load 'pmodload'.
 [[ ! -f "$ZDOTDIR/pmodload.zsh" ]] || source "$ZDOTDIR/pmodload.zsh"
