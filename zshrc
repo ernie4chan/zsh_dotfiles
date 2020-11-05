@@ -24,7 +24,7 @@ zstyle ':zmodule:load' pmodule \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions' \
-	'prompt' 
+	'prompt'
 
 # Load 'pmodload'.
 [[ ! -f "$ZDOTDIR/pmodload.zsh" ]] || source "$ZDOTDIR/pmodload.zsh"
