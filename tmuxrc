@@ -26,13 +26,16 @@ set-option -g bell-action none
 unbind-key C-b
 set-option -g prefix C-a
 
-# Send the prefix to client inside window
+# Ensure that we can send <C-a> to other apps.
 bind-key C-a send-prefix
 
-# Personal keybinding preferences
-unbind-key 0	# Window 0
-unbind-key l	# last-window: Move to previously selected window
-bind-key a last-window
+# Start windows and panes at 1, not 0.
+set-option -g base-index 1
+set-window-option -g pane-base-index 1
+
+# Personal keybinding preferences.
+bind-key 0 last-window	# Re-assign select Window-0
+unbind-key l						# last-window (reserve for Vim usage, if any)
 
 # Keys to toggle monitoring activity in a window, and synchronize-panes.
 bind-key B set-option monitor-activity \; display-message 'monitor-activity #{?monitor-activity,on,off}'
@@ -44,10 +47,6 @@ bind-key R source-file ~/.zsh/tmuxrc \; display-message 'config file reloaded...
 # More way to splitting windows.
 bind-key v split-window -h -c "#{pane_current_path}"
 bind-key V split-window -v -c "#{pane_current_path}"
-
-# Start windows and panes at 1, not 0.
-set-option -g base-index 1
-set-window-option -g pane-base-index 1
 
 # Swap window to the left or right. Use 'Prefix + {}' for panes.
 bind-key -r < swap-window -t -1
