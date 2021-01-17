@@ -27,11 +27,11 @@ for index ({1..9}) alias "${index}"="cd +${index}"; unset index
 for index ({1..9}) alias ".${index}"="cd $(printf "%0.s../" $(seq 1 ${index}))"; unset index
 
 # Customize some aliases.
+alias tp='trash-put'
 alias df='df -kh'					# More human readable
 alias du='du -kh'					# More human readable
 alias ftty='stty sane'		# Restore terminal settings when screwed up
-alias myip='echo "Current IP is $(curl -s ifconfig.co)"' \
-	# Public facing IP address
+alias myip='echo "Current IP is $(curl -s ifconfig.co)"' # Published IP add.
 alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT
 alias py3='python3'				# Redifining python3 shell
 
@@ -61,6 +61,21 @@ if is-darwin; then
 	#  w: the comparison is word-based and detects transitions from lower-case to upper-case.
 	#  c: the comparison is case insensitive.
 	locate () { mdfind "kMDItemDisplayName == '$@'wc"; }
+
+	# Change directory to the current Finder folder.
+	SyncFinder () {
+		target=`osascript -e 'tell application "Finder" to if \
+		(count of Finder windows) > 0 then get POSIX path of \
+		(target of front Finder window as text)'`;
+		if [ "$target" != "" ]; then cd "$target"; pwd; \
+		else echo 'No Finder window found' >&2; fi;
+		}
+
+	# Recursively delete Apple files.
+	clearmacOS () {
+		list=( .DS_Store ._.Trashes );
+		for i in $list; do find . -type f -name $i -ls -delete 2>/dev/null; done;
+		}
 fi
 
 # }}}1
