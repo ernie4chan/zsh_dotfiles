@@ -43,7 +43,7 @@ if is-callable 'irssi'; then alias irssi="TERM=screen irssi \
 	--home=~/.local/share/irssi"; fi
 if is-callable 'lynx'; then alias lynx="lynx -cfg=$HOME/.config/lynx/lynxrc"; fi
 if is-callable 'mc'; then alias mc="SHELL=/bin/bash \
-	LANG=en_US.UTF-8 source /usr/lib/mc/mc-wrapper.sh"; fi
+	LANG=en_US.UTF-8 source /usr/lib/mc/mc-wrapper.sh -x"; fi
 if is-callable 'mutt'; then alias mutt="mutt -F ~/.local/share/mutt/muttrc"; fi
 # Load tmux with specific config file
 if is-callable 'tmux'; then alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"; fi
