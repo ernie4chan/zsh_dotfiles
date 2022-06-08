@@ -1,0 +1,100 @@
+# vim: ts=4 ft=tmux
+#
+# Tmux Configuration by ernie4chan.
+# Update: 2021/12/04.
+#
+
+# {{{ --- Default Options. ---
+
+# Change the default $TERM to tmux-256color / xterm-256color / screen-256color.
+set-option -g default-terminal "xterm-256color"
+
+# Enable RGB colour, if running in xterm(1).
+set-option -ga terminal-overrides ",*256color:Tc"
+
+# Adding Powerline-status to tmux.
+run-shell 'powerline-daemon -q'
+if-shell 'env "$POWERLINE_CONFIG_COMMAND" tmux setup' '' 'run-shell "powerline-config tmux setup"'
+
+# Set up the status line.
+set-option -g status-position top
+#set-option -g status-style fg=cyan,bg=black
+
+# Bells and alerts.
+set-option -g bell-action none
+
+# Start windows and panes at 1, not 0.
+set-option -g base-index 1
+set-window-option -g pane-base-index 1
+
+# }}}
+
+# {{{ --- Key Bindings. ---
+
+# Add the prefix key to 'C-a'.
+unbind-key C-b
+set-option -g prefix C-a
+
+# Ensure that we can send <C-a> to other apps.
+bind-key C-a send-prefix
+
+# Personal keybinding preferences.
+unbind-key C-Up
+unbind-key C-Down
+unbind-key C-Left
+unbind-key C-Right
+unbind-key M-Up
+unbind-key M-Down
+unbind-key M-Left
+unbind-key M-Right
+unbind-key S-Up
+unbind-key S-Down
+unbind-key S-Left
+unbind-key S-Right
+unbind-key l
+unbind-key L
+bind-key -T prefix \`	last-window			# 'l': Select 'last-window'.
+bind-key -T prefix S	switch-client -l	# 'L': Switch to last session.
+
+# macOS keys conflict with resizing.
+bind-key -r -T prefix k		select-pane -U
+bind-key -r -T prefix j		select-pane -D
+bind-key -r -T prefix h		select-pane -L
+bind-key -r -T prefix l		select-pane -R
+bind-key -r -T prefix C-k	resize-pane -U
+bind-key -r -T prefix C-j	resize-pane -D
+bind-key -r -T prefix C-h	resize-pane -L
+bind-key -r -T prefix C-l	resize-pane -R
+bind-key -r -T prefix M-k	resize-pane -U 5
+bind-key -r -T prefix M-j	resize-pane -D 5
+bind-key -r -T prefix M-h	resize-pane -L 5
+bind-key -r -T prefix M-l	resize-pane -R 5
+
+# Keys to toggle monitoring activity in a window, and synchronize-panes.
+bind-key -T prefix U set-option monitor-activity \; display-message \
+	'monitor-activity #{?monitor-activity,on,off}'
+bind-key -T prefix T set-option synchronize-panes \; display-message \
+	'synchronize-panes #{?synchronize-panes,on,off}'
+bind-key -T prefix R source-file ~/.zsh/tmuxrc \; display-message \
+	'reload-config'
+
+# }}}
+
+# {{{ --- Vim-like Keys in Tmux. ---
+
+# Turn the mouse on, but without copy mode dragging.
+set-option -g mouse on
+
+# Use Vim key-bindings.
+set-window-option -g mode-keys vi
+set-window-option -g status-keys vi
+
+# Use <Space> or <v> to begin highlight, <Enter> or <y> to enable copy function, and
+#  <P> to paste. Caveats: pbcopy and pbpaste have been redefined in 'tmux/aliases'.
+#bind-key -T copy-mode-vi v send-keys -X begin-selection
+#bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T preifx P run "pbpaste | tmux load-buffer - ; tmux paste-buffer"
+
+# }}}

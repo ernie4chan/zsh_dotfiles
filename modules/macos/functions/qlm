@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# Previews files in Quick Look.
+#
+
+#function ql {
+if (( $# > 0 )); then
+	qlmanage -p "$@" &> /dev/null
+fi
+#}

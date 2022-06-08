@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Tell me the weather!
+#
+
+#function Sky {
+	curl wttr.in/"$*"
+#}

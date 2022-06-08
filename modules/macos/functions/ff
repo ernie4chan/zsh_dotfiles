@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Using Spotlight metadata to search.
+#
+
+#function ff {
+if [ "$2" != "" ]; then
+	mdfind "kMDItemDisplayName == '*$1*'cd" -onlyin "$2"
+else
+	mdfind "kMDItemDisplayName == '*$1*'cd"
+fi
+#}

@@ -1,0 +1,9 @@
+.iterm2/
+.zcompcache/
+.zsh_session/
+prezto/
+
+.iterm2_shell_integration*
+.zsh_history
+
+*.zwc
