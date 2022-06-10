@@ -4,17 +4,11 @@
 #
 
 # Ensure arrays do not contain duplicates.
-typeset -U path cdpath fpath infopath mailpath manpath
+typeset -U cdpath fpath infopath mailpath manpath path
 
 # List directories that searches for shell functions.
-#
-path=(
-	~/Library/Python/3.10/bin
-	/usr/local/{,s}bin
-	$path
-)
-
 cdpath=(
+	$HOME/Projects
 	$cdpath
 )
 
@@ -30,6 +24,12 @@ infopath=(
 manpath=(
 	/usr/{local/,}share/man
 	$manpath
+)
+
+path=(
+	~/Library/Python/3.10/bin
+	/usr/local/{,s}bin
+	$path
 )
 
 # Shell language.

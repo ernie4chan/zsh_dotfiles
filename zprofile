@@ -19,6 +19,19 @@ fi
 
 # }}}
 
+# {{{ --- Editor. ---
+
+# Key mapping style to 'emacs' or 'vi'.
+zstyle ':e4czmod:module:editor' key-bindings 'vi'
+
+# Auto convert .... to ../..
+zstyle ':e4czmod:module:editor' dot-expansion 'no'
+
+# Allow to show ZSH prompt context.
+zstyle ':e4czmod:module:editor' ps-context 'no'
+
+# }}}
+
 # {{{ --- Utility. ---
 
 # Set the working directory prompt display length: 'short', 'long', and 'full'.
@@ -62,19 +75,6 @@ zstyle ':e4czmod:module:aliases:grep' color 'yes'
 
 # Set the command prefix on non-GNU systems.
 #zstyle ':e4czmod:module:gnu-utility' prefix 'g'
-
-# }}}
-
-# {{{ --- Editor. ---
-
-# Key mapping style to 'emacs' or 'vi'.
-zstyle ':e4czmod:module:editor' key-bindings 'vi'
-
-# Auto convert .... to ../..
-zstyle ':e4czmod:module:editor' dot-expansion 'no'
-
-# Allow to show ZSH prompt context.
-zstyle ':e4czmod:module:editor' ps-context 'no'
 
 # }}}
 

@@ -1,7 +1,11 @@
 # vim: ts=4 ft=zsh
+
 #
 # Provides for trapping UNIX signals and calling callback functions when a trap
 # is triggered.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
 # Adds a function name to a list to be called when a trap is triggered.

@@ -8,12 +8,11 @@
 
 # Load modules! Remember that the order matters.
 zstyle ':e4czmod:load' pmodule \
-	'environment' \
 	'helper' \
+	'environment' \
 	'tmux' \
 	'prompt' \
 	'utility' \
-	'editor' \
 	'fzf' \
 	'gpg' \
 	'macos' \
@@ -22,6 +21,7 @@ zstyle ':e4czmod:load' pmodule \
 	'hist_sub_search' \
 	'autosuggestions'
 
+#'editor' goes before 'fzf'.
 #'gnu_utility' goes before 'utility'.
 #'thefuck' goes before 'completions'.
 

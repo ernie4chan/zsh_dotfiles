@@ -8,9 +8,6 @@ if [[ "$TERM" == 'dumb' ]]; then
 	return 1
 fi
 
-# Beep on error in line editor.
-setopt BEEP
-
 # {{{ --- Variables. ---
 
 # Treat these characters as part of a word.
@@ -314,6 +311,9 @@ bindkey -M vicmd "u" undo
 bindkey -M viins "$key_info[Control]_" undo
 bindkey -M vicmd "$key_info[Control]R" redo
 
+# Toggle comment at the start of the line.
+bindkey -M vicmd "#" vi-pound-insert
+
 if (( $+widgets[history-incremental-pattern-search-backward] )); then
 	bindkey -M vicmd "?" history-incremental-pattern-search-backward
 	bindkey -M vicmd "/" history-incremental-pattern-search-forward
@@ -321,9 +321,6 @@ else
 	bindkey -M vicmd "?" history-incremental-search-backward
 	bindkey -M vicmd "/" history-incremental-search-forward
 fi
-
-# Toggle comment at the start of the line.
-bindkey -M vicmd "#" vi-pound-insert
 
 # }}}
 
@@ -367,7 +364,7 @@ for keymap in 'emacs' 'viins' 'vicmd'; do
 done
 
 # Keybinds for all vi keymaps.
-for keymap in viins vicmd; do
+for keymap in 'viins' 'vicmd'; do
 	# Ctrl + Left and Ctrl + Right bindings to forward/backward word.
 	for key in "${(s: :)key_info[ControlLeft]}"
 		bindkey -M "$keymap" "$key" vi-backward-word
@@ -425,7 +422,9 @@ done
 
 # Delete key deletes character in vimcmd cmd mode instead of weird
 #  default functionality.
-bindkey -M vicmd "$key_info[Delete]" delete-char
+for keymap in 'vicmd'; do
+	bindkey -M vicmd "$key_info[Delete]" delete-char
+done
 
 # Do not expand .... to ../.. during incremental search.
 if zstyle -t ':e4czmod:module:editor' dot-expansion; then

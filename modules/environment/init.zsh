@@ -1,7 +1,13 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# File: ./environment/init.zsh
 #
-# Overall zsh environment option and not populate conditions in 'zhsenv'.
+# Defining zsh environment variables
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
+
+# {{{ --- Function: Smart URLs. ---
 
 # This logic comes from an old version of zim. Essentially, bracketed-paste was
 #  added as a requirement of url-quote-magic in 5.1, but in 5.1.1 bracketed
@@ -22,10 +28,18 @@ if [[ ${ZSH_VERSION} != 5.1.1 && ${TERM} != "dumb" ]]; then
 	zle -N self-insert url-quote-magic
 fi
 
+# }}}
+
 # {{{ --- Shell Behavior. ---
 
 # Behaviour.
-setopt COMBINING_CHARS	# Combine zero-length punctuation characters (accents) with the base character.
+if ! is-darwin; then
+# Combine zero-length punctuation characters (accents) with the base character.
+	setopt COMBINING_CHARS
+# Beep on error.
+	setopt BEEP
+fi
+
 setopt INTERACTIVE_COMMENTS	# Enable comments in interactive shell.
 setopt RC_QUOTES		# Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'.
 unsetopt MAIL_WARNING	# Don't print a warning message if a mail file has been accessed.
@@ -41,10 +55,10 @@ unsetopt HUP			# Don't kill jobs on shell exit.
 # Directory.
 setopt AUTO_CD			# Auto changes to a directory without typing cd.
 setopt AUTO_PUSHD		# Push the old directory onto the stack on cd.
-#setopt CDABLE_VARS		# Change directory to a path stored in a variable.
 setopt PUSHD_IGNORE_DUPS	# Do not store duplicates in the stack.
 setopt PUSHD_SILENT		# Do not print the directory stack after pushd or popd.
 setopt PUSHD_TO_HOME	# Push to home directory when no argument is given.
+unsetopt CDABLE_VARS	# Do not Change directory to a path stored in a variable.
 
 # I/O.
 setopt EXTENDED_GLOB	# Use extended globbing syntax and needed with 'compinit'.
@@ -63,12 +77,16 @@ unsetopt MENU_COMPLETE	# Do not autoselect the first completion entry.
 
 # }}}
 
-# {{{ --- ZSH History ---
+# {{{ --- zsh History. ---
 
 # Preferences.
-export HISTFILE="$HOME/.zsh_history"
-export HISTSIZE=10000		# Maximum history events in mem.
-export SAVEHIST=20000	# Maximum history file size.
+
+if ! is-darwin; then
+	export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+fi
+
+export HISTSIZE=10000	# Maximum history events in mem.
+export SAVEHIST=50000	# Maximum history file size.
 
 # History options.
 setopt BANG_HIST			# Treat the '!' character specially during expansion.
@@ -91,14 +109,17 @@ setopt SHARE_HISTORY		# Share history between all sessions.
 # Preferred apps.
 export EDITOR='vim'
 export PAGER='less'
-if [[ "$OSTYPE" == darwin* ]]; then
-	export VISUAL='mvim'
-	export BROWSER='open'
-elif [[ "$OSTYPE" == linux* ]]; then
+
+if is-linux; then
 	export VISUAL='gvim'
-	if (( $+commands[xdg-open] )); then
-		export BROWSER='xdg-open'
-	fi
+elif is-darwin; then
+	export VISUAL='mvim'
+fi
+
+if (( $+commands[xdg-open] )); then
+	export BROWSER='xdg-open'
+elif (( $+commands[open] )); then
+	export BROWSER='open'
 fi
 
 # Less Preferences.
