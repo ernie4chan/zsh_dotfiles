@@ -33,7 +33,7 @@ manpath=(
 )
 
 path=(
-	~/Library/Python/3.10/bin
+	$HOME/Library/Python/3.10/bin
 	/usr/local/{,s}bin
 	$path
 )
