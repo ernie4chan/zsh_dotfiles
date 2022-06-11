@@ -1,18 +1,39 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=2 ft=zsh
+#
+# File: .zshenv
 #
 # Integrates Completions.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Return if requirements are not found.
-if [[ "$TERM" == 'dumb' ]]; then
-	return 1
-fi
+[[ "$TERM" == 'dumb' ]] && return 1
 
-# Add ZSH Completions to $fpath.
+# Add zsh-completions to $fpath.
 fpath+=(${0:h}/external/src)
 
 # Standard style used by default for 'list-colors'
 LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
+
+# {{{ --- Homebrew completion. ---
+
+# Add completion for keg-only brewed curl on macOS when available.
+if (( $+commands[brew] )); then
+  brew_prefix=${HOMEBREW_PREFIX:-${HOMEBREW_REPOSITORY:-$commands[brew]:A:h:h}}
+  # $HOMEBREW_PREFIX defaults to $HOMEBREW_REPOSITORY but is explicitly set to
+  # /usr/local when $HOMEBREW_REPOSITORY is /usr/local/Homebrew.
+  # https://github.com/Homebrew/brew/blob/2a850e02d8f2dedcad7164c2f4b95d340a7200bb/bin/brew#L66-L69
+  [[ $brew_prefix == '/usr/local/Homebrew' ]] && brew_prefix=$brew_prefix:h
+  fpath=($brew_prefix/opt/curl/share/zsh/site-functions(/N) $fpath)
+  unset brew_prefix
+fi
+
+# }}}
+
+# {{{ --- Initialize the completion system. ---
 
 # Load and initialize the completion system ignoring insecure directories
 #  with a cache time of 20 hours, so it should almost always regenerate
@@ -31,7 +52,9 @@ else
 fi
 unset _comp_path
 
-# {{{ --- ZSH Style Table for Completions. ---
+# }}}
+
+# {{{ --- Zsh Style Table for Completions. ---
 
 # Default colors.
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}

@@ -4,8 +4,10 @@
 #
 
 #function clear-win-dir-metadata {
+
 find "${@:-$PWD}" \( \
 	-type f -name 'desktop.ini' -o \
 	-type d -name 'Thumbs.db' \
 \) -print0 | xargs -0 rm -rf
+
 #}

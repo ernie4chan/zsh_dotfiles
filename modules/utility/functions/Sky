@@ -4,5 +4,7 @@
 #
 
 #function Sky {
-	curl wttr.in/"$*"
+
+curl wttr.in/"$*"
+
 #}
