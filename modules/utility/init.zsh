@@ -5,7 +5,7 @@
 
 # Correct commands.
 if zstyle -T ':e4czmod:module:aliases' correct; then
-	unsetopt CORRECT_ALL
+	setopt CORRECT
 fi
 
 # Load 'run-help' function.
@@ -14,12 +14,19 @@ autoload -Uz run-help-{ip,openssl,sudo}
 # {{{ --- Aliases. ---
 
 # Disable correction.
+alias ack='nocorrect ack'
+alias cd='nocorrect cd'
 alias cp='nocorrect cp'
+alias ebuild='nocorrect ebuild'
+alias gcc='nocorrect gcc'
+alias gist='nocorrect gist'
 alias grep='nocorrect grep'
+alias heroku='nocorrect heroku'
 alias ln='nocorrect ln'
 alias man='nocorrect man'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
+alias mysql='nocorrect mysql'
 alias rm='nocorrect rm'
 
 # Disable globbing.
@@ -34,17 +41,19 @@ alias scp='noglob scp'
 alias sftp='noglob sftp'
 
 # Surfing directory on steroids.
+alias diffu="diff --unified"
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias po='popd'
 alias pu='pushd'
+alias ga='alias | grep -i'
 alias 0='dirs -v'				# List last used directories.
+
 for index in {1..9}; do
 	alias "${index}"="cd +${index}"
 	alias ".${index}"="cd $(printf "%0.s../" $(seq 1 ${index}))"
 done
 unset index
 
-# Customizing aliases.
 alias fixtty='stty sane'		# Restore terminal settings when screwed up.
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"' # Published IP add.
 alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT.
@@ -54,6 +63,10 @@ alias py3='python3'				# Redifining python3 shell.
 alias key-stats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 # Safe ops. Ask the user before doing anything destructive.
+alias cpi="${aliases[cp]:-cp} -i"
+alias lni="${aliases[ln]:-ln} -i"
+alias mvi="${aliases[mv]:-mv} -i"
+alias rmi="${aliases[rm]:-rm} -i"
 if zstyle -T ':e4czmod:module:aliases' safe-ops; then
 	alias cp="${aliases[cp]:-cp} -i"
 	alias ln="${aliases[ln]:-ln} -i"
@@ -68,11 +81,6 @@ if is-callable 'irssi'; then alias irssi="TERM=screen-256color \
 if is-callable 'lynx'; then alias lynx="lynx -cfg=$HOME/.config/lynx/lynx.cfg"; fi
 if is-callable 'mc'; then alias mc="mc -ux"; fi
 if is-callable 'tree'; then alias shu='tree -N -L 2'; fi
-
-# }}}
-
-# {{{ --- Weather. ---
-
 if is-callable 'Sky'; then alias caba='Sky caba\?0pq'; fi
 if is-callable 'Sky'; then alias taipei='Sky taipei\?0pq'; fi
 if is-callable 'Sky'; then alias taichung='Sky taichung\?0pq'; fi
@@ -121,6 +129,7 @@ alias l='ls -1A'	# Lists in one column, hidden files.
 alias ll='ls -lh'	# Lists human readable sizes.
 alias lr='ll -R'	# Lists human readable sizes, recursively.
 alias la='ll -A'	# Lists human readable sizes, hidden files.
+alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
 alias lk='ll -Sr'	# Lists sorted by size, largest last.
 alias lt='ll -tr'	# Lists sorted by date, most recent last.
 alias lc='lt -c'	# Lists sorted by date, most recent last, shows change time.
