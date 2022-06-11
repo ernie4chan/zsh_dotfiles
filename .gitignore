@@ -2,7 +2,6 @@
 .zcompcache/
 .zsh_session/
 prezto/
-backup/
 
 .iterm2_shell_integration*
 .zsh_history
