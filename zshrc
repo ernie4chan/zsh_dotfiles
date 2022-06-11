@@ -9,30 +9,40 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
+
 # Failsafe test purposes and debugging.
 #zsh -x 2> "$HOME/zsh_error.log"
 
-# Load modules! Remember that the order matters.
+# Load Styles.
+zshstyle="${ZDOTDIR:-$HOME/.zsh}/zshstyle"
+[[ ! -f "$zshstyle" ]] || source "$zshstyle"
+
+# Read Modules! Remember that the order matters.
 zstyle ':e4czmod:load' pmodule \
 	'helper' \
 	'environment' \
 	'tmux' \
-	'utility' \
+	'prompt' \
 	'editor' \
-	'fzf' \
+	'utility' \
 	'gpg' \
+	'fzf' \
 	'macos' \
 	'completions' \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions'
 
-#'prompt' goes before 'utility'.
 #'gnu_utility' goes before 'utility'.
 
-# Load Init File.
+# Load Modules.
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
-if [[ -f "$zshinit" ]]; then
-	source "$zshinit"
-fi
-unset zshinit
+[[ ! -f "$zshinit" ]] || source "$zshinit"
+
+unset {zshstyle,zshinit}
