@@ -17,7 +17,6 @@ zstyle ':e4czmod:load' pmodule \
 	'helper' \
 	'environment' \
 	'tmux' \
-	'prompt' \
 	'utility' \
 	'editor' \
 	'fzf' \
@@ -28,6 +27,7 @@ zstyle ':e4czmod:load' pmodule \
 	'hist_sub_search' \
 	'autosuggestions'
 
+#'prompt' goes before 'utility'.
 #'gnu_utility' goes before 'utility'.
 
 # Load Init File.
