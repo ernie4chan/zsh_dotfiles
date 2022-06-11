@@ -1,0 +1,11 @@
+# vim: ts=4 ft=zsh
+
+zfolder="${ZDOTDIR:-$HOME/.zsh}"
+
+[[ ! -f "${zfolder}/modules/prompt/external/p10k.zsh" ]] || \
+	source "${zfolder}/modules/prompt/external/p10k.zsh"
+
+[[ ! -f "${zfolder}/powerlevel10k/powerlevel10k.zsh-theme" ]] || \
+source "${zfolder}/powerlevel10k/powerlevel10k.zsh-theme"
+
+unset {p10k_instance,zfolder}
