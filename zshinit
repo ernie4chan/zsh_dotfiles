@@ -1,7 +1,13 @@
+# ---------------------------------------------------------
 # vim: ts=4 ft=zsh
+#
+# File: zshinit.zsh
 #
 # Borrow from Prezto --- The Heart Module Loader.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Check for the minimum supported version.
 min_zsh_version='4.3.11'

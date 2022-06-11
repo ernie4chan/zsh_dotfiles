@@ -106,6 +106,12 @@ setopt SHARE_HISTORY		# Share history between all sessions.
 
 # {{{ --- Pager, Editors & Browsers. ---
 
+# Shell language.
+if [[ -z "$LANG" ]]; then
+	export LC_ALL='en_US.UTF-8'
+	export LANG='en_US.UTF-8'
+fi
+
 # Preferred apps.
 export EDITOR='vim'
 export PAGER='less'

@@ -1,8 +1,19 @@
 # vim: ts=4 ft=zsh
 
-#[[ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] || \
-#	source "${XDG_CACHE_HOME:-$HOME/.zsh}/powerlevel10k/powerlevel10k.zsh-theme"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+#
+p10k_instance="${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+if [[ -r "$p10k_instance" ]]; then
+	source "$p10k_instance"
+fi
 
-[[ ! -f "${ZDOTDIR:-$HOME/.zsh}/p10k.zsh" ]] || source "${ZDOTDIR:-$HOME/.zsh}/p10k.zsh"
+zfolder="${ZDOTDIR:-$HOME/.zsh}"
+if [[ -f "${zfolder}/modules/prompt/p10k.zsh" ]] ; then
+	source "${zfolder}/modules/prompt/p10k.zsh"
+fi
 
-source "${ZDOTDIR:-$HOME/.zsh}/powerlevel10k/powerlevel10k.zsh-theme"
+source "${zfolder}/powerlevel10k/powerlevel10k.zsh-theme"
+
+unset {p10k_instance,zfolder}

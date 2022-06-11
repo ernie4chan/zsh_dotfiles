@@ -1,7 +1,13 @@
+# ---------------------------------------------------------
 # vim: ts=4 ft=zsh
+#
+# File: .zshenv
 #
 # Shell environment variables, executed before zshrc.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Ensure arrays do not contain duplicates.
 typeset -U cdpath fpath infopath mailpath manpath path
@@ -31,9 +37,3 @@ path=(
 	/usr/local/{,s}bin
 	$path
 )
-
-# Shell language.
-if [[ -z "$LANG" ]]; then
-	export LC_ALL='en_US.UTF-8'
-	export LANG='en_US.UTF-8'
-fi

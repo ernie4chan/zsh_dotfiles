@@ -1,7 +1,13 @@
+# ---------------------------------------------------------
 # vim: ts=4 ft=zsh
+#
+# File: .zprofile
 #
 # zstyle Table.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # {{{ --- Terminal. ---
 
@@ -24,39 +30,21 @@ fi
 # Key mapping style to 'emacs' or 'vi'.
 zstyle ':e4czmod:module:editor' key-bindings 'vi'
 
-# Auto convert .... to ../..
-zstyle ':e4czmod:module:editor' dot-expansion 'no'
-
-# Allow to show ZSH prompt context.
-zstyle ':e4czmod:module:editor' ps-context 'no'
-
 # }}}
 
 # {{{ --- Utility. ---
 
-# Set the working directory prompt display length: 'short', 'long', and 'full'.
-#zstyle ':e4czmod:module:prompt' pwd-length 'short'
+# Allow module overrides when pmodule-dirs causes module name collisions.
+zstyle ':e4czmod:load' pmodule-allow-overrides 'yes'
 
-# Set the prompt to display the return code.
-#zstyle ':e4czmod:module:prompt' show-return-val 'yes'
-
-# Set case-sensitivity for completion, history lookup, etc.
-zstyle ':e4czmod:*:*' case-sensitive 'no'
+# Set the zsh modules to load (man zshmodules).
+zstyle ':e4czmod:load' zmodule 'attr'
 
 # Add additional directories to be loaded.
 #zstyle ':e4czmod:load' pmodule-dirs $HOME/.zshcontrib
 
-# Allow module overrides when pmodule-dirs causes module name collisions.
-zstyle ':e4czmod:load' pmodule-allow-overrides 'yes'
-
-# Set the ZSH modules to load (man zshmodules).
-zstyle ':e4czmod:load' zmodule 'attr' 'stat'
-
-# Set the ZSH functions to load (man zshcontrib).
+# Set the zsh functions to load (man zshcontrib).
 #zstyle ':e4czmod:load' zfunction 'zargs' 'zmv'
-
-# SSH.
-zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 # Enabled safe operations
 zstyle ':e4czmod:module:aliases' safe-ops 'no'
@@ -72,6 +60,12 @@ zstyle ':e4czmod:module:aliases:ls' dirs-first 'yes'
 
 # To disable 'grep' highlighting.
 zstyle ':e4czmod:module:aliases:grep' color 'yes'
+
+# SSH.
+zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
+
+# Set case-sensitivity for completion, history lookup, etc.
+zstyle ':e4czmod:*:*' case-sensitive 'no'
 
 # Set the command prefix on non-GNU systems.
 #zstyle ':e4czmod:module:gnu-utility' prefix 'g'

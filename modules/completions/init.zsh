@@ -18,18 +18,18 @@ LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40
 #  with a cache time of 20 hours, so it should almost always regenerate
 #  the first time a shell is opened each day.
 autoload -Uz compinit
-_comp_dumpfile="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 # #q expands globs in conditional expressions.
-if [[ $_comp_dumpfile(#qNmh-20) ]]; then
+if [[ $_comp_path(#qNmh-20) ]]; then
 	# -C (skip function check) implies -i (skip security check).
-	compinit -C -d "$_comp_dumpfile"
+	compinit -C -d "$_comp_path"
 else
-	mkdir -p "$_comp_dumpfile:h"
-	compinit -i -d "$_comp_dumpfile"
+	mkdir -p "$_comp_path:h"
+	compinit -i -d "$_comp_path"
 	# Keep $_comp_dumpfile younger than cache time even if it isn't regenerated.
-	touch "$_comp_dumpfile"
+	touch "$_comp_path"
 fi
-unset _comp_dumpfile
+unset _comp_path
 
 # {{{ --- ZSH Style Table for Completions. ---
 

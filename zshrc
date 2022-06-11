@@ -1,7 +1,13 @@
+# ---------------------------------------------------------
 # vim: ts=4 ft=zsh
+#
+# File: .zshrc
 #
 # The Master Mind of ZSH!
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Failsafe test purposes and debugging.
 #zsh -x 2> "$HOME/zsh_error.log"
@@ -13,6 +19,7 @@ zstyle ':e4czmod:load' pmodule \
 	'tmux' \
 	'prompt' \
 	'utility' \
+	'editor' \
 	'fzf' \
 	'gpg' \
 	'macos' \
@@ -21,9 +28,11 @@ zstyle ':e4czmod:load' pmodule \
 	'hist_sub_search' \
 	'autosuggestions'
 
-#'editor' goes before 'fzf'.
 #'gnu_utility' goes before 'utility'.
-#'thefuck' goes before 'completions'.
 
 # Load Init File.
-[[ ! -f "${ZDOTDIR:-$HOME/.zsh}/zshinit.zsh" ]] || source "${ZDOTDIR:-$HOME/.zsh}/zshinit.zsh"
+zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
+if [[ -f "$zshinit" ]]; then
+	source "$zshinit"
+fi
+unset zshinit

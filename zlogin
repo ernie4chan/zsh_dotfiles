@@ -1,15 +1,19 @@
+# ---------------------------------------------------------
 # vim: ts=4 ft=zsh
 #
-# Execution in the background when login.
+# File: .zlogin
 #
+# Executes commands at login post-zshrc.
+#
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
+# Execute code that does not affect the current session in the background.
 {
-
 	# Compile the completion dump to increase startup speed.
-	_comp_dumpfile="${XDG_CACHE_HOME:-$HOME.cache}/zsh/zcompdump}"
-	if [[ -s "$_comp_dumpfile" && (! -s "${_comp_dumpfile}.zwc" || "$_comp_dumpfile" -nt "${_comp_dumpfile}.zwc") ]]; then
-		zcompile "$_comp_dumpfile"
+	zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+	if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+		zcompile "$zcompdump"
 	fi
-	unset _comp_dumpfile
-
 } &!

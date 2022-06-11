@@ -2,6 +2,9 @@
 #
 # Prompt setup function commonly used by prompt themes.
 #
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
 # function prompt-pwd {
 
