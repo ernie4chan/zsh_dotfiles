@@ -29,20 +29,16 @@ if ! zstyle -T ':e4czmod:module:history-substring-search' color; then
 	unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_{FOUND,NOT_FOUND}
 fi
 
-# Key Bindings.
-if [[ -n "$key_info" ]]; then
-	# Emacs.
-	bindkey -M emacs "$key_info[Control]P" history-substring-search-up
-	bindkey -M emacs "$key_info[Control]N" history-substring-search-down
+# Keybindings.
+bindkey -M emacs "^P" history-substring-search-up
+bindkey -M emacs "^N" history-substring-search-down
 
-	# Vi.
-	bindkey -M vicmd "k" history-substring-search-up
-	bindkey -M vicmd "j" history-substring-search-down
+bindkey -M vicmd "k" history-substring-search-up
+bindkey -M vicmd "j" history-substring-search-down
 
-	# Emacs and Vi.
-	for keymap in 'emacs' 'viins'; do
-		bindkey -M "$keymap" "$key_info[Up]" history-substring-search-up
-		bindkey -M "$keymap" "$key_info[Down]" history-substring-search-down
-	done
-	unset keymap
-fi
+for keymap in 'emacs' 'viins'; do
+	bindkey -M "$keymap" "[Up]" history-substring-search-up
+	bindkey -M "$keymap" "[Down]" history-substring-search-down
+done
+
+unset keymap

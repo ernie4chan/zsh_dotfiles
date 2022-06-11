@@ -1,7 +1,13 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=2 ft=zsh
+#
+# File: ./autosuggestions/init.zsh
 #
 # Integrates zsh-autosuggestions.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Source module files.
 source ${0:h}/external/zsh-autosuggestions.zsh || return 1
@@ -15,8 +21,6 @@ if ! zstyle -t ':e4czmod:module:autosuggestions' color; then
 	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=''
 fi
 
-# Vim Key Bindings
-if [[ -n "$key_info" ]]; then
-	bindkey -M viins "$key_info[Control]F" vi-forward-word
-	bindkey -M viins "$key_info[Control]E" vi-add-eol
-fi
+# Vim Keybindings
+bindkey -M viins "^F" vi-forward-word
+bindkey -M viins "^E" vi-add-eol
