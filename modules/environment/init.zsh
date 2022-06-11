@@ -1,7 +1,9 @@
 # ---------------------------------------------------------
+# vim: ts=2 ft=zsh
+#
 # File: ./environment/init.zsh
 #
-# Defining zsh environment variables
+# Defining Zsh environment variables.
 #
 # Author: Ernie Lin
 # Update: 2022-06-10
@@ -77,7 +79,7 @@ unsetopt MENU_COMPLETE	# Do not autoselect the first completion entry.
 
 # }}}
 
-# {{{ --- zsh History. ---
+# {{{ --- Zsh History. ---
 
 # Preferences.
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history

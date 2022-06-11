@@ -1,4 +1,6 @@
 # ---------------------------------------------------------
+# vim: ts=2 ft=zsh
+#
 # File: ./helper/init.zsh
 #
 # Defining helper functions.

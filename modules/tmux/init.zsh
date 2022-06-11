@@ -1,7 +1,9 @@
 # ---------------------------------------------------------
+# vim: ts=2 ft=zsh
+#
 # File: ./tmux/init.zsh
 #
-# Auto launching Tmux at start-up
+# Auto launching Tmux at start-up.
 #
 # Author: Ernie Lin
 # Update: 2022-06-10
@@ -12,7 +14,7 @@ if (( ! $+commands[tmux] )); then
 	return 1
 fi
 
-# Load Specifif Tmux Config and Aliases.
+# Load specific Tmux configs and aliases.
 if is-callable 'tmux'; then alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"; fi
 alias tmuxa="tmux $_tmux_iterm_integration new-session -A"
 alias tmuxl="tmux list-sessions"
@@ -23,7 +25,7 @@ if ([[ "$LC_TERMINAL" = 'iTerm2' ]] && \
 	_tmux_iterm_integration='-CC'
 fi
 
-# Autostart.
+# Loading Tmux.
 if [[ -z "$TMUX" && -z "$EMACS" && -z "$VIM" && -z "$INSIDE_EMACS" && "$TERM_PROGRAM" != "vscode" ]] && ( \
 	( [[ -n "$SSH_TTY" ]] && zstyle -t ':e4czmod:module:tmux:auto-start' remote ) ||
 	( [[ -z "$SSH_TTY" ]] && zstyle -t ':e4czmod:module:tmux:auto-start' local ) \

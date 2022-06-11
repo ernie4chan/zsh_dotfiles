@@ -1,12 +1,18 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=2 ft=zsh
+#
+# File: ./fzf/init.zsh
 #
 # Make fuzzy file finder fun!
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Return if requirements are not found.
 (( ! $+commands[fzf] )) && return 1
 
-# Add fzf path.
+# Add fzf to path.
 if is-darwin; then
 	[[ ! "$PATH" == */usr/local/opt/fzf/bin* ]] && \
 		export PATH="$PATH:/usr/local/opt/fzf/bin"

@@ -3,7 +3,7 @@
 #
 # File: .zshenv
 #
-# Shell environment variables, executed before zshrc.
+# Shell environment variables, executed before ".zshrc".
 #
 # Author: Ernie Lin
 # Update: 2022-06-10

@@ -3,13 +3,13 @@
 #
 # File: .zprofile
 #
-# zstyle Table.
+# Zstyle Table.
 #
 # Author: Ernie Lin
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
-# {{{ --- Terminal. ---
+# {{{ --- General & Prompt. ---
 
 # Disable color and theme in dumb terminals.
 if [[ "$TERM" == (dumb|linux|*bsd*) ]]; then
@@ -23,16 +23,8 @@ else
 	zstyle ':e4czmod:module:prompt' theme 'powerlevel10k'
 fi
 
-# }}}
-
-# {{{ --- Editor. ---
-
-# Key mapping style to 'emacs' or 'vi'.
-zstyle ':e4czmod:module:editor' key-bindings 'vi'
-
-# }}}
-
-# {{{ --- Utility. ---
+# Set case-sensitivity for completion, history lookup, etc.
+zstyle ':e4czmod:*:*' case-sensitive 'no'
 
 # Allow module overrides when pmodule-dirs causes module name collisions.
 zstyle ':e4czmod:load' pmodule-allow-overrides 'yes'
@@ -45,30 +37,6 @@ zstyle ':e4czmod:load' zmodule 'attr'
 
 # Set the zsh functions to load (man zshcontrib).
 #zstyle ':e4czmod:load' zfunction 'zargs' 'zmv'
-
-# Enabled safe operations
-zstyle ':e4czmod:module:aliases' safe-ops 'no'
-
-# To disable all spelling corrections.
-zstyle ':e4czmod:module:aliases' correct 'yes'
-
-# To disable 'ls' color.
-zstyle ':e4czmod:module:aliases:ls' color 'yes'
-
-# To disable GNU coreutils 'ls' to list directories grouped first.
-zstyle ':e4czmod:module:aliases:ls' dirs-first 'yes'
-
-# To disable 'grep' highlighting.
-zstyle ':e4czmod:module:aliases:grep' color 'yes'
-
-# SSH.
-zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
-
-# Set case-sensitivity for completion, history lookup, etc.
-zstyle ':e4czmod:*:*' case-sensitive 'no'
-
-# Set the command prefix on non-GNU systems.
-#zstyle ':e4czmod:module:gnu-utility' prefix 'g'
 
 # }}}
 
@@ -85,6 +53,45 @@ zstyle ':e4czmod:module:tmux:auto-start' remote 'no'
 
 # Integrate iTerm2.
 zstyle ':e4czmod:module:tmux:iterm' integrate 'no'
+
+# }}}
+
+# {{{ --- Editor. ---
+
+# Key mapping style to 'emacs' or 'vi'.
+zstyle ':e4czmod:module:editor' key-bindings 'vi'
+
+# Auto convert .... to ../..
+zstyle ':e4czmod:module:editor' dot-expansion 'yes'
+
+# }}}
+
+# {{{ --- Utility. ---
+
+# Enabled safe operations
+zstyle ':e4czmod:module:aliases' safe-ops 'no'
+
+# To disable all spelling corrections.
+zstyle ':e4czmod:module:aliases' correct 'yes'
+
+# To disable 'ls' color.
+zstyle ':e4czmod:module:aliases:ls' color 'yes'
+
+# To disable GNU coreutils 'ls' to list directories grouped first.
+zstyle ':e4czmod:module:aliases:ls' dirs-first 'yes'
+
+# To disable 'grep' highlighting.
+zstyle ':e4czmod:module:aliases:grep' color 'yes'
+
+# Set the command prefix on non-GNU systems.
+#zstyle ':e4czmod:module:gnu-utility' prefix 'g'
+
+# }}}
+
+# {{{ --- SSH & GPG. ---
+
+# SSH.
+zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
 
 # }}}
 
