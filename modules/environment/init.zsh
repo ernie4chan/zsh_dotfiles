@@ -80,11 +80,7 @@ unsetopt MENU_COMPLETE	# Do not autoselect the first completion entry.
 # {{{ --- zsh History. ---
 
 # Preferences.
-
-if ! is-darwin; then
-	export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-fi
-
+export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 export HISTSIZE=10000	# Maximum history events in mem.
 export SAVEHIST=50000	# Maximum history file size.
 

@@ -1,4 +1,4 @@
-# vim: ts=4 ft=zsh
+# vim: ts=2 ft=zsh
 #
 # Loads prompt themes.
 #

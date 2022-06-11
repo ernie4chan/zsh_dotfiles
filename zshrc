@@ -1,9 +1,9 @@
 # ---------------------------------------------------------
-# vim: ts=4 ft=zsh
+# vim: ts=2 ft=zsh
 #
 # File: .zshrc
 #
-# The Master Mind of ZSH!
+# The Master Mind of Zsh!
 #
 # Author: Ernie Lin
 # Update: 2022-06-10
@@ -23,7 +23,7 @@
 zshstyle="${ZDOTDIR:-$HOME/.zsh}/zshstyle"
 [[ ! -f "$zshstyle" ]] || source "$zshstyle"
 
-# Read Modules! Remember that the order matters.
+# Read Modules! Remember that order matters.
 zstyle ':e4czmod:load' pmodule \
 	'helper' \
 	'environment' \
@@ -38,8 +38,6 @@ zstyle ':e4czmod:load' pmodule \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions'
-
-#'gnu_utility' goes before 'utility'.
 
 # Load Modules.
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
