@@ -3,7 +3,7 @@
 #
 # File: ./editor/init.zsh
 #
-# Define custom key bindings.
+# Define custom keybindings.
 #
 # Author: Ernie Lin
 # Update: 2022-06-10
@@ -18,25 +18,24 @@
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-# Edit command in an external editor emacs style (v is used for visual mode)
-bindkey -M vicmd "^X^E" edit-command-line
+# Edit command in an external editor emacs style (v is used for visual mode).
+for keymap in 'emacs' 'vicmd'; do
+	bindkey -M "$keymap" "^X^E" edit-command-line
+done
 
 # }}}
 
-# {{{ --- Custom keybindings. ---
+# {{{ --- Expand dots. ---
 
+# Load function to expand '....' to '../..' .
 zle -N expand-dot-to-parent-directory-path
 
-# Keybinds for emacs and vi insert mode
-for keymap in 'emacs' 'viins'; do
-# Expand .... to ../..
-	if zstyle -t ':e4czmod:module:editor' dot-expansion; then
-		bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
-	fi
-done
-
-# Do not expand .... to ../.. during incremental search.
 if zstyle -t ':e4czmod:module:editor' dot-expansion; then
+	for keymap in 'emacs' 'viins'; do
+		# Expand '....' to '../..' .
+		bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
+	done
+	# Do not expand .... to ../.. during incremental search.
 	bindkey -M isearch . self-insert 2> /dev/null
 fi
 
@@ -53,5 +52,7 @@ elif [[ "$key_bindings" == (emacs|) ]]; then
 else
 	print "e4czmod: editor: invalid key bindings: $key_bindings" >&2
 fi
+
+export KEYTIMEOUT=1
 
 # }}}

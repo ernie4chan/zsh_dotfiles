@@ -1,6 +1,6 @@
 # vim: ts=2 sts=1 ft=zsh
 
-# Expands .... to ../..
+# Expands '....' to '../..' .
 #function expand-dot-to-parent-directory-path {
 
 if [[ $LBUFFER = *.. ]]; then
