@@ -15,7 +15,7 @@
 set-option -g default-terminal "xterm-256color"
 
 # Enable RGB colour, if running in xterm(1).
-set-option -ga terminal-overrides ",*256color:Tc"
+set-option -ga terminal-overrides ",*col*:Tc"
 
 # Adding Powerline-status to tmux.
 run-shell 'powerline-daemon -q'
