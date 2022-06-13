@@ -12,10 +12,11 @@
 # {{{ --- Default Options. ---
 
 # Change the default $TERM to tmux-256color / xterm-256color / screen-256color.
+#set-option -g default-terminal "tmux-256color"
 set-option -g default-terminal "xterm-256color"
 
 # Enable RGB colour, if running in xterm(1).
-set-option -ga terminal-overrides ",*col*:Tc"
+set-option -ga terminal-overrides ",*256col*:Tc"
 
 # Adding Powerline-status to tmux.
 run-shell 'powerline-daemon -q'
@@ -44,36 +45,38 @@ set-option -g prefix C-a
 bind-key C-a send-prefix
 
 # Personal keybinding preferences.
-unbind-key C-Up
-unbind-key C-Down
-unbind-key C-Left
-unbind-key C-Right
-unbind-key M-Up
-unbind-key M-Down
-unbind-key M-Left
-unbind-key M-Right
-unbind-key S-Up
-unbind-key S-Down
-unbind-key S-Left
-unbind-key S-Right
-unbind-key l
-unbind-key L
-bind-key -T prefix \`	last-window			# 'l': Select 'last-window'.
-bind-key -T prefix S	switch-client -l	# 'L': Switch to last session.
+unbind-key C-Up			# conflicts macOS shortcut: Misiion Control.
+unbind-key C-Down		# conflitcs macOS shortcut: Application windows.
+unbind-key C-Left		# conflicts macOS shortcut: move left a space.
+unbind-key C-Right	# conflicts macOS shortcut: move right a space.
+unbind-key M-Up			# Re-assigned to avoid arrow.
+unbind-key M-Down		# Re-assigned to avoid arrow.
+unbind-key M-Left		# Re-assigned to avoid arrow.
+unbind-key M-Right	# Re-assigned to avoid arrow.
+unbind-key S-Up 		# Re-assigned to avoid arrow.
+unbind-key S-Down		# Re-assigned to avoid arrow.
+unbind-key S-Left		# Re-assigned to avoid arrow.
+unbind-key S-Right	# Re-assigned to avoid arrow.
+unbind-key l				# Avoid Vi concept of left.
+bind-key -T prefix \`	last-window						# 'l': Select 'last-window'.
 
 # macOS keys conflict with resizing.
 bind-key -r -T prefix k		select-pane -U
 bind-key -r -T prefix j		select-pane -D
 bind-key -r -T prefix h		select-pane -L
 bind-key -r -T prefix l		select-pane -R
-bind-key -r -T prefix C-k	resize-pane -U
-bind-key -r -T prefix C-j	resize-pane -D
-bind-key -r -T prefix C-h	resize-pane -L
-bind-key -r -T prefix C-l	resize-pane -R
-bind-key -r -T prefix M-k	resize-pane -U 5
-bind-key -r -T prefix M-j	resize-pane -D 5
-bind-key -r -T prefix M-h	resize-pane -L 5
-bind-key -r -T prefix M-l	resize-pane -R 5
+bind-key -r -T prefix C-k	resize-pane -U		# C-Up: resize in 1 cell step.
+bind-key -r -T prefix C-j	resize-pane -D		# C-Down: resize in 1 cell step.
+bind-key -r -T prefix C-h	resize-pane -L		# C-Left: resize in 1 cell step.
+bind-key -r -T prefix C-l	resize-pane -R		# C-Right: resize in 1 cell step.
+bind-key -r -T prefix M-k	resize-pane -U 5	# M-Up: resize in 5 cells step.
+bind-key -r -T prefix M-j	resize-pane -D 5	# M-Down: resize in 5 cells step.
+bind-key -r -T prefix M-h	resize-pane -L 5	# M-Left: resize in 5 cells step.
+bind-key -r -T prefix M-l	resize-pane -R 5	# M-Right: resize in 5 cells step.
+bind-key -r -T prefix S-k	refresh-client -U 10	# S-Up: refresh client.
+bind-key -r -T prefix S-j	refresh-client -D 10	# S-Down: refresh client.
+bind-key -r -T prefix S-h	refresh-client -L 10	# S-Left: refresh client.
+bind-key -r -T prefix S-l	refresh-client -R 10	# S-Right: refresh client.
 
 # Keys to toggle monitoring activity in a window, and synchronize-panes.
 bind-key -T prefix U set-option monitor-activity \; display-message \
@@ -96,6 +99,7 @@ set-window-option -g status-keys vi
 
 # Use <Space> or <v> to begin highlight, <Enter> or <y> to enable copy function, and
 #  <P> to paste. Caveats: pbcopy and pbpaste have been redefined in 'tmux/aliases'.
+#  Caveats: pbcopy and pbpaste are re-defined aliases.
 #bind-key -T copy-mode-vi v send-keys -X begin-selection
 #bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
