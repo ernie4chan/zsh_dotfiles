@@ -74,6 +74,12 @@ if zstyle -T ':e4czmod:module:aliases' safe-ops; then
 	alias rm="${aliases[rm]:-rm} -i"
 fi
 
+alias Sky=curl wttr.in/"$*"
+alias caba="Sky caba\?0pq"
+alias taipei="Sky taipei\?0pq"
+alias taichung="Sky taichung\?0pq"
+alias tainan="Sky tainan\?0pq"
+
 # 3rd-Party Apps:
 if is-callable 'abcde'; then alias abcde="abcde -c ~/.config/abcde/abcde.cfg"; fi
 if is-callable 'irssi'; then alias irssi="TERM=screen-256color \
@@ -81,10 +87,6 @@ if is-callable 'irssi'; then alias irssi="TERM=screen-256color \
 if is-callable 'lynx'; then alias lynx="lynx -cfg=$HOME/.config/lynx/lynx.cfg"; fi
 if is-callable 'mc'; then alias mc="mc -ux"; fi
 if is-callable 'tree'; then alias shu='tree -N -L 2'; fi
-if is-callable 'Sky'; then alias caba='Sky caba\?0pq'; fi
-if is-callable 'Sky'; then alias taipei='Sky taipei\?0pq'; fi
-if is-callable 'Sky'; then alias taichung='Sky taichung\?0pq'; fi
-if is-callable 'Sky'; then alias tainan='Sky tainan\?0pq'; fi
 
 # }}}
 

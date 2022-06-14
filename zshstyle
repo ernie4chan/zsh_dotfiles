@@ -72,7 +72,7 @@ zstyle ':e4czmod:module:editor' dot-expansion 'yes'
 zstyle ':e4czmod:module:aliases' safe-ops 'no'
 
 # To disable all spelling corrections.
-zstyle ':e4czmod:module:aliases' correct 'yes'
+zstyle ':e4czmod:module:aliases' correct 'no'
 
 # To disable 'ls' color.
 zstyle ':e4czmod:module:aliases:ls' color 'yes'
