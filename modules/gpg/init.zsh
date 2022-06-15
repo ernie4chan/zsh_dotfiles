@@ -1,12 +1,16 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=4 ts=2 ft=zsh
+#
+# File: ./gpg/init.zsh
 #
 # Provides an easier use of GPG.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Return if requirements are not found.
-if (( ! $+commands[gpg-agent] )); then
-	return 1
-fi
+(( ! $+commands[gpg-agent] )) && return 1
 
 # Set the default paths to gpg-agent files.
 _gpg_agent_conf="${GNUPGHOME:-$HOME/.gnupg}/gpg-agent.conf"
@@ -16,11 +20,10 @@ _gpg_agent_env="${XDG_CACHE_HOME:-$HOME/.cache}/gpg/gpg-agent.env"
 source "$_gpg_agent_env" 2> /dev/null
 
 # Start gpg-agent if not started.
-#if [[ -z "$GPG_AGENT_INFO" && ! -S "$(gpgconf --list-dir agent-ssh-socket)" ]]; then
 if [[ -z "$GPG_AGENT_INFO" && ! -S "${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent" ]]; then
 	# Start gpg-agent if not started.
 	if ! ps -U "$LOGNAME" -o pid,ucomm | grep -q -- "${${${(s.:.)GPG_AGENT_INFO}[2]}:--1} gpg-agent"; then
-		mkdir -p "$_gpg_agent_env:h"
+	mkdir -p "$_gpg_agent_env:h"
 		eval "$(gpg-agent --daemon | tee "$_gpg_agent_env")"
 	fi
 fi

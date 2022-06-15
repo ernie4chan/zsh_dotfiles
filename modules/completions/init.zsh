@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
-# vim: ts=2 ft=zsh
+# vim: ts=4 sts=2 ft=zsh
 #
-# File: .zshenv
+# File: ./completions/init.zsh
 #
 # Integrates Completions.
 #
