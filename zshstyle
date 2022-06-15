@@ -46,7 +46,7 @@ zstyle ':e4czmod:load' zmodule 'attr'
 zstyle ':e4czmod:module:tmux:session' name 'tmux'
 
 # Launch Tmux.
-zstyle ':e4czmod:module:tmux:auto-start' local 'yes'
+zstyle ':e4czmod:module:tmux:auto-start' local 'no'
 
 # Launch Tmux in SSH connections.
 zstyle ':e4czmod:module:tmux:auto-start' remote 'no'
