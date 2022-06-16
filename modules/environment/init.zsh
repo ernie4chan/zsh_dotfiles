@@ -9,26 +9,69 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
-# {{{ --- Function: Smart URLs. ---
+# {{{ --- Pager, Editors & Browsers. ---
 
-# This logic comes from an old version of zim. Essentially, bracketed-paste was
-#  added as a requirement of url-quote-magic in 5.1, but in 5.1.1 bracketed
-#  paste had a regression. Additionally, 5.2 added bracketed-paste-url-magic
-#  which is generally better than url-quote-magic so we load that when possible.
-autoload -Uz is-at-least
-if [[ ${ZSH_VERSION} != 5.1.1 && ${TERM} != "dumb" ]]; then
-	if is-at-least 5.2; then
-		autoload -Uz bracketed-paste-url-magic
-		zle -N bracketed-paste bracketed-paste-url-magic
-	else
-		if is-at-least 5.1; then
-			autoload -Uz bracketed-paste-magic
-			zle -N bracketed-paste bracketed-paste-magic
-		fi
-	fi
-	autoload -Uz url-quote-magic
-	zle -N self-insert url-quote-magic
+# Shell language.
+if [[ -z "$LANG" ]]; then
+	export LC_ALL='en_US.UTF-8'
+	export LANG='en_US.UTF-8'
 fi
+
+# Less Preferences.
+export LESSHISTFILE="$HOME/.less_history"
+export LESSEDIT='vim ?lm+%lm. %f'
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+export LESS='-g -i -M -R -S -w -X -z-4'
+
+# Termcap.
+if zstyle -t ':e4czmod:environment:termcap' color; then
+	export LESS_TERMCAP_mb=$'\E[01;31m'		# Begins blinking.
+	export LESS_TERMCAP_md=$'\E[01;31m'		# Begins bold.
+	export LESS_TERMCAP_me=$'\E[0m'			# Ends mode.
+	export LESS_TERMCAP_se=$'\E[0m'			# Ends standout-mode.
+	export LESS_TERMCAP_so=$'\E[00;47;30m'	# Begins standout-mode.
+	export LESS_TERMCAP_ue=$'\E[0m'			# Ends underline.
+	export LESS_TERMCAP_us=$'\E[01;32m'		# Begins underline.
+fi
+
+# Preferred apps.
+export EDITOR='vim'
+export PAGER='less'
+
+if is-linux; then
+	export VISUAL='gvim'
+elif is-darwin; then
+	export VISUAL='mvim'
+fi
+
+if (( $+commands[xdg-open] )); then
+	export BROWSER='xdg-open'
+elif (( $+commands[open] )); then
+	export BROWSER='open'
+fi
+
+# }}}
+#
+# {{{ --- Zsh History. ---
+
+# Preferences.
+export HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
+export HISTSIZE=10000	# Maximum history events in mem.
+export SAVEHIST=50000	# Maximum history file size.
+
+# History options.
+setopt BANG_HIST			# Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY		# History file format as ':start:elapsed;command'.
+setopt HIST_BEEP			# Beep when accessing non-existent history.
+setopt HIST_EXPIRE_DUPS_FIRST	# Expire a duplicate event first when trimming history.
+setopt HIST_FIND_NO_DUPS	# Do not display a previously found event.
+setopt HIST_IGNORE_ALL_DUPS	# Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_DUPS		# Do not record an event that was just recorded again.
+setopt HIST_IGNORE_SPACE	# Do not record an event starting with a space.
+setopt HIST_SAVE_NO_DUPS	# Do not write a duplicate event to the history file.
+setopt HIST_VERIFY			# Do not execute immediately upon history expansion.
+setopt INC_APPEND_HISTORY	# Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY		# Share history between all sessions.
 
 # }}}
 
@@ -73,69 +116,26 @@ unsetopt FLOW_CONTROL	# Disable start/stop characters in shell editor.
 unsetopt MENU_COMPLETE	# Do not autoselect the first completion entry.
 
 # }}}
+#
+# {{{ --- Function: Smart URLs. ---
 
-# {{{ --- Zsh History. ---
-
-# Preferences.
-export HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
-export HISTSIZE=10000	# Maximum history events in mem.
-export SAVEHIST=50000	# Maximum history file size.
-
-# History options.
-setopt BANG_HIST			# Treat the '!' character specially during expansion.
-setopt EXTENDED_HISTORY		# History file format as ':start:elapsed;command'.
-setopt HIST_BEEP			# Beep when accessing non-existent history.
-setopt HIST_EXPIRE_DUPS_FIRST	# Expire a duplicate event first when trimming history.
-setopt HIST_FIND_NO_DUPS	# Do not display a previously found event.
-setopt HIST_IGNORE_ALL_DUPS	# Delete an old recorded event if a new event is a duplicate.
-setopt HIST_IGNORE_DUPS		# Do not record an event that was just recorded again.
-setopt HIST_IGNORE_SPACE	# Do not record an event starting with a space.
-setopt HIST_SAVE_NO_DUPS	# Do not write a duplicate event to the history file.
-setopt HIST_VERIFY			# Do not execute immediately upon history expansion.
-setopt INC_APPEND_HISTORY	# Write to the history file immediately, not when the shell exits.
-setopt SHARE_HISTORY		# Share history between all sessions.
-
-# }}}
-
-# {{{ --- Pager, Editors & Browsers. ---
-
-# Shell language.
-if [[ -z "$LANG" ]]; then
-	export LC_ALL='en_US.UTF-8'
-	export LANG='en_US.UTF-8'
-fi
-
-# Preferred apps.
-export EDITOR='vim'
-export PAGER='less'
-
-if is-linux; then
-	export VISUAL='gvim'
-elif is-darwin; then
-	export VISUAL='mvim'
-fi
-
-if (( $+commands[xdg-open] )); then
-	export BROWSER='xdg-open'
-elif (( $+commands[open] )); then
-	export BROWSER='open'
-fi
-
-# Less Preferences.
-export LESSHISTFILE="$HOME/.less_history"
-export LESSEDIT='vim ?lm+%lm. %f'
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-export LESS='-g -i -M -R -S -w -X -z-4'
-
-# Termcap.
-if zstyle -t ':e4czmod:environment:termcap' color; then
-	export LESS_TERMCAP_mb=$'\E[01;31m'		# Begins blinking.
-	export LESS_TERMCAP_md=$'\E[01;31m'		# Begins bold.
-	export LESS_TERMCAP_me=$'\E[0m'			# Ends mode.
-	export LESS_TERMCAP_se=$'\E[0m'			# Ends standout-mode.
-	export LESS_TERMCAP_so=$'\E[00;47;30m'	# Begins standout-mode.
-	export LESS_TERMCAP_ue=$'\E[0m'			# Ends underline.
-	export LESS_TERMCAP_us=$'\E[01;32m'		# Begins underline.
+# This logic comes from an old version of zim. Essentially, bracketed-paste was
+#  added as a requirement of url-quote-magic in 5.1, but in 5.1.1 bracketed
+#  paste had a regression. Additionally, 5.2 added bracketed-paste-url-magic
+#  which is generally better than url-quote-magic so we load that when possible.
+autoload -Uz is-at-least
+if [[ ${ZSH_VERSION} != 5.1.1 && ${TERM} != "dumb" ]]; then
+	if is-at-least 5.2; then
+		autoload -Uz bracketed-paste-url-magic
+		zle -N bracketed-paste bracketed-paste-url-magic
+	else
+		if is-at-least 5.1; then
+			autoload -Uz bracketed-paste-magic
+			zle -N bracketed-paste bracketed-paste-magic
+		fi
+	fi
+	autoload -Uz url-quote-magic
+	zle -N self-insert url-quote-magic
 fi
 
 # }}}
