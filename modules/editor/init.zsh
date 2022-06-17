@@ -19,7 +19,7 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 
 # Edit command in an external editor emacs style (v is used for visual mode).
-bindkey -M vicmd "^V" edit-command-line
+bindkey -M vicmd "^X" edit-command-line
 
 # }}}
 

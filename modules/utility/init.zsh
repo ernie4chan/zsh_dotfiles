@@ -1,7 +1,13 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=4 sts=2 ft=zsh
+#
+# File: ./utility/init.zsh
 #
 # Defines general aliases and functions.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Correct commands.
 if zstyle -T ':e4czmod:module:aliases' correct; then
