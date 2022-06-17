@@ -28,3 +28,11 @@ elif is-linux; then
 		source "/usr/share/fzf/completion.zsh" 2>/dev/null; \
 		source "/usr/share/fzf/key-bindings.zsh" 2>/dev/null
 fi
+
+
+# Modify default Alt+C.
+for keymap in 'viins' 'vicmd'; do
+	# Jumping through lines.
+	bindkey -M "$keymap" "$key_info[Control]Z" fzf-cd-widget
+done
+unset keymap

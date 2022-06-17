@@ -142,7 +142,7 @@ done
 # Keymaps for vicmd.
 for keymap in 'vicmd'; do
 	# Edit command in an external editor.
-	bindkey -M  "$keymap" "$key_info[Control]X" edit-command-line
+	bindkey -M  "$keymap" "$key_info[Control]E" edit-command-line
 
 	# Incremental search.
 	if (( $+widgets[history-incremental-pattern-search-backward] )); then
@@ -168,7 +168,7 @@ for keymap in 'viins'; do
 	bindkey -M "$keymap" "$key_info[BackTab]" reverse-menu-complete
 
 	# Expand command name to full path.
-	for key in "$key_info[Escape]"{E,e}
+	for key in "$key_info[Control]Xp"
 		bindkey -M "$keymap" "$key" expand-cmd-path
 
 	# Useful in 'autosuggestions'.
