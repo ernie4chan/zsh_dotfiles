@@ -14,15 +14,17 @@ if (( ! $+commands[tmux] )); then
 	return 1
 fi
 
-# Load specific Tmux configs and aliases.
-if is-callable 'tmux'; then alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"; fi
-alias tmuxa="tmux $_tmux_iterm_integration new-session -A"
-alias tmuxl="tmux list-sessions"
-
 # Integrate with iTerm2.
 if ([[ "$LC_TERMINAL" = 'iTerm2' ]] && \
 	zstyle -t ':e4czmod:module:tmux:iterm' integrate ); then
 	_tmux_iterm_integration='-CC'
+fi
+
+# Load specific Tmux configs and aliases.
+if is-callable "tmux"; then
+		alias tmux="tmux -u -f $HOME/.zsh/tmuxrc"
+		alias tmuxa="tmux $_tmux_iterm_integration new-session -A"
+		alias tmuxl="tmux list-sessions"
 fi
 
 # Loading Tmux.

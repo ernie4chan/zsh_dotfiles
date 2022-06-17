@@ -1,7 +1,13 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=4 sts=2 ft=zsh
+#
+# File: ./hist_sub_search/init.zsh
 #
 # Integrates History-Substring-Search.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Source module files.
 if (( ! $+functions[history-substring-search-up] )); then
@@ -30,15 +36,8 @@ if ! zstyle -T ':e4czmod:module:history-substring-search' color; then
 fi
 
 # Keybindings.
-bindkey -M emacs "^P" history-substring-search-up
-bindkey -M emacs "^N" history-substring-search-down
-
 bindkey -M vicmd "k" history-substring-search-up
 bindkey -M vicmd "j" history-substring-search-down
 
-for keymap in 'emacs' 'viins'; do
-	bindkey -M "$keymap" "[Up]" history-substring-search-up
-	bindkey -M "$keymap" "[Down]" history-substring-search-down
-done
-
-unset keymap
+bindkey -M viins "[Up]" history-substring-search-up
+bindkey -M viins "[Down]" history-substring-search-down

@@ -1,7 +1,13 @@
-# vim: ts=2 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=4 ts=2 ft=zsh
+#
+# File: ./prompt/init.zsh
 #
 # Loads prompt themes.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Load and execute the prompt theming system.
 autoload -Uz promptinit && promptinit

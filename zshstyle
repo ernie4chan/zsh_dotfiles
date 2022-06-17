@@ -58,9 +58,6 @@ zstyle ':e4czmod:module:tmux:iterm' integrate 'no'
 
 # {{{ --- Editor. ---
 
-# Key mapping style to 'emacs' or 'vi'.
-zstyle ':e4czmod:module:editor' key-bindings 'vi'
-
 # Auto convert .... to ../..
 zstyle ':e4czmod:module:editor' dot-expansion 'yes'
 
