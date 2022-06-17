@@ -1,7 +1,13 @@
-# vim: ts=4 ft=zsh
+# ---------------------------------------------------------
+# vim: ts=4 sts=2 ft=zsh
+#
+# File: ./gnu_utility/init.zsh
 #
 # Provides for the interactive use of GNU utilities on BSD systems.
 #
+# Author: Ernie Lin
+# Update: 2022-06-10
+# ---------------------------------------------------------
 
 # Get the prefix or use the default.
 zstyle -s ':e4czmod:module:gnu-utility' prefix '_gnu_utility_p' || \
