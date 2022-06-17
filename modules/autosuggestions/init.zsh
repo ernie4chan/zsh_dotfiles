@@ -61,7 +61,3 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
 
 # }}}
-
-# Keybindings.
-bindkey -M viins "^F" vi-forward-word
-bindkey -M viins "^E" vi-add-eol

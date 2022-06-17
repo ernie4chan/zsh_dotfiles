@@ -39,5 +39,5 @@ fi
 bindkey -M vicmd "k" history-substring-search-up
 bindkey -M vicmd "j" history-substring-search-down
 
-bindkey -M viins "[Up]" history-substring-search-up
-bindkey -M viins "[Down]" history-substring-search-down
+bindkey -M viins "$key_info[Up]" history-substring-search-up
+bindkey -M viins "$key_info[Down]" history-substring-search-down
