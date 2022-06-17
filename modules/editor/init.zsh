@@ -23,7 +23,7 @@ bindkey -M vicmd "^X" edit-command-line
 
 # }}}
 
-# {{{ --- Expand dots. ---
+# {{{ --- Custom keybindings. ---
 
 # Load function to expand '....' to '../..'.
 zle -N expand-dot-to-parent-directory-path
@@ -35,6 +35,19 @@ if zstyle -t ':e4czmod:module:editor' dot-expansion; then
 	# Do not expand '....' to '../..' during incremental search.
 	bindkey -M isearch "." self-insert 2> /dev/null
 fi
+
+# Expand history on space.
+bindkey -M viins ' ' magic-space
+
+# Search.
+if (( $+widgets[history-incremental-pattern-search-backward] )); then
+  bindkey -M vicmd "?" history-incremental-pattern-search-backward
+  bindkey -M vicmd "/" history-incremental-pattern-search-forward
+else
+  bindkey -M vicmd "?" history-incremental-search-backward
+  bindkey -M vicmd "/" history-incremental-search-forward
+fi
+
 # }}}
 
 # {{{ --- Layout. ---
