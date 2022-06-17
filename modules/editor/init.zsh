@@ -132,13 +132,6 @@ bindkey -M viins "$key_info[Control]_" undo
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
-# Keymaps for viins & vicmd.
-for keymap in 'viins' 'vicmd'; do
-	# Jumping through lines.
-	bindkey -M "$keymap" "$key_info[Home]" beginning-of-line
-	bindkey -M "$keymap" "$key_info[End]" end-of-line
-done
-
 # Keymaps for vicmd.
 for keymap in 'vicmd'; do
 	# Edit command in an external editor.
@@ -178,8 +171,13 @@ for keymap in 'viins'; do
 
 	# Expand history on space.
 	bindkey -M "$keymap" ' ' magic-space
+done
 
-
+# Keymaps for viins & vicmd.
+for keymap in 'viins' 'vicmd'; do
+	# Jumping through lines.
+	bindkey -M "$keymap" "$key_info[Home]" beginning-of-line
+	bindkey -M "$keymap" "$key_info[End]" end-of-line
 done
 
 # }}}
