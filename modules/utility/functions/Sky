@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#function Sky {
+
+curl wttr.in/"$*"
+
+#caba="Sky caba\?0pq"
+
+#}

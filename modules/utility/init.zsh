@@ -80,12 +80,6 @@ if zstyle -T ':e4czmod:module:aliases' safe-ops; then
 	alias rm="${aliases[rm]:-rm} -i"
 fi
 
-alias Sky=curl wttr.in/"$*"
-alias caba="Sky caba\?0pq"
-alias taipei="Sky taipei\?0pq"
-alias taichung="Sky taichung\?0pq"
-alias tainan="Sky tainan\?0pq"
-
 # 3rd-Party Apps:
 if is-callable 'abcde'; then alias abcde="abcde -c ~/.config/abcde/abcde.cfg"; fi
 if is-callable 'irssi'; then alias irssi="TERM=screen-256color \
