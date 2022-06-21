@@ -81,11 +81,9 @@ if zstyle -T ':e4czmod:module:aliases' safe-ops; then
 fi
 
 # 3rd-Party Apps:
-if is-callable 'abcde'; then alias abcde="abcde -c ~/.config/abcde/abcde.cfg"; fi
-if is-callable 'irssi'; then alias irssi="TERM=screen-256color \
-	irssi --home=~/.config/irssi"; fi
+if is-callable 'abcde'; then alias abcde="abcde -c $HOME/.config/abcde/abcde.cfg"; fi
+if is-callable 'irssi'; then alias irssi="irssi --home=$HOME/.config/irssi"; fi
 if is-callable 'lynx'; then alias lynx="lynx -cfg=$HOME/.config/lynx/lynx.cfg"; fi
-if is-callable 'mc'; then alias mc="mc -ux"; fi
 if is-callable 'tree'; then alias shu='tree -N -L 2'; fi
 
 # }}}
