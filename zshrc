@@ -27,17 +27,19 @@ zshstyle="${ZDOTDIR:-$HOME/.zsh}/zshstyle"
 zstyle ':e4czmod:load' pmodule \
 	'helper' \
 	'environment' \
-	'tmux' \
 	'prompt' \
 	'editor' \
 	'utility' \
 	'gpg' \
 	'fzf' \
-	'macos' \
 	'completions' \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions'
+
+# Free Styles
+#	'tmux'
+#	'macos'
 
 # Load Modules.
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
