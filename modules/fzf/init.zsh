@@ -31,8 +31,8 @@ fi
 
 
 # Modify default Alt+C.
-for keymap in 'viins' 'vicmd'; do
-	# Jumping through lines.
-	bindkey -M "$keymap" "$key_info[Control]Z" fzf-cd-widget
-done
-unset keymap
+#for keymap in 'viins' 'vicmd'; do
+#	# Jumping through lines.
+#	bindkey -M "$keymap" "$key_info[Control]Z" fzf-cd-widget
+#done
+#unset keymap
