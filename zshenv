@@ -34,5 +34,6 @@ manpath=(
 
 path=(
 	/usr/local/{,s}bin
+	$HOME/.local/{,s}bin
 	$path
 )
