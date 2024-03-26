@@ -9,23 +9,6 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
-# Execute code that does not affect the current session in the background.
-{
-	# Compile the completion dump to increase startup speed.
-	zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-
-	if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-		zcompile "$zcompdump"
-	fi
-
-} &!
-
-# Execute code only if STDERR is bound to a TTY.
-[[ -o INTERACTIVE && -t 2 ]] && {
-	# Print a random, hopefully interesting, adage.
-	if (( $+commands[fortune] )); then
-		fortune -s
-		print
-	fi
-
-} >&2
+# For WSL2
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+export LIBGL_ALWAYS_INDIRECT=1
