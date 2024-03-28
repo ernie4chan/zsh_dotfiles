@@ -34,7 +34,7 @@ function pmodload {
 		fi
 	done
 
-	pmodule_dirs=("$ZFOLDER/modules" "$ZFOLDER/contrib" "$user_pmodule_dirs[@]")
+	pmodule_dirs=("$ZDOTDIR/modules" "$ZDOTDIR/contrib" "$user_pmodule_dirs[@]")
 
 	# $argv is overridden in the anonymous function.
 	pmodules=("$argv[@]")
@@ -106,7 +106,7 @@ function pmodload {
 
 # This needs to be done here because inside the pmodload function ${0:h}
 #  evaluates to the current directory of the shel.
-ZFOLDER=${0:h}
+ZDOTDIR=${0:h}
 
 # Load Zsh modules.
 zstyle -a ':e4czmod:load' zmodule 'zmodules'

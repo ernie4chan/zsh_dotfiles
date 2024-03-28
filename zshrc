@@ -36,8 +36,7 @@ zstyle ':e4czmod:load' pmodule \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions'
-
-# Free Styles
+# Unloaded Modules!
 #	'tmux'
 #	'macos'
 
@@ -46,3 +45,24 @@ zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ ! -f "$zshinit" ]] || source "$zshinit"
 
 unset {zshstyle,zshinit}
+
+# Execute code that does not affect the current session in the background.
+{
+# Compile the completion dump to increase startup speed.
+_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+if [[ -s "$_comp_path" && (! -s "${_comp_path}.zwc" || "$_comp_path" -nt "${_comp_path}.zwc") ]]; then
+		zcompile "$_comp_path"
+fi
+unset _comp_path
+} &!
+
+# Remove unwated init files.
+_unwanted_file="${HOME}/.zcompdump"
+if [[ -f "$_unwanted_file" ]]; then
+		rm "$_unwanted_file"
+fi
+unset _unwanted_file
+
+# For WSL2.
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+export LIBGL_ALWAYS_INDIRECT=1

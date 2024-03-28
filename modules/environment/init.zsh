@@ -55,7 +55,7 @@ fi
 # {{{ --- Zsh History. ---
 
 # Preferences.
-export HISTFILE="${ZDOTDIR:-$HOME}/.zsh_history"
+export HISTFILE="${HOME}/.zsh_history"
 export HISTSIZE=10000	# Maximum history events in mem.
 export SAVEHIST=50000	# Maximum history file size.
 
