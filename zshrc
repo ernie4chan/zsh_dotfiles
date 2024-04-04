@@ -32,6 +32,7 @@ zstyle ':e4czmod:load' pmodule \
 	'utility' \
 	'gpg' \
 	'fzf' \
+	'wsl2' \
 	'completions' \
 	'syn_highlight' \
 	'hist_sub_search' \
@@ -55,14 +56,3 @@ if [[ -s "$_comp_path" && (! -s "${_comp_path}.zwc" || "$_comp_path" -nt "${_com
 fi
 unset _comp_path
 } &!
-
-# Remove unwated init files.
-_unwanted_file="${HOME}/.zcompdump"
-if [[ -f "$_unwanted_file" ]]; then
-		rm "$_unwanted_file"
-fi
-unset _unwanted_file
-
-# For WSL2.
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
-export LIBGL_ALWAYS_INDIRECT=1

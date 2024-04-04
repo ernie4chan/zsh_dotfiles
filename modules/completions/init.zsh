@@ -37,6 +37,13 @@ else
 fi
 unset _comp_path
 
+# Remove unwated init files.
+_unwanted_file="${HOME}/.zcompdump"
+if [[ -f "$_unwanted_file" ]]; then
+		rm "$_unwanted_file"
+fi
+unset _unwanted_file
+
 # }}}
 
 # {{{ --- Zsh Style Table for Completions. ---
