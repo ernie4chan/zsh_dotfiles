@@ -23,7 +23,7 @@
 zshstyle="${ZDOTDIR:-$HOME/.zsh}/zshstyle"
 [[ ! -f "$zshstyle" ]] || source "$zshstyle"
 
-# Read Modules! Remember that order matters.
+# Load Modules. The order matters.
 zstyle ':e4czmod:load' pmodule \
 	'helper' \
 	'environment' \
@@ -37,22 +37,10 @@ zstyle ':e4czmod:load' pmodule \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions'
-# Unloaded Modules!
+# Modules not loaded:
 #	'tmux'
 #	'macos'
-
-# Load Modules.
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ ! -f "$zshinit" ]] || source "$zshinit"
 
 unset {zshstyle,zshinit}
-
-# Execute code that does not affect the current session in the background.
-{
-# Compile the completion dump to increase startup speed.
-_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-if [[ -s "$_comp_path" && (! -s "${_comp_path}.zwc" || "$_comp_path" -nt "${_comp_path}.zwc") ]]; then
-		zcompile "$_comp_path"
-fi
-unset _comp_path
-} &!
