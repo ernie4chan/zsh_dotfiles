@@ -9,40 +9,33 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
-# Ensure arrays do not contain duplicates.
-typeset -xUT CDPATH cdpath
-typeset -xUT FPATH fpath
-typeset -xUT INFOPATH infopath
-typeset -xUT LD_LIBRARY_PATH ld_library_path
-typeset -xUT MANPATH manpath
-typeset -xUT PATH path
-
-# List directories that searches for shell functions.
-cdpath=(
+# Ensure the data are:
+# (1) -x, export to parameter; (2) -U, keey array values unique; (3) -T, tie scalar to array.
+typeset -xUT CDPATH cdpath=(
 	$HOME/Projects
 	$cdpath
 )
 
-fpath=(
+typeset -xUT FPATH fpath=(
 	$fpath
 )
 
-infopath=(
+typeset -xUT INFOPATH infopath=(
 	/usr/{local/,}share/info
 	$infopath
 )
 
-ld_library_path=(
+typeset -xUT LD_LIBRARY_PATH ld_library_path=(
 	/usr/local/cuda/lib64
 	$ld_library_path
 )
 
-manpath=(
+typeset -xUT MANPATH manpath=(
 	/usr/{local/,}share/man
 	$manpath
 )
 
-path=(
+typeset -xUT PATH path=(
 	/usr/local/cuda/bin
 	/usr/local/{,s}bin
 	$HOME/.local/{,s}bin
