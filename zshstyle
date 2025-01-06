@@ -88,7 +88,7 @@ zstyle ':e4czmod:module:aliases:grep' color 'yes'
 # {{{ --- SSH & GPG. ---
 
 # SSH.
-zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_rsa2' 'id_github'
+zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_ed25519' 'id_github'
 
 # }}}
 
