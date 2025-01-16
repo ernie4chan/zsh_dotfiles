@@ -29,8 +29,8 @@ zstyle ':e4czmod:load' pmodule \
 	'environment' \
 	'prompt' \
 	'editor' \
-	'utility' \
 	'gpg' \
+	'utility' \
 	'fzf' \
 	'wsl2' \
 	'completions' \
