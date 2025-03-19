@@ -19,8 +19,9 @@ _gpg_agent_env="${XDG_CACHE_HOME:-$HOME/.cache}/gpg/gpg-agent.env"
 # Load environment variables from previous run.
 source "$_gpg_agent_env" 2> /dev/null
 
-# Start gpg-agent if not started.
-if [[ -z "$GPG_AGENT_INFO" && ! -S "${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent" ]]; then
+# Resume gpg-agent if started.
+if [[ -z "$GPG_AGENT_INFO" && ! -S "${GNUPGHOME:-$HOME/.gnupg}/S.gpg-agent" \
+		&& ! -S "/run/user/$(id -u)/gnupg/S.gpg-agent" ]]; then
 	# Start gpg-agent if not started.
 	if ! ps -U "$LOGNAME" -o pid,ucomm | grep -q -- "${${${(s.:.)GPG_AGENT_INFO}[2]}:--1} gpg-agent"; then
 	mkdir -p "$_gpg_agent_env:h"
