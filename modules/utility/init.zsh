@@ -73,6 +73,7 @@ if is-callable 'abcde'; then alias abcde="abcde -c $HOME/.config/abcde/abcde.cfg
 if is-callable 'irssi'; then alias irssi="irssi --home=$HOME/.config/irssi"; fi
 if is-callable 'lynx'; then alias lynx="lynx -cfg=$HOME/.config/lynx/lynx.cfg"; fi
 if is-callable 'tree'; then alias shu='tree -N -L 2'; fi
+if is-callable 'wget'; then alias wget='wget --hsts-file=~/.wget_history'; fi
 
 # }}}
 
