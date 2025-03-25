@@ -64,14 +64,30 @@ if zstyle -T ':e4czmod:module:aliases' safe-ops; then
 	for cmd in $cmdis; do
 		alias "$cmd"="${aliases[$cmd]:-$cmd} -i"
 	done
+
+	unset cmdis cmd
 fi
 
-# 3rd-Party Apps:
-if is-callable 'abcde'; then alias abcde="abcde -c $HOME/.config/abcde/abcde.cfg"; fi
-if is-callable 'irssi'; then alias irssi="irssi --home=$HOME/.config/irssi"; fi
-if is-callable 'lynx'; then alias lynx="lynx -cfg=$HOME/.config/lynx/lynx.cfg"; fi
-if is-callable 'tree'; then alias shu='tree -N -L 2'; fi
-if is-callable 'wget'; then alias wget='wget --hsts-file=~/.wget_history'; fi
+# Define commands and their alias settings
+cmdas=(
+  "abcde|abcde -c \$HOME/.config/abcde/abcde.cfg"
+  "irssi|irssi --home=\$HOME/.config/irssi"
+  "lynx|lynx -cfg=\$HOME/.config/lynx/lynx.cfg"
+  "tree|tree -N -L 2"
+  "wget|wget --hsts-file=\$HOME/.wget_history"
+)
+
+# Loop through the commands and check if they are callable
+for cmd_alias in $cmdas; do
+  cmd=$(echo $cmd_alias | cut -d'|' -f1)
+  alias_cmd=$(echo $cmd_alias | cut -d'|' -f2)
+
+  if is-callable "$cmd" ; then
+    alias $cmd="$alias_cmd"
+  fi
+done
+
+unset cmdas cmd alias_cmd
 
 # }}}
 

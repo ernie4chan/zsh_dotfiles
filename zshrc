@@ -32,12 +32,12 @@ zstyle ':e4czmod:load' pmodule \
 	'gpg' \
 	'utility' \
 	'fzf' \
-	'wsl2' \
 	'completions' \
 	'syn_highlight' \
 	'hist_sub_search' \
 	'autosuggestions'
 # Modules not loaded:
+#	'wsl2'
 #	'tmux'
 #	'macos'
 
