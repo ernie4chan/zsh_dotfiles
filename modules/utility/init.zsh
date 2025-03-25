@@ -35,7 +35,7 @@ alias ftp='noglob ftp'
 alias sftp='noglob sftp'
 
 # Lists the ten most used commands.
-alias key-stats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+alias keystats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 # Surfing directory on steroids.
 for index in {1..9}; do
@@ -51,7 +51,7 @@ alias diffu="diff --unified"
 alias fixtty='stty sane'		# Restore terminal settings when screwed up.
 alias ga='alias | grep -i'
 alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias myip='echo "Current IP is $(curl -s ifconfig.co)"' # Published IP add.
+alias myip='echo "The current IP is $(curl -s ifconfig.co)"' # Published IP add.
 alias po='popd'
 alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT.
 alias pu='pushd'

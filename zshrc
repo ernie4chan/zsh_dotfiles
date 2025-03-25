@@ -40,6 +40,7 @@ zstyle ':e4czmod:load' pmodule \
 #	'wsl2'
 #	'tmux'
 #	'macos'
+#	'gnu_utility'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ ! -f "$zshinit" ]] || source "$zshinit"
