@@ -66,7 +66,7 @@ zstyle ':e4czmod:module:editor' dot-expansion 'yes'
 # {{{ --- Utility. ---
 
 # Enabled safe operations
-zstyle ':e4czmod:module:aliases' safe-ops 'no'
+zstyle ':e5czmod:module:aliases' safe-ops 'yes'
 
 # To disable all spelling corrections.
 zstyle ':e4czmod:module:aliases' correct 'no'

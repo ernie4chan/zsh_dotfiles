@@ -38,14 +38,14 @@ alias sftp='noglob sftp'
 alias key-stats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 # Surfing directory on steroids.
-alias 0='dirs -v'				# List last used directories.
-
 for index in {1..9}; do
 	alias "${index}"="cd +${index}"
 	alias ".${index}"="cd $(printf "%0.s../" $(seq 1 ${index}))"
 done
 
 unset index
+
+alias 0='dirs -v'				# List last used directories.
 
 alias diffu="diff --unified"
 alias fixtty='stty sane'		# Restore terminal settings when screwed up.
@@ -58,15 +58,12 @@ alias pu='pushd'
 alias py3='python3'				# Redifining python3 shell.
 
 # Safe ops. Ask the user before doing anything destructive.
-alias cpi="${aliases[cp]:-cp} -i"
-alias lni="${aliases[ln]:-ln} -i"
-alias mvi="${aliases[mv]:-mv} -i"
-alias rmi="${aliases[rm]:-rm} -i"
 if zstyle -T ':e4czmod:module:aliases' safe-ops; then
-	alias cp="${aliases[cp]:-cp} -i"
-	alias ln="${aliases[ln]:-ln} -i"
-	alias mv="${aliases[mv]:-mv} -i"
-	alias rm="${aliases[rm]:-rm} -i"
+	cmdis=(cp ln mv rm)
+
+	for cmd in $cmdis; do
+		alias "$cmd"="${aliases[$cmd]:-$cmd} -i"
+	done
 fi
 
 # 3rd-Party Apps:
