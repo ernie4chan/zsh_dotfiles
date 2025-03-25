@@ -34,27 +34,28 @@ alias rm='nocorrect rm'
 alias ftp='noglob ftp'
 alias sftp='noglob sftp'
 
+# Lists the ten most used commands.
+alias key-stats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+
 # Surfing directory on steroids.
-alias diffu="diff --unified"
-alias mkdir="${aliases[mkdir]:-mkdir} -p"
-alias po='popd'
-alias pu='pushd'
-alias ga='alias | grep -i'
 alias 0='dirs -v'				# List last used directories.
 
 for index in {1..9}; do
 	alias "${index}"="cd +${index}"
 	alias ".${index}"="cd $(printf "%0.s../" $(seq 1 ${index}))"
 done
+
 unset index
 
+alias diffu="diff --unified"
 alias fixtty='stty sane'		# Restore terminal settings when screwed up.
+alias ga='alias | grep -i'
+alias mkdir="${aliases[mkdir]:-mkdir} -p"
 alias myip='echo "Current IP is $(curl -s ifconfig.co)"' # Published IP add.
+alias po='popd'
 alias ptt='ssh bbsu@ptt.cc'		# Open up BBS: PTT.
+alias pu='pushd'
 alias py3='python3'				# Redifining python3 shell.
-
-# Lists the ten most used commands.
-alias key-stats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 
 # Safe ops. Ask the user before doing anything destructive.
 alias cpi="${aliases[cp]:-cp} -i"
