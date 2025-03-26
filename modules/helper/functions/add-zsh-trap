@@ -1,43 +1,38 @@
-# vim: ts=2 ft=zsh
-
+# ---------------------------------------------------------
+# vim: ts=4 ts=2 ft=zsh
 #
-# Provides for trapping UNIX signals and calling callback functions when a trap
-# is triggered.
+# File: ./helper/functions/add-zsh-trap.sh
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
+# Provides for trapping UNIX signals and calling callback functions
+# when a trap is triggered.
 #
+# Author: Ernie Lin
+# Update: 2025/03/26 with help of ChatGPT
+# ---------------------------------------------------------
 
 # Adds a function name to a list to be called when a trap is triggered.
-function add-zsh-trap {
-	if (( $# < 2 )); then
-		print "usage: $0 type function" >&2
-		return 1
-	fi
-
-	if [[ -z "$signals[(r)$1]" ]]; then
-		print "$0: unknown signal: $1" >&2
-		return 1
-	fi
+add-zsh-trap() {
+	# Validate inputs.
+	(( $# < 2 )) && print "usage: $0 type function" >&2 && return 1
+	[[ -z "$signals[(r)$1]" ]] && print "$0: unknown signal: $1" >&2 && return 1
 
 	local trap_functions="TRAP${1}_FUNCTIONS"
-	if (( ! ${(P)+trap_functions} )); then
-		typeset -gaU "$trap_functions"
-	fi
-	eval "$trap_functions+="$2""
 
-	if (( ! $+functions[TRAP${1}] )); then
-	eval "
+	# Initialize the array if not already defined.
+	(( ! ${(P)+trap_functions} )) && typeset -gaU "$trap_functions"
+
+  # Add the function name to the trap function list.
+	eval "$trap_functions+=$2"
+
+	# Define the trap function if not already defined
+	(( ! $+functions[TRAP${1}] )) && eval "
 		function TRAP${1} {
 			for trap_function in \"\$TRAP${1}_FUNCTIONS[@]\"; do
-				if (( \$+functions[\$trap_function] )); then
-					\"\$trap_function\" \"\$1\"
-				fi
+				\"\$trap_function\" \"\$1\"
 			done
 			return \$(( 128 + \$1 ))
 		}
 	"
-	fi
 }
 
 add-zsh-trap "$@"
