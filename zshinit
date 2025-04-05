@@ -19,102 +19,110 @@ unset min_zsh_version
 
 # Loading modules.
 function pmodload {
-	local -a pmodules
-	local -a pmodule_dirs
-	local -a locations
-	local pmodule
-	local pmodule_location
-	local pfunction_glob='^([_.]*|prompt_*_setup|README*|*~)(-.N:t)'
+    local -a pmodules pmodule_dirs locations
+    local pmodule pmodule_location
+    local pfunction_glob='^([_.]*|prompt_*_setup|README*|*~)(-.N:t)'
 
 	# Load in any additional directories and warn if they don't exist.
 	zstyle -a ':e4czmod:load' pmodule-dirs 'user_pmodule_dirs'
-	for user_dir in "$user_pmodule_dirs[@]"; do
-		if [[ ! -d "$user_dir" ]]; then
-			echo "$0: Missing user module dir: $user_dir"
-		fi
+	for user_dir in ${(u)user_pmodule_dirs}; do
+		[[ -d "$user_dir" ]] || echo "$0: Missing user module dir: $user_dir"
 	done
 
-	pmodule_dirs=("$ZDOTDIR/modules" "$ZDOTDIR/contrib" "$user_pmodule_dirs[@]")
+    # Consolidated module directories with default fallbacks
+    pmodule_dirs=(
+        "$ZDOTDIR/modules"
+        "$ZDOTDIR/contrib"
+        "${user_pmodule_dirs[@]}"
+    )
 
 	# $argv is overridden in the anonymous function.
 	pmodules=("$argv[@]")
 
-	# Load pmodules.
-	for pmodule in "$pmodules[@]"; do
-		if zstyle -t ":e4czmod:module:$pmodule" loaded 'yes' 'no'; then
-			continue
-		else
-			locations=(${pmodule_dirs:+${^pmodule_dirs}/$pmodule(-/FN)})
-			if (( ${#locations} > 1 )); then
-				if ! zstyle -t ':e4czmod:load' pmodule-allow-overrides 'yes'; then
-					print "$0: conflicting module locations: $locations"
-					continue
-				fi
-			elif (( ${#locations} < 1 )); then
-				print "$0: no such module: $pmodule"
-				continue
-			fi
+    # Load pmodules.
+    for pmodule in ${pmodules}; do
+        # Skip if module is already loaded
+        zstyle -t ":e4czmod:module:$pmodule" loaded 'yes' 'no' && continue
+    
+        # Find module locations
+        locations=(${pmodule_dirs:+${^pmodule_dirs}/$pmodule(-/FN)})
+    
+        # Handle module location cases
+        case ${#locations} in
+            0) 
+                print "$0: no such module: $pmodule"
+                continue
+                ;;
+            1) 
+                ;;
+            *) 
+                zstyle -t ':e4czmod:load' pmodule-allow-overrides 'yes' || {
+                    print "$0: conflicting module locations: $locations"
+                    continue
+                }
+                ;;
+        esac
+    
+        # Grab the full path to this module.
+        pmodule_location=${locations[1]}
+        
+        # Add functions to $fpath.
+        fpath=(${pmodule_location}/functions(-/FN) $fpath)
+        
+        # Load functions using anonymous function
+        () {
+            # Extended globbing is needed for listing autoloadable function directories.
+            setopt LOCAL_OPTIONS EXTENDED_GLOB
+            
+            # Load functions.
+            for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
+                autoload -Uz "$pfunction"
+            done
+        }
 
-			# Grab the full path to this module.
-			pmodule_location=${locations[1]}
-
-			# Add functions to $fpath.
-			fpath=(${pmodule_location}/functions(-/FN) $fpath)
-
-			function {
-				local pfunction
-
-				# Extended globbing is needed for listing autoloadable function directories.
-				setopt LOCAL_OPTIONS EXTENDED_GLOB
-
-				# Load functions.
-				for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
-					autoload -Uz "$pfunction"
-				done
-			}
-
-			if [[ -s "${pmodule_location}/init.zsh" ]]; then
+        # Source initialization file.
+		{
+			[[ -s "${pmodule_location}/init.zsh" ]] && \
 				source "${pmodule_location}/init.zsh"
-			elif [[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]]; then
+		} || {
+			[[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]] && \
 				source "${pmodule_location}/${pmodule}.plugin.zsh"
-			fi
+		}
 
-			if (( $? == 0 )); then
-				zstyle ":e4czmod:module:$pmodule" loaded 'yes'
-			else
-				# Remove the $fpath entry.
-				fpath[(r)${pmodule_location}/functions]=()
-
-				function {
-					local pfunction
-
-					# Extended globbing is needed for listing autoloadable function
-					#  directories.
-					setopt LOCAL_OPTIONS EXTENDED_GLOB
-
-					# Unload functions.
-					for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
-						unfunction "$pfunction"
-					done
-				}
-
-				zstyle ":e4czmod:module:$pmodule" loaded 'no'
-			fi
-		fi
-	done
+        # Handle success or failure based on last command status
+        (( $? == 0 )) && {
+            zstyle ":e4czmod:module:$pmodule" loaded 'yes'
+        } || {
+            # Clean up on failure
+            fpath[(r)${pmodule_location}/functions]=()
+            
+            # Load functions using anonymous function
+            () {
+                # Extended globbing is needed for listing autoloadable function directories.
+                setopt LOCAL_OPTIONS EXTENDED_GLOB
+                
+                # Load functions.
+                for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
+                    autoload -Uz "$pfunction"
+                done
+            }
+        
+            zstyle ":e4czmod:module:$pmodule" loaded 'no'
+        }
+    done
 }
 
 # This needs to be done here because inside the pmodload function ${0:h}
 #  evaluates to the current directory of the shel.
 ZDOTDIR=${0:h}
 
+# Load more specific 'run-help' function from $fpath.
+(( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
+
 # Load Zsh modules.
 zstyle -a ':e4czmod:load' zmodule 'zmodules'
 for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
 unset zmodule{s,}
-
-# Load more specific 'run-help' function from $fpath.
-(( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
 
 # Autoload Zsh functions.
 zstyle -a ':e4czmod:load' zfunction 'zfunctions'

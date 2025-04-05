@@ -9,6 +9,9 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
+# Load dependencies.
+pmodload 'helper' 'spectrum'
+
 # Correct commands.
 if zstyle -T ':e4czmod:module:aliases' correct; then
 	setopt CORRECT

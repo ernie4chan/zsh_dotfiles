@@ -9,19 +9,13 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
-# {{{ --- Pager, Editors & Browsers. ---
+# {{{ --- Pager & Editors. ---
 
-# Shell language.
-if [[ -z "$LANG" ]]; then
-	export LC_ALL='en_US.UTF-8'
-	export LANG='en_US.UTF-8'
-fi
-
-# Less Preferences.
-export LESSHISTFILE="$HOME/.less_history"
-export LESSEDIT='vim ?lm+%lm. %f'
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-export LESS='-g -i -M -R -S -w -X -z-4'
+# Override settings for dumb/linux/bsd terminals
+[[ "$TERM" == (dumb|linux|*bsd*) ]] && {
+	zstyle ':e4czmod:*:*' color 'no'
+	zstyle ':e4czmod:module:prompt' theme 'off'
+}
 
 # Termcap.
 if zstyle -t ':e4czmod:environment:termcap' color; then
@@ -34,30 +28,32 @@ if zstyle -t ':e4czmod:environment:termcap' color; then
 	export LESS_TERMCAP_us=$'\E[01;32m'		# Begins underline.
 fi
 
-# Preferred apps.
-export EDITOR='vim'
-export PAGER='less'
+# Shell language.
+export LANG=${LANG:-en_US.UTF-8}
+export LC_ALL=${LC_ALL:-$LANG}
 
-if is-linux; then
-	export VISUAL='gvim'
-elif is-darwin; then
-	export VISUAL='mvim'
-fi
+# Less Preferences.
+export LESSHISTFILE="$HOME/.less_history"
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+export LESS=${LESS:-'-g -i -M -R -S -w -X -z-4'}
+export LESSEDIT='vim "+%lm" "%f"'
 
-if (( $+commands[xdg-open] )); then
-	export BROWSER='xdg-open'
-elif (( $+commands[open] )); then
-	export BROWSER='open'
-fi
+# Set the default applications.
+export PAGER="${PAGER:-less}"
+export EDITOR="${EDITOR:-vim}"
+export VISUAL="${VISUAL:-vim}"
 
 # }}}
 
 # {{{ --- Zsh History. ---
 
 # Preferences.
-export HISTFILE="${HOME}/.zsh_history"
-export HISTSIZE=10000	# Maximum history events in mem.
-export SAVEHIST=50000	# Maximum history file size.
+HISTFILE="${HOME}/.zsh_history"
+
+zstyle -s ':e4czmod:environment:history' histsize 'HISTSIZE' \
+    || HISTSIZE=10000		# Maximum history events in mem.
+zstyle -s ':e4czmod:enviromment:history' savehist 'SAVEHIST' \
+    || SAVEHIST=$HISTSIZE	# Maximum history file size.
 
 # History options.
 setopt BANG_HIST			# Treat the '!' character specially during expansion.
@@ -101,18 +97,7 @@ setopt PUSHD_TO_HOME	# Push to home directory when no argument is given.
 unsetopt CDABLE_VARS	# Do not Change directory to a path stored in a variable.
 
 # I/O.
-setopt EXTENDED_GLOB	# Use extended globbing syntax and needed with 'compinit'.
 setopt MULTIOS			# Write to multiple descriptors.
 unsetopt CLOBBER		# Do not overwrite existing files with > and >>, use >! and >>! to bypass.
-
-# Completion (also check 'Completions' module).
-setopt ALWAYS_TO_END	# Move cursor to the end of a completed word.
-setopt AUTO_LIST		# Automatically list choices on ambiguous completion.
-setopt AUTO_MENU		# Show completion menu on a successive tab press.
-setopt AUTO_PARAM_SLASH	# If completed parameter is a directory, add a trailing slash.
-setopt COMPLETE_IN_WORD	# Complete from both ends of a word.
-setopt PATH_DIRS		# Perform path search even on command names with slashes.
-unsetopt FLOW_CONTROL	# Disable start/stop characters in shell editor.
-unsetopt MENU_COMPLETE	# Do not autoselect the first completion entry.
 
 # }}}

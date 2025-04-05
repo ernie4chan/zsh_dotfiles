@@ -1,21 +1,19 @@
 # ---------------------------------------------------------
-# vim: ts=4 sts=2 ft=zsh
+# vim: ts=4 ft=zsh
 #
 # File: ./editor/init.zsh
 #
 # Define custom keybindings.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2025-03-29
 # ---------------------------------------------------------
 
+# Check if the terminal is dumb.
 # Return if requirements are not found.
 [[ "$TERM" == 'dumb' ]] && return 1
 
 # {{{ --- Overwrite default identifiers. ---
-
-# Treat these characters as part of a word. (Default in macOS)
-#WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
 
 # Use human-friendly identifiers.
 zmodload zsh/terminfo
@@ -40,48 +38,75 @@ key_info=(
 	'F10'			  "$terminfo[kf10]"
 	'F11'			  "$terminfo[kf11]"
 	'F12'			  "$terminfo[kf12]"
+	'Home'			  "$terminfo[khome]"
+	'End'			  "$terminfo[kend]"
+	'Insert'		  "$terminfo[kich1]"
 	'Backspace'		  "$terminfo[kbs]"
 	'Delete'		  "$terminfo[kdch1]"
-	'Insert'		  "$terminfo[kich1]"
-	'Home'			  "$terminfo[khome]"
-	'PageUp'		  "$terminfo[kpp]"
-	'End'			  "$terminfo[kend]"
-	'PageDown'		  "$terminfo[knp]"
 	'Up'			  "$terminfo[kcuu1]"
-	'Left'			  "$terminfo[kcub1]"
 	'Down'			  "$terminfo[kcud1]"
+	'Left'			  "$terminfo[kcub1]"
 	'Right'			  "$terminfo[kcuf1]"
+	'PageUp'		  "$terminfo[kpp]"
+	'PageDown'		  "$terminfo[knp]"
 	'BackTab'		  "$terminfo[kcbt]"
 )
 
 # Set empty $key_info values to an invalid UTF-8 sequence to induce
 # silent bindkey failure.
-for key in "${(k)key_info[@]}"; do
-	if [[ -z "$key_info[$key]" ]]; then
-		key_info[$key]='�'
-	fi
+for key ( ${(k)key_info} ); do
+	[[ -z ${key_info[$key]} ]] && key_info[$key]='�'
 done
-
-# }}}
-
-# {{{ --- Custom widgets. ---
-
-# Runs bindkey but for all of the keymaps. Running it with no arguments
-# will print out the mappings for all of the keymaps.
-function bindkey-all {
-	local keymap=''
-	for keymap in $(bindkey -l); do
-		[[ "$#" -eq 0 ]] && printf "#### %s\n" "${keymap}" 1>&2
-		bindkey -M "${keymap}" "$@"
-	done
-}
 
 # }}}
 
 # {{{ --- Custom keybindings. ---
 
-# Reset to default key bindings.
-bindkey -d
+# Treat these characters as part of a word.
+zstyle -s ':e4czmod:module:editor' wordchars 'WORDCHARS' \
+	|| WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+# Runs bindkey but for all of the keymaps. Running it with no arguments will
+# print out the mappings for all of the keymaps.
+function bindkey-all {
+	for keymap in ${(f)"$(bindkey -l)"}; do
+		(( $# == 0 )) && echo "#### ${keymap}" >&2
+		bindkey -M "${keymap}" "$@"
+	done
+}
+
+# Allow command line editing in an external editor.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+function expand-dot-to-parent-directory-path {
+	# If the buffer already ends with double dots, append a parent directory path
+	# Otherwise just add a dot
+	[[ $LBUFFER = *.. ]] && LBUFFER+='/..' || LBUFFER+='.'
+}
+zle -N expand-dot-to-parent-directory-path
+
+# Only bind the key if dot-expansion is enabled in zstyle
+zstyle -t ':e4czmod:module:editor' dot-expansion && \
+	bindkey -M viins "." expand-dot-to-parent-directory-path
+
+# Reset the prompt based on the current context and
+# the ps-context option.
+function zle-reset-prompt {
+    # If we aren't within one of the specified contexts, then we want to reset
+    # the prompt with the appropriate editor_info[keymap] if there is one.
+	if ! zstyle -t ':prezto:module:editor' ps-context || [[ $CONTEXT != (select|cont) ]]; then
+ 		zle reset-prompt
+		zle -R
+	fi
+}
+zle -N zle-reset-prompt
+
+# Updates editor information when the keymap changes.
+function zle-keymap-select {
+	zle editor-info
+}
+zle -N zle-keymap-select
 
 # Unbound keys in vicmd and viins mode will cause really odd things to happen
 # such as the casing of all the characters you have typed changing or other
@@ -90,6 +115,7 @@ bindkey -d
 # it will fall back and do nothing.
 function _prezto-zle-noop {  ; }
 zle -N _prezto-zle-noop
+
 local -a unbound_keys
 unbound_keys=(
 	"${key_info[F1]}"
@@ -109,76 +135,19 @@ unbound_keys=(
 	"${key_info[ControlPageUp]}"
 	"${key_info[ControlPageDown]}"
 )
+
 for keymap in $unbound_keys; do
-  bindkey -M viins "${keymap}" _prezto-zle-noop
-  bindkey -M vicmd "${keymap}" _prezto-zle-noop
+	bindkey -M viins "${keymap}" _prezto-zle-noop
+	bindkey -M vicmd "${keymap}" _prezto-zle-noop
 done
-
-# Expand '....' to '../..'.
-zle -N expand-dot-to-parent-directory-path
-if zstyle -t ':e4czmod:module:editor' dot-expansion; then
-	bindkey -M viins "." expand-dot-to-parent-directory-path
-
-	# Do not expand '....' to '../..' during incremental search.
-	bindkey -M isearch "." self-insert 2> /dev/null
-fi
 
 # Undo/Redo.
+#bindkey -M vicmd "u" undo				# Already set as default.
+#bindkey -M vicmd "$key_info[Control]R" redo	# Conflicts with fzf.
 bindkey -M viins "$key_info[Control]_" undo
-#bindkey -M vicmd "u" undo					  # Default bindkey.
-#bindkey -M vicmd "$key_info[Control]R" redo  # Conflicts with fzf.
 
-# Allow command line editing in an external editor.
-autoload -Uz edit-command-line
-zle -N edit-command-line
-
-# Keymaps for vicmd.
-for keymap in 'vicmd'; do
-	# Edit command in an external editor.
-	bindkey -M  "$keymap" "$key_info[Control]E" edit-command-line
-
-	# Incremental search.
-	if (( $+widgets[history-incremental-pattern-search-backward] )); then
-		bindkey -M "$keymap" "?" history-incremental-pattern-search-backward
-		bindkey -M "$keymap" "/" history-incremental-pattern-search-forward
-	else
-		bindkey -M "$keymap" "?" history-incremental-search-backward
-		bindkey -M "$keymap" "/" history-incremental-search-forward
-	fi
-done
-
-# Keymaps for viins.
-for keymap in 'viins'; do
-	# Defaults.
-	bindkey -M "$keymap" "$key_info[Insert]" overwrite-mode
-	bindkey -M "$keymap" "$key_info[Delete]" delete-char
-	bindkey -M "$keymap" "$key_info[Backspace]" backward-delete-char
-
-	bindkey -M "$keymap" "$key_info[Left]" backward-char
-	bindkey -M "$keymap" "$key_info[Right]" forward-char
-
-	# Bind Shift+Tab to go to the previous menu item.
-	bindkey -M "$keymap" "$key_info[BackTab]" reverse-menu-complete
-
-	# Expand command name to full path.
-	for key in "$key_info[Control]Xp"
-		bindkey -M "$keymap" "$key" expand-cmd-path
-
-	# Useful in 'autosuggestions'.
-    bindkey -M "$keymap" "$key_info[Control]B" vi-backward-word
-	bindkey -M "$keymap" "$key_info[Control]F" vi-forward-word
-	bindkey -M "$keymap" "$key_info[Control]E" vi-add-eol
-
-	# Expand history on space.
-	bindkey -M "$keymap" ' ' magic-space
-done
-
-# Keymaps for viins & vicmd.
-for keymap in 'viins' 'vicmd'; do
-	# Jumping through lines.
-	bindkey -M "$keymap" "$key_info[Home]" beginning-of-line
-	bindkey -M "$keymap" "$key_info[End]" end-of-line
-done
+# Toggle comment at the start of the line.
+#bindkey -M vicmd "#" vi-pound-insert	# Already set as default.
 
 # }}}
 
@@ -186,7 +155,6 @@ done
 
 # Set the key layout.
 bindkey -v
-export KEYTIMEOUT=1
 
 # Unset bindkey variables.
 unset key{,map}

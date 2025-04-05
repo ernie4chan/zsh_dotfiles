@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
-# vim: ts=2 ft=zsh
+# vim: ft=zsh
 #
-# File: .zlogin
+# File: .\zlogin
 #
 # Executes commands at login post-'.zshrc'.
 #
@@ -9,12 +9,22 @@
 # Update: 2022-06-10
 # ---------------------------------------------------------
 
-# Execute code that does not affect the current session in the background.
+# Remove unwated init files.
+#_unwanted_file="${HOME}/.zcompdump"
+#if [[ -f "$_unwanted_file" ]]; then
+	#command rm "$_unwanted_file"
+#fi
+#unset _unwanted_file
+
 {
-# Compile the completion dump to increase startup speed.
-_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-if [[ -s "$_comp_path" && (! -s "${_comp_path}.zwc" || "$_comp_path" -nt "${_comp_path}.zwc") ]]; then
-		zcompile "$_comp_path"
-fi
-unset _comp_path
+    # Define zcompdump path
+    zcompdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+
+    # Compile zcompdump if needed
+    command mkdir "${zcompdump}.zwc.lock" 2>/dev/null && \
+
+    [[ -s $zcompdump && (! -s ${zcompdump}.zwc || $zcompdump -nt ${zcompdump}.zwc) ]] && \
+    zcompile "$zcompdump"
+
+    command rmdir "${zcompdump}.zwc.lock" 2>/dev/null
 } &!

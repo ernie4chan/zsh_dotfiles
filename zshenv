@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
 # vim: ts=2 ft=zsh
 #
-# File: .zshenv
+# File: ./zshenv
 #
 # Shell environment variables, executed before ".zshrc".
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2025-04-01
 # ---------------------------------------------------------
 
 # Ensure the data are:
@@ -21,22 +21,16 @@ typeset -xUT FPATH fpath=(
 )
 
 typeset -xUT INFOPATH infopath=(
-	/usr/{local/,}share/info
+	/usr/{,local/}share/info
 	$infopath
 )
 
-typeset -xUT LD_LIBRARY_PATH ld_library_path=(
-	/usr/local/cuda/lib64
-	$ld_library_path
-)
-
 typeset -xUT MANPATH manpath=(
-	/usr/{local/,}share/man
+	/usr/{,local/}share/man
 	$manpath
 )
 
 typeset -xUT PATH path=(
-	/usr/local/cuda/bin
 	/usr/local/{,s}bin
 	$HOME/.local/{,s}bin
 	$path

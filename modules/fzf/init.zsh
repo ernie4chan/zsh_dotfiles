@@ -6,33 +6,32 @@
 # Make fuzzy file finder fun!
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2025/03/29
 # ---------------------------------------------------------
 
-# Return if requirements are not found.
-(( ! $+commands[fzf] )) && return 1
+# Exit if 'fzf' is not found.
+(( $+commands[fzf] )) || return 1
 
-# Add fzf to path.
-if is-darwin; then
-	[[ ! "$PATH" == */usr/local/opt/fzf/bin* ]] && \
-		export PATH="$PATH:/usr/local/opt/fzf/bin"
-	# Auto-completion and Key-bindings.
-	[[ $- == *i* ]] && \
-		source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null; \
-		source "/usr/local/opt/fzf/shell/key-bindings.zsh" 2> /dev/null
-elif is-linux; then
-	[[ ! "$PATH" == */usr/share/fzf* ]] && \
-		export PATH="$PATH:/usr/share/fzf"
-	# Auto-completion and Key-bindings.
-	[[ $- == *i* ]] && \
-		source "/usr/share/fzf/completion.zsh" 2>/dev/null; \
-		source "/usr/share/fzf/key-bindings.zsh" 2>/dev/null
+# Determine the fzf installation path based on the OS.
+case "$(uname -s)" in
+    Linux)  
+        fzf_bin_path="/usr/bin"
+        fzf_shell_path="/usr/share/doc/fzf/examples"
+        ;;
+    Darwin) 
+        fzf_bin_path="/usr/local/opt/fzf/bin"
+        fzf_shell_path="/usr/local/opt/fzf/shell"
+        ;;
+    *)      
+        return 1  # Exit if neither Linux nor macOS
+        ;;
+esac
+
+# Ensure fzf binary path is in $PATH.
+[[ ":$PATH:" != *":$fzf_bin_path:"* ]] && export PATH+=":$fzf_bin_path"
+
+# Load fzf auto-completion and key bindings in interactive shells.
+if [[ $- == *i* ]]; then
+    [[ -r "$fzf_shell_path/completion.zsh" ]] && source "$fzf_shell_path/completion.zsh"
+    [[ -r "$fzf_shell_path/key-bindings.zsh" ]] && source "$fzf_shell_path/key-bindings.zsh"
 fi
-
-
-# Modify default Alt+C.
-#for keymap in 'viins' 'vicmd'; do
-#	# Jumping through lines.
-#	bindkey -M "$keymap" "$key_info[Control]Z" fzf-cd-widget
-#done
-#unset keymap
