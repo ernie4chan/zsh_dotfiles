@@ -1,20 +1,20 @@
 # ---------------------------------------------------------
-# vim: ts=2 ft=zsh
+# vim: ft=sh
 #
-# File: zshinit.zsh
+# File: ./zshinit.zsh
 #
 # Borrowed from Prezto --- The Heart Module Loader.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2025/04/05
 # ---------------------------------------------------------
 
 # Check for the minimum supported version.
 min_zsh_version='4.3.11'
-if ! autoload -Uz is-at-least || ! is-at-least "$min_zsh_version"; then
-	printf "Old zsh detected, minimum required: %s\n" "$min_zsh_version" >&2
-	return 1
-fi
+autoload -Uz is-at-least && is-at-least "$min_zsh_version" || {
+    printf "Old zsh detected, minimum required: %s\n" "$min_zsh_version" >&2
+    return 1
+}
 unset min_zsh_version
 
 # Loading modules.
@@ -116,9 +116,6 @@ function pmodload {
 #  evaluates to the current directory of the shel.
 ZDOTDIR=${0:h}
 
-# Load more specific 'run-help' function from $fpath.
-(( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
-
 # Load Zsh modules.
 zstyle -a ':e4czmod:load' zmodule 'zmodules'
 for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
@@ -128,6 +125,9 @@ unset zmodule{s,}
 zstyle -a ':e4czmod:load' zfunction 'zfunctions'
 for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
 unset zfunction{s,}
+
+# Load more specific 'run-help' function from $fpath.
+(( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
 
 # Load modules.
 zstyle -a ':e4czmod:load' pmodule 'pmodules'

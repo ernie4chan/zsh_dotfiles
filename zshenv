@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=2 ft=zsh
+# vim: ft=sh
 #
 # File: ./zshenv
 #
 # Shell environment variables, executed before ".zshrc".
 #
 # Author: Ernie Lin
-# Update: 2025-04-01
+# Update: 2025/04/01
 # ---------------------------------------------------------
 
 # Ensure the data are:

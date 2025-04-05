@@ -6,7 +6,7 @@
 # Define custom keybindings.
 #
 # Author: Ernie Lin
-# Update: 2025-03-29
+# Update: 2025/03/29
 # ---------------------------------------------------------
 
 # Check if the terminal is dumb.

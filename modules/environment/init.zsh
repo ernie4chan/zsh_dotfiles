@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=4 sts=2 ft=zsh
+# vim: ft=sh
 #
 # File: ./environment/init.zsh
 #
 # Defining Zsh environment variables.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2025/04/05
 # ---------------------------------------------------------
 
 # {{{ --- Pager & Editors. ---
@@ -16,17 +16,6 @@
 	zstyle ':e4czmod:*:*' color 'no'
 	zstyle ':e4czmod:module:prompt' theme 'off'
 }
-
-# Termcap.
-if zstyle -t ':e4czmod:environment:termcap' color; then
-	export LESS_TERMCAP_mb=$'\E[01;31m'		# Begins blinking.
-	export LESS_TERMCAP_md=$'\E[01;31m'		# Begins bold.
-	export LESS_TERMCAP_me=$'\E[0m'			# Ends mode.
-	export LESS_TERMCAP_se=$'\E[0m'			# Ends standout-mode.
-	export LESS_TERMCAP_so=$'\E[00;47;30m'	# Begins standout-mode.
-	export LESS_TERMCAP_ue=$'\E[0m'			# Ends underline.
-	export LESS_TERMCAP_us=$'\E[01;32m'		# Begins underline.
-fi
 
 # Shell language.
 export LANG=${LANG:-en_US.UTF-8}
@@ -42,6 +31,20 @@ export LESSEDIT='vim "+%lm" "%f"'
 export PAGER="${PAGER:-less}"
 export EDITOR="${EDITOR:-vim}"
 export VISUAL="${VISUAL:-vim}"
+
+# Check if color support is enabled via the zstyle configuration.
+zstyle -t ':e4czmod:environment:termcap' color && \
+	# Set the terminal capability variables for LESS to manage text formatting
+	export LESS_TERMCAP_mb=$'\E[01;31m'			# Begins blinking.
+	LESS_TERMCAP_md=$'\E[01;31m'                # Begins bold.
+	LESS_TERMCAP_me=$'\E[0m'                    # Ends mode.
+	LESS_TERMCAP_se=$'\E[0m'                    # Ends standout-mode.
+	LESS_TERMCAP_so=$'\E[00;47;30m'             # Begins standout-mode.
+	LESS_TERMCAP_ue=$'\E[0m'                    # Ends underline.
+	LESS_TERMCAP_us=$'\E[01;32m'                # Begins underline.
+
+# Allow mapping Ctrl+S and Ctrl+Q shortcuts.
+[[ -r $TTY && -w $TTY && -n $TTY && $+commands[stty] ]] && stty -ixon <"$TTY" >"$TTY"
 
 # }}}
 
@@ -75,7 +78,7 @@ setopt SHARE_HISTORY		# Share history between all sessions.
 
 # Behaviour.
 setopt COMBINING_CHARS	# Combine zero-length punctuation characters (accents) with the base character.
-setopt INTERACTIVE_COMMENTS	# Enable comments in interactive shell.
+setopt INTERACTIVE_COMMENTS		# Enable comments in interactive shell.
 setopt RC_QUOTES		# Allow 'Henry''s Garage' instead of 'Henry'\''s Garage'.
 unsetopt BEEP			# Beep on error.
 unsetopt MAIL_WARNING	# Don't print a warning message if a mail file has been accessed.
@@ -91,7 +94,7 @@ unsetopt HUP			# Don't kill jobs on shell exit.
 # Directory.
 setopt AUTO_CD			# Auto changes to a directory without typing cd.
 setopt AUTO_PUSHD		# Push the old directory onto the stack on cd.
-setopt PUSHD_IGNORE_DUPS	# Do not store duplicates in the stack.
+setopt PUSHD_IGNORE_DUPS		# Do not store duplicates in the stack.
 setopt PUSHD_SILENT		# Do not print the directory stack after pushd or popd.
 setopt PUSHD_TO_HOME	# Push to home directory when no argument is given.
 unsetopt CDABLE_VARS	# Do not Change directory to a path stored in a variable.
