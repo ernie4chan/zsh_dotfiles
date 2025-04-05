@@ -1,0 +1,12 @@
+# vim: ts=2 ft=zsh
+
+zpromptpath="${ZDOTDIR:-$HOME/.zsh}/modules/prompt"
+
+# Source the files if they exist
+[[ -f "${zpromptpath}/p10k/p10k.zsh" ]] \
+		&& source "${zpromptpath}/p10k/p10k.zsh"
+
+[[ -f "${zpromptpath}/external/powerlevel10k.zsh-theme" ]] \
+		&& source "${zpromptpath}/external/powerlevel10k.zsh-theme"
+
+unset zpromptpath
