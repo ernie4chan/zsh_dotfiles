@@ -6,7 +6,7 @@
 # Loads prompt themes.
 #
 # Author: Ernie Lin
-# Update: 2025-03-30
+# Update: 2025/03/30
 # ---------------------------------------------------------
 
 # Load and execute the prompt theming system.

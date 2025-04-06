@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=2 ft=zsh
+# vim: ft=zsh
 #
 # File: ./tmux/init.zsh
 #
 # Auto launching Tmux at start-up.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2022/06/10
 # ---------------------------------------------------------
 
 # Return if requirements are not found.

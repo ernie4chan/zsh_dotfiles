@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=4 sts=2 ft=zsh
+# vim: ft=zsh
 #
 # File: ./hist_sub_search/init.zsh
 #
 # Integrates History-Substring-Search.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2022/06/10
 # ---------------------------------------------------------
 
 # Source module files.

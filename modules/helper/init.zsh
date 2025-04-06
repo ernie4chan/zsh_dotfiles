@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=4 ts=2 ft=zsh
+# vim: ft=zsh
 #
 # File: ./helper/init.zsh
 #
 # Defining helper functions.
 #
 # Author: Ernie Lin
-# Update: 2025/03/26 with help of ChatGPT
+# Update: 2025/03/26
 # ---------------------------------------------------------
 
 # Checks if a file can be autoloaded by trying to load it in a subshell.

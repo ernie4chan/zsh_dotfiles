@@ -1,5 +1,5 @@
 # ---------------------------------------------------------
-# vim: ft=sh
+# vim: ft=zsh
 #
 # File: ./zshenv
 #
@@ -10,7 +10,9 @@
 # ---------------------------------------------------------
 
 # Ensure the data are:
-# (1) -x, export to parameter; (2) -U, keey array values unique; (3) -T, tie scalar to array.
+# (1) -x, export to parameter;
+# (2) -U, keey array values unique;
+# (3) -T, tie scalar to array.
 typeset -xUT CDPATH cdpath=(
 	$HOME/Projects
 	$cdpath

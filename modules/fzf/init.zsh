@@ -1,5 +1,5 @@
 # ---------------------------------------------------------
-# vim: ft=sh
+# vim: ft=zsh
 #
 # File: ./fzf/init.zsh
 #
@@ -14,15 +14,15 @@
 
 # Determine the fzf installation path based on the OS.
 case "$(uname -s)" in
-    Linux)  
+    Linux)
         fzf_bin_path="/usr/bin"
         fzf_shell_path="/usr/share/doc/fzf/examples"
         ;;
-    Darwin) 
+    Darwin)
         fzf_bin_path="/usr/local/opt/fzf/bin"
         fzf_shell_path="/usr/local/opt/fzf/shell"
         ;;
-    *)      
+    *)
         return 1  # Exit if neither Linux nor macOS
         ;;
 esac

@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
-# vim: ft=sh
+# vim: ft=zsh
 #
-# File: .\tmuxrc
+# File: ./tmuxrc
 #
 # Tmux Configuration by ernie4chan.
 #

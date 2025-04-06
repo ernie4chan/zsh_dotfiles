@@ -1,5 +1,5 @@
 # ---------------------------------------------------------
-# vim: ts=4 ft=zsh
+# vim: ft=zsh
 #
 # File: ./editor/init.zsh
 #
@@ -75,27 +75,13 @@ function bindkey-all {
 	done
 }
 
-# Allow command line editing in an external editor.
-autoload -Uz edit-command-line
-zle -N edit-command-line
-
-function expand-dot-to-parent-directory-path {
-	# If the buffer already ends with double dots, append a parent directory path
-	# Otherwise just add a dot
-	[[ $LBUFFER = *.. ]] && LBUFFER+='/..' || LBUFFER+='.'
-}
-zle -N expand-dot-to-parent-directory-path
-
-# Only bind the key if dot-expansion is enabled in zstyle
-zstyle -t ':e4czmod:module:editor' dot-expansion && \
-	bindkey -M viins "." expand-dot-to-parent-directory-path
-
 # Reset the prompt based on the current context and
 # the ps-context option.
 function zle-reset-prompt {
     # If we aren't within one of the specified contexts, then we want to reset
     # the prompt with the appropriate editor_info[keymap] if there is one.
-	if ! zstyle -t ':prezto:module:editor' ps-context || [[ $CONTEXT != (select|cont) ]]; then
+	if ! zstyle -t ':e4czmod:module:editor' ps-context || \
+	  [[ $CONTEXT != (select|cont) ]]; then
  		zle reset-prompt
 		zle -R
 	fi
@@ -141,13 +127,94 @@ for keymap in $unbound_keys; do
 	bindkey -M vicmd "${keymap}" _prezto-zle-noop
 done
 
+function expand-dot-to-parent-directory-path {
+	# If the buffer already ends with double dots, append a parent directory path
+	# Otherwise just add a dot
+	[[ $LBUFFER = *.. ]] && LBUFFER+='/..' || LBUFFER+='.'
+}
+zle -N expand-dot-to-parent-directory-path
+
+# Do not expand .... to ../.. during incremental search.
+zstyle -t ':e4czmod:module:editor' dot-expansion && \
+	bindkey -M isearch . self-insert 2>/dev/null
+
+# Inserts 'sudo ' at the beginning of the line.
+function prepend-sudo {
+	if [[ "$BUFFER" != su(do|)\ * ]]; then
+		BUFFER="sudo $BUFFER"
+		(( CURSOR += 5 ))
+	fi
+}
+zle -N prepend-sudo
+
+# Expand aliases
+function glob-alias {
+	zle _expand_alias
+	zle expand-word
+	zle magic-space
+}
+zle -N glob-alias
+
+# Allow command line editing in an external editor.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+# Edit command in an external editor emacs style (v is used for visual mode)
+bindkey -M vicmd "$key_info[Control]X$key_info[Control]E" edit-command-line
+
+# Delete key deletes character in vimcmd mode.
+#bindkey -M vicmd "$key_info[Delete]" delete-char	# Already set as default.
+
+# Toggle comment at the start of the line.
+#bindkey -M vicmd "#" vi-pound-insert			# Already set as default.
+
 # Undo/Redo.
-#bindkey -M vicmd "u" undo				# Already set as default.
+#bindkey -M vicmd "u" undo						# Already set as default.
 #bindkey -M vicmd "$key_info[Control]R" redo	# Conflicts with fzf.
 bindkey -M viins "$key_info[Control]_" undo
 
-# Toggle comment at the start of the line.
-#bindkey -M vicmd "#" vi-pound-insert	# Already set as default.
+(( $+widgets[history-incremental-pattern-search-backward] )) && {
+	bindkey -M vicmd "?" history-incremental-pattern-search-backward
+	bindkey -M vicmd "/" history-incremental-pattern-search-forward
+} || {
+	bindkey -M vicmd "?" history-incremental-search-backward
+	bindkey -M vicmd "/" history-incremental-search-forward
+}
+
+# Bind Ctrl+← and Ctrl+→ to forward/backward word.
+for keymap in 'viins' 'vicmd'; do
+	for key in "${(s: :)key_info[ControlLeft]}"
+		bindkey -M "$keymap" "$key" vi-backward-word
+	for key in "${(s: :)key_info[ControlRight]}"
+		bindkey -M "$keymap" "$key" vi-forward-word
+done
+
+for keymap in 'viins'; do
+	# Only bind the key if dot-expansion is enabled in zstyle.
+	zstyle -t ':e4czmod:module:editor' dot-expansion && \
+		bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
+
+	# Expand history on space.
+	bindkey -M "$keymap" ' ' magic-space
+
+	# Duplicate the previous word.
+	bindkey -M "$keymap" "${key_info[Escape]}m" copy-prev-shell-word 
+
+	# Expand command name to full path.
+	bindkey -M "$keymap" "${key_info[Escape]}e" expand-cmd-path
+
+	# Bind Shift + Tab to go to the previous menu item.
+	bindkey -M "$keymap" "$key_info[BackTab]" reverse-menu-complete
+
+	# Complete in the middle of word.
+	bindkey -M "$keymap" "$key_info[Control]I" expand-or-complete
+
+	# Insert 'sudo' at the beginning of the line.
+	bindkey -M "$keymap" "$key_info[Control]X$key_info[Control]S" prepend-sudo
+
+	# Expands all aliases.
+	bindkey -M "$keymap" "$key_info[Control]X$key_info[Control]A" glob-alias
+done
 
 # }}}
 

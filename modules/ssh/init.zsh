@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=4 ts=2 ft=zsh
+# vim: ft=zsh
 #
 # File: ./ssh/init.zsh
 #
 # Setting up SSH agent.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2022/06/10
 # ---------------------------------------------------------
 
 # Return if requirements are not found.

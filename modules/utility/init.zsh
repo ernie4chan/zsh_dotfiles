@@ -1,12 +1,12 @@
 # ---------------------------------------------------------
-# vim: ts=4 sts=2 ft=zsh
+# vim: ft=zsh
 #
 # File: ./utility/init.zsh
 #
 # Defines general aliases and functions.
 #
 # Author: Ernie Lin
-# Update: 2022-06-10
+# Update: 2025/04/06
 # ---------------------------------------------------------
 
 # Load dependencies.
