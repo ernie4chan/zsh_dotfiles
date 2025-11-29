@@ -151,12 +151,7 @@ fi
 # {{{ --- Coloring Grep. ---
 
 if zstyle -t ':e4czmod:module:aliases:grep' color; then
-	if [[ ${(@M)${(f)"$(ls --version 2>&1)"}:#*GNU *} ]]; then
-		export GREP_COLORS=${GREP_COLORS:-"mt=37;45"}	# GNU.
-	else
-		export GREP_COLOR=${GREP_COLOR:-'37;45'}		# BSD.
-	fi
-
+	export GREP_COLORS=${GREP_COLORS:-"mt=37;45"}
 	alias grep="${aliases[grep]:-grep} --color=auto"
 fi
 
