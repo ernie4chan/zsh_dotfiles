@@ -73,11 +73,8 @@ fi
 
 # Define commands and their alias settings
 cmdas=(
-  "abcde|abcde -c \$HOME/.config/abcde/abcde.cfg"
-  "irssi|irssi --home=\$HOME/.config/irssi"
   "lynx|lynx -cfg=\$HOME/.config/lynx/lynx.cfg"
   "tree|tree -N -L 2"
-  "wget|wget --hsts-file=\$HOME/.wget_history"
 )
 
 # Loop through the commands and check if they are callable
