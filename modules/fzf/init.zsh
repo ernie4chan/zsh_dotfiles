@@ -16,7 +16,7 @@
 case "$(uname -s)" in
     Linux)
         fzf_bin_path="/usr/bin"
-        fzf_shell_path="/usr/share/doc/fzf/examples"
+        fzf_shell_path="/usr/share/fzf"
         ;;
     Darwin)
         fzf_bin_path="/usr/local/opt/fzf/bin"
