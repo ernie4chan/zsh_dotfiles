@@ -14,7 +14,6 @@
 # (2) -U, keey array values unique;
 # (3) -T, tie scalar to array.
 typeset -xUT CDPATH cdpath=(
-	$HOME/Projects
 	$cdpath
 )
 
@@ -22,18 +21,8 @@ typeset -xUT FPATH fpath=(
 	$fpath
 )
 
-typeset -xUT INFOPATH infopath=(
-	/usr/{,local/}share/info
-	$infopath
-)
-
-typeset -xUT MANPATH manpath=(
-	/usr/{,local/}share/man
-	$manpath
-)
-
 typeset -xUT PATH path=(
-	/usr/local/{,s}bin
-	$HOME/.local/{,s}bin
+	/{usr/{local/,},}{,s}bin
+	/{,s}bin
 	$path
 )

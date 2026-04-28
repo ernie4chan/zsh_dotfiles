@@ -9,6 +9,9 @@
 # Update: 2025/03/30
 # ---------------------------------------------------------
 
+# Failsafe test purposes and debugging.
+#zsh -x 2> "$HOME/zsh_error.log"
+
 # Load Modules. The order matters!
 zstyle ':e4czmod:load' pmodule \
 	'zstyle' \
@@ -30,6 +33,3 @@ zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ -r "$zshinit" ]] && source "$zshinit"
 
 unset zsh{style,init}
-
-# Failsafe test purposes and debugging.
-#zsh -x 2> "$HOME/zsh_error.log"
