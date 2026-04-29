@@ -28,7 +28,7 @@ zstyle ':e4czmod:module:prompt' theme 'p10k-1'
 # {{{ --- General ---
 
 # Color output (auto set to 'no' on dumb terminals).
-zstyle ':e4czmod:*:*' color 'yes' 
+zstyle ':e4czmod:*:*' color 'yes'
 
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':e4czmod:*:*' case-sensitive 'yes'
