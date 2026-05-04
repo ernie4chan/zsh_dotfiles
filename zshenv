@@ -22,6 +22,7 @@ typeset -xUT FPATH fpath=(
 )
 
 typeset -xUT PATH path=(
+	$HOME/.local/bin
 	/{usr/{local/,},}{,s}bin
 	/{,s}bin
 	$path
