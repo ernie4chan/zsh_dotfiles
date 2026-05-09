@@ -1,12 +1,11 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-#
-# File: ./zshrc
-#
-# The Master Mind of Zsh!
-#
-# Author: Ernie Lin
-# Update: 2025/03/30
+# File: ~/.zsh/zshrc
+# Title: The Master Mind of Zsh!
+# Maintainer: Ernie Lin
+# Update:
+#	20250330
+#	20260509
 # ---------------------------------------------------------
 
 # Failsafe test purposes and debugging.
@@ -18,7 +17,7 @@ zstyle ':e4czmod:load' pmodule \
 	'environment' \
 	'prompt' \
 	'editor' \
-	'utility' \
+	'utilities' \
 	'fzf' \
 	'gpg' \
 	'completions' \
@@ -27,9 +26,9 @@ zstyle ':e4czmod:load' pmodule \
 	'autosuggestions'
 	# Modules not loaded:
 	#'tmux'
+	#'spectrum' p10k handles all the colors.
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
-
 [[ -r "$zshinit" ]] && source "$zshinit"
 
-unset zsh{style,init}
+unset zshinit zshstyle

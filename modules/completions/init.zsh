@@ -1,60 +1,53 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-#
-# File: ./completions/init.zsh
-#
-# Integrates Completions.
-#
-# Author: Ernie Lin
-# Update: 2022/06/10
+# File: ~/.zsh/modules/completions/init.zsh
+# Title: Integrating Completions.
+# Maintainer: Ernie Lin
+# Update:
+#   20220610
+#   20260509
 # ---------------------------------------------------------
 
 # Return if requirements are not found.
 [[ "$TERM" == 'dumb' ]] && return 1
 
+# {{{ --- Completions setup ---
+
 # Add zsh-completions to $fpath.
 fpath+=(${0:h}/external/src)
 
 # Options
-
 setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
 setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
 setopt PATH_DIRS            # Perform path search even on command names with slashes.
 setopt AUTO_MENU            # Show completion menu on a successive tab press.
 setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
 setopt AUTO_PARAM_SLASH     # If completed parameter is a directory, add a trailing slash.
-setopt EXTENDED_GLOB        # Needed for file modification glob modifiers with compinit.
 unsetopt MENU_COMPLETE      # Do not autoselect the first completion entry.
-unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
-
-
-# Standard style used by default for 'list-colors'.
-LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
-
-# {{{ --- Initialize the completion system. ---
-
-# Load and initialize the completion system ignoring insecure directories
-#  with a cache time of 20 hours, so it should almost always regenerate
-#  the first time a shell is opened each day.
-#autoload -Uz compinit
-#_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-## #q expands globs in conditional expressions.
-#if [[ $_comp_path(#qNmh-20) ]]; then
-	## -C (skip function check) implies -i (skip security check).
-	#compinit -C -d "$_comp_path"
-#else
-	#mkdir -p "$_comp_path:h"
-	#compinit -i -d "$_comp_path"
-	## Keep $_comp_path younger than cache time even if it isn't regenerated.
-	#touch "$_comp_path"
-#fi
-#unset _comp_path
 
 # }}}
 
-# {{{ --- Zsh Style Table for Completions. ---
+# {{{ --- Initialize the completion system ---
 
-# Default colors.
+# Load and initialize the completion system ignoring insecure directories
+# with a cache time of 20 hours, so it should almost always regenerate
+# the first time a shell is opened each day.
+autoload -Uz compinit
+_comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
+# #q expands globs in conditional expressions.
+# -C (skip function check) implies -i (skip security check).
+[[ $_comp_path(#qNmh-20) ]] && compinit -C -d "$_comp_path" || {
+    mkdir -p "$_comp_path:h"
+    compinit -i -d "$_comp_path"
+    touch "$_comp_path"
+}
+unset _comp_path
+
+# }}}
+
+# {{{ --- Zsh Style Table for Completions ---
+
+# Default colors (remember that ls colors are defined in utilties).
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
@@ -62,13 +55,13 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
 
-# Case-insensitive (all), partial-word, and then substring completion.
+# Case-insensitive (all), partial-word, and then substring completion..
 if zstyle -t ':e4czmod:module:completion:*' case-sensitive; then
-	zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-	setopt CASE_GLOB
+    zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+    setopt CASE_GLOB
 else
-	zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-	unsetopt CASE_GLOB
+    zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+    unsetopt CASE_GLOB
 fi
 
 # Group matches and describe.
@@ -119,20 +112,20 @@ zstyle ':completion:*:(-command-|export):*' fake-parameters ${${${_comps[(I)-val
 zstyle -a ':e4czmod:module:completion:*:hosts' etc-host-ignores '_etc_host_ignores'
 
 zstyle -e ':completion:*:hosts' hosts 'reply=(
-	${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2> /dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
-	${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2> /dev/null))"}%%(\#${_etc_host_ignores:+|${(j:|:)~_etc_host_ignores}})*}
-	${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2> /dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+    ${=${=${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) 2> /dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
+    ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2> /dev/null))"}%%(\#${_etc_host_ignores:+|${(j:|:)~_etc_host_ignores}})*}
+    ${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2> /dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
 )'
 
 # Don't complete uninteresting users...
 zstyle ':completion:*:*:*:users' ignored-patterns \
-	adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
-	dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
-	hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
-	mailman mailnull mldonkey mysql nagios \
-	named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
-	operator pcap postfix postgres privoxy pulse pvm quagga radvd \
-	rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
+    adm amanda apache avahi beaglidx bin cacti canna clamav daemon \
+    dbus distcache dovecot fax ftp games gdm gkrellmd gopher \
+    hacluster haldaemon halt hsqldb ident junkbust ldap lp mail \
+    mailman mailnull mldonkey mysql nagios \
+    named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+    operator pcap postfix postgres privoxy pulse pvm quagga radvd \
+    rpc rpcuser rpm shutdown squid sshd sync uucp vcsa xfs '_*'
 
 # ... unless we really want to.
 zstyle '*' single-ignored show
@@ -160,8 +153,8 @@ zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):
 
 # Mutt client.
 if [[ -s "$HOME/.mutt/aliases" ]]; then
-	zstyle ':completion:*:*:mutt:*' menu yes select
-	zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
+    zstyle ':completion:*:*:mutt:*' menu yes select
+    zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
 fi
 
 # SSH/SCP/RSYNC.

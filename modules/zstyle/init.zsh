@@ -1,12 +1,11 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-#
-# File: ./modules/zstyle
-#
-# Zsh Style Table.
-#
-# Author: Ernie Lin
-# Update: 2025/04/01
+# File: ~/.zsh/modules/zstyle/init.zsh
+# Tilte: Zsh Style Table.
+# Maintainer: Ernie Lin
+# Update:
+#	20250401
+#	20260509
 # ---------------------------------------------------------
 
 # {{{ --- Prompt ---
@@ -33,27 +32,28 @@ zstyle ':e4czmod:*:*' color 'yes'
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':e4czmod:*:*' case-sensitive 'yes'
 
-# Allow module overrides when pmodule-dirs causes module name collisions.
-#zstyle ':e4czmod:load' pmodule-allow-overrides 'yes'
+# Toggle module overrides when pmodule-dirs causes name collisions.
+zstyle ':e4czmod:load' pmodule-allow-overrides 'no'
 
-# Set the zsh modules to load (man zshmodules).
+# Extra zsh modules to load man zshmodules.
 #zstyle ':e4czmod:load' zmodule 'attr'
 
+# Extra zsh functions to load man zshcontrib.
 # Set the zsh functions to load (man zshcontrib).
 #zstyle ':e4czmod:load' zfunction 'zargs' 'zmv'
 
-# Add additional directories to be loaded.
+# Load additional module directories.
 #zstyle ':e4czmod:load' pmodule-dirs $HOME/.zshcontrib
 
 # }}}
 
-# {{{ --- History Size ---
+# {{{ --- History size ---
 
-# Set the maximum  number  of  events  stored  in  the  internal history list.
-zstyle ':e4czmod:enviromment:history' histsize 10000
+# Set the maximum number of events stored in the internal history list.
+zstyle ':e4czmod:environment:history' histsize 10000
 
 # Set the maximum number of history events to save in the history file.
-zstyle ':e4czmod:enviromment:history' savehist 50000
+zstyle ':e4czmod:environment:history' savehist 50000
 
 # }}}
 
@@ -62,30 +62,30 @@ zstyle ':e4czmod:enviromment:history' savehist 50000
 # Set the characters that are considered to be part of a word.
 zstyle ':e4czmod:module:editor' wordchars '*?_-.[]~&;!#$%^(){}<>'
 
-# Auto convert .... to ../..
+# Toggle auto convert .... to ../..
 zstyle ':e4czmod:module:editor' dot-expansion 'yes'
 
-# Allow the zsh prompt context to be shown.
-#zstyle ':e4czmod:module:editor' ps-context 'yes'
+# Toggle the zsh prompt context to be shown.
+zstyle ':e4czmod:module:editor' ps-context 'no'
 
 # }}}
 
 # {{{ --- Utility ---
 
-# Enabled safe operations
-zstyle ':e5czmod:module:aliases' safe-ops 'yes'
+# Disable some spelling corrections.
+zstyle ':e4czmod:module:utilities' correct 'no'
 
-# To disable all spelling corrections.
-zstyle ':e4czmod:module:aliases' correct 'no'
+# Enable safe operations
+zstyle ':e4czmod:module:utilities' safe-ops 'yes'
 
-# To disable 'ls' color.
-zstyle ':e4czmod:module:aliases:ls' color 'yes'
+# Disable 'grep' highlighting.
+zstyle ':e4czmod:module:utilities:grep' color 'yes'
 
-# To disable GNU coreutils 'ls' to list directories grouped first.
-zstyle ':e4czmod:module:aliases:ls' dirs-first 'yes'
+# Disable 'ls' color.
+zstyle ':e4czmod:module:utilities:ls' color 'yes'
 
-# To disable 'grep' highlighting.
-zstyle ':e4czmod:module:aliases:grep' color 'yes'
+# Disable GNU coreutils 'ls' to list directories grouped first.
+zstyle ':e4czmod:module:utilities:ls' dirs-first 'yes'
 
 # }}}
 
@@ -98,14 +98,14 @@ zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_ed25519' 'id_github'
 
 # {{{ --- Tmux ---
 
-# Default session name.
-zstyle ':e4czmod:module:tmux:session' name 'tmux'
-
 # Launch Tmux.
 zstyle ':e4czmod:module:tmux:auto-start' local 'no'
 
 # Launch Tmux in SSH connections.
 zstyle ':e4czmod:module:tmux:auto-start' remote 'no'
+
+# Default session name.
+zstyle ':e4czmod:module:tmux:session' name 'tmux'
 
 # }}}
 
@@ -149,16 +149,16 @@ zstyle ':e4czmod:module:history-substring-search:color' not-found \
 zstyle ':e4czmod:module:history-substring-search' globbing-flags \
 	'i'
 
-# Enable search case-sensitivity.
+# Toggle search case-sensitivity.
 zstyle ':e4czmod:module:history-substring-search' case-sensitive 'yes'
 
-# Enable search for fuzzy matches.
+# Toggle search for fuzzy matches.
 zstyle ':e4czmod:module:history-substring-search' fuzzy 'yes'
 
-# Enable prefixed search.
+# Toggle prefixed search.
 zstyle ':e4czmod:module:history-substring-search' prefixed 'yes'
 
-# Enable search uniqueness.
+# Toggle search uniqueness.
 zstyle ':e4czmod:module:history-substring-search' unique 'yes'
 
 # }}}

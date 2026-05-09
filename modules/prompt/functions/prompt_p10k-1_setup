@@ -1,4 +1,4 @@
-# vim: ts=2 ft=zsh
+# vim: ft=zsh
 
 zpromptpath="${ZDOTDIR:-$HOME/.zsh}/modules/prompt"
 

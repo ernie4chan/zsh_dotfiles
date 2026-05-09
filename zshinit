@@ -1,8 +1,8 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-# File: ~/.zsh/zshinit.zsh
+# File: ~/.zsh/zshinit
 # Title: The Heart Module Loader -- borrowed from Prezto.
-# Mainainer: Ernie Lin
+# Maintainer: Ernie Lin
 # Update:
 #  20250405
 #  20260509

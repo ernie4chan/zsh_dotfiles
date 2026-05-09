@@ -1,15 +1,13 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-#
-# File: ./tmuxrc
-#
+# File: ~/.zsh/tmuxrc
 # Tmux Configuration by ernie4chan.
-#
 # Author: Ernie Lin
-# Update: 2021/12/04.
+# Update:
+#	20211204
 # ---------------------------------------------------------
 
-# {{{ --- Default Options. ---
+# {{{ --- Default Options ---
 
 # Change the default $TERM to tmux-256color / xterm-256color / screen-256color.
 #set-option -g default-terminal "tmux-256color"
@@ -35,7 +33,7 @@ set-window-option -g pane-base-index 1
 
 # }}}
 
-# {{{ --- Key Bindings. ---
+# {{{ --- Key Bindings ---
 
 # Add the prefix key to 'C-a'.
 unbind-key C-b
@@ -76,7 +74,7 @@ bind-key -T prefix R source-file ~/.zsh/tmuxrc \; display-message \
 
 # }}}
 
-# {{{ --- Vim-like Keys in Tmux. ---
+# {{{ --- Vim-like Keys in Tmux ---
 
 # Turn the mouse on, but without copy mode dragging.
 set-option -g mouse on

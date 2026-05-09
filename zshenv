@@ -1,23 +1,22 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-#
-# File: ./zshenv
-#
-# Shell environment variables, executed before ".zshrc".
-#
-# Author: Ernie Lin
-# Update: 2025/04/01
+# File: ~/.zsh/zshenv
+# Title: Shell environment variables, executed before ".zshrc".
+# Maintainer: Ernie Lin
+# Update:
+#	20250401
+#	20260501
 # ---------------------------------------------------------
 
 # Ensure the data are:
 # (1) -x, export to parameter;
 # (2) -U, keey array values unique;
 # (3) -T, tie scalar to array.
-typeset -xUT CDPATH cdpath=(
+typeset -UT CDPATH cdpath=(
 	$cdpath
 )
 
-typeset -xUT FPATH fpath=(
+typeset -UT FPATH fpath=(
 	$fpath
 )
 
