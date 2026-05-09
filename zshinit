@@ -1,66 +1,58 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
-#
-# File: ./zshinit.zsh
-#
-# Borrowed from Prezto --- The Heart Module Loader.
-#
-# Author: Ernie Lin
-# Update: 2025/04/05
+# File: ~/.zsh/zshinit.zsh
+# Title: The Heart Module Loader -- borrowed from Prezto.
+# Mainainer: Ernie Lin
+# Update:
+#  20250405
+#  20260509
 # ---------------------------------------------------------
 
-# Check for the minimum supported version.
+# --- Version guard ---
 min_zsh_version='4.3.11'
 autoload -Uz is-at-least && is-at-least "$min_zsh_version" || {
-	printf "Old zsh detected, minimum required: %s\n" "$min_zsh_version" >&2
+    printf "Old zsh detected, minimum required: %s " "$min_zsh_version" >&2
     return 1
 }
 unset min_zsh_version
 
-# Loading modules.
+# --- The Heart Module Loader ---
 function pmodload {
     local -a pmodules pmodule_dirs locations
     local pmodule pmodule_location
     local pfunction_glob='^([_.]*|prompt_*_setup|README*|*~)(-.N:t)'
 
-	# Load in any additional directories and warn if they don't exist.
-	zstyle -a ':e4czmod:load' pmodule-dirs 'user_pmodule_dirs'
-	for user_dir in ${(u)user_pmodule_dirs}; do
-		[[ -d "$user_dir" ]] || echo "$0: Missing user module dir: $user_dir"
-	done
+    # Load in any additional directories and warn if they don't exist.
+    zstyle -a ':e4czmod:load' pmodule-dirs 'user_pmodule_dirs'
+    for user_dir in ${(u)user_pmodule_dirs}; do
+        [[ -d "$user_dir" ]] || echo "$0: Missing user module dir: $user_dir"
+    done
 
-    # Consolidated module directories with default fallbacks
+    # Consolidated module directories with default fallbacks.
     pmodule_dirs=(
         "$ZDOTDIR/modules"
         "$ZDOTDIR/contrib"
         "${user_pmodule_dirs[@]}"
     )
 
-	# $argv is overridden in the anonymous function.
-	pmodules=("$argv[@]")
+    # $argv is overridden in the anonymous function.
+    pmodules=("$argv[@]")
 
     # Load pmodules.
     for pmodule in ${pmodules}; do
-        # Skip if module is already loaded
+        # Skip if module is already loaded.
         zstyle -t ":e4czmod:module:$pmodule" loaded 'yes' 'no' && continue
 
-        # Find module locations
+        # Find module locations.
         locations=(${pmodule_dirs:+${^pmodule_dirs}/$pmodule(-/FN)})
 
-        # Handle module location cases
+        # Handle module location cases.
         case ${#locations} in
-            0)
-                print "$0: no such module: $pmodule"
-                continue
-                ;;
-            1)
-                ;;
-            *)
-                zstyle -t ':e4czmod:load' pmodule-allow-overrides 'yes' || {
-                    print "$0: conflicting module locations: $locations"
-                    continue
-                }
-                ;;
+            0) print "$0: no such module: $pmodule"; continue ;;
+            1) ;;
+            *) zstyle -t ':e4czmod:load' pmodule-allow-overrides 'yes' || {
+                    print "$0: conflicting module locations: $locations"; continue
+                } ;;
         esac
 
         # Grab the full path to this module.
@@ -69,11 +61,10 @@ function pmodload {
         # Add functions to $fpath.
         fpath=(${pmodule_location}/functions(-/FN) $fpath)
 
-        # Load functions using anonymous function
+        # Load functions using anonymous function.
         () {
             # Extended globbing is needed for listing autoloadable function directories.
             setopt LOCAL_OPTIONS EXTENDED_GLOB
-
             # Load functions.
             for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
                 autoload -Uz "$pfunction"
@@ -81,26 +72,25 @@ function pmodload {
         }
 
         # Source initialization file.
-		{
-			[[ -s "${pmodule_location}/init.zsh" ]] && \
-				source "${pmodule_location}/init.zsh"
-		} || {
-			[[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]] && \
-				source "${pmodule_location}/${pmodule}.plugin.zsh"
-		}
+        {
+            [[ -s "${pmodule_location}/init.zsh" ]] && \
+                source "${pmodule_location}/init.zsh"
+        } || {
+            [[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]] && \
+                source "${pmodule_location}/${pmodule}.plugin.zsh"
+        }
 
-        # Handle success or failure based on last command status
+        # Handle success or failure based on last command status.
         (( $? == 0 )) && {
             zstyle ":e4czmod:module:$pmodule" loaded 'yes'
         } || {
-            # Clean up on failure
+            # Clean up on failure.
             fpath[(r)${pmodule_location}/functions]=()
 
-            # Load functions using anonymous function
+            # Load functions using anonymous function.
             () {
                 # Extended globbing is needed for listing autoloadable function directories.
                 setopt LOCAL_OPTIONS EXTENDED_GLOB
-
                 # Load functions.
                 for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
                     autoload -Uz "$pfunction"
@@ -108,28 +98,28 @@ function pmodload {
             }
 
             zstyle ":e4czmod:module:$pmodule" loaded 'no'
+
         }
     done
 }
 
-# This needs to be done here because inside the pmodload function ${0:h}
-#  evaluates to the current directory of the shel.
+#  --- ${0:h} must be set before pmodload ---
 ZDOTDIR=${0:h}
 
-# Load Zsh modules.
+# --- Load Zsh modules ---
 zstyle -a ':e4czmod:load' zmodule 'zmodules'
 for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
-unset zmodule{s,}
+unset zmodules zmodule
 
-# Autoload Zsh functions.
+# --- Load Autoload functions ---
 zstyle -a ':e4czmod:load' zfunction 'zfunctions'
 for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
-unset zfunction{s,}
+unset zfunctions zfunction
 
-# Load more specific 'run-help' function from $fpath.
+# --- Load more specific 'run-help' function from $fpath ---
 (( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
 
-# Load modules.
+# --- Load modules ---
 zstyle -a ':e4czmod:load' pmodule 'pmodules'
 pmodload "$pmodules[@]"
 unset pmodules
