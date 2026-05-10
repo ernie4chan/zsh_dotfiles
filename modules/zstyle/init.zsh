@@ -35,15 +35,15 @@ zstyle ':e4czmod:*:*' case-sensitive 'yes'
 # Toggle module overrides when pmodule-dirs causes name collisions.
 zstyle ':e4czmod:load' pmodule-allow-overrides 'no'
 
-# Extra zsh modules to load man zshmodules.
-#zstyle ':e4czmod:load' zmodule 'attr'
+# Extra zsh modules to load (man zshmodules).
+zstyle ':e4czmod:load' zmodule 'attr'
 
-# Extra zsh functions to load man zshcontrib.
+# Extra zsh functions to load (man zshcontrib).
 # Set the zsh functions to load (man zshcontrib).
-#zstyle ':e4czmod:load' zfunction 'zargs' 'zmv'
+zstyle ':e4czmod:load' zfunction 'zargs' 'zmv'
 
-# Load additional module directories.
-#zstyle ':e4czmod:load' pmodule-dirs $HOME/.zshcontrib
+# Load additional user module directories.
+#zstyle ':e4czmod:load' pmodule-dirs $HOME/.zsh/contrib
 
 # }}}
 
@@ -72,20 +72,20 @@ zstyle ':e4czmod:module:editor' ps-context 'no'
 
 # {{{ --- Utility ---
 
-# Disable some spelling corrections.
+# Toggle some spelling corrections.
 zstyle ':e4czmod:module:utilities' correct 'no'
 
-# Enable safe operations
+# Toggle safe operations
 zstyle ':e4czmod:module:utilities' safe-ops 'yes'
 
-# Disable 'grep' highlighting.
+# Toggle 'grep' highlighting.
 zstyle ':e4czmod:module:utilities:grep' color 'yes'
 
-# Disable 'ls' color.
-zstyle ':e4czmod:module:utilities:ls' color 'yes'
-
-# Disable GNU coreutils 'ls' to list directories grouped first.
+# Toggle GNU coreutils 'ls' to list directories grouped first.
 zstyle ':e4czmod:module:utilities:ls' dirs-first 'yes'
+
+# Toggle 'ls' color.
+zstyle ':e4czmod:module:utilities:ls' color 'yes'
 
 # }}}
 
@@ -146,8 +146,7 @@ zstyle ':e4czmod:module:history-substring-search:color' not-found \
 	'bg=red,fg=white,bold'
 
 # Set search globbing flags.
-zstyle ':e4czmod:module:history-substring-search' globbing-flags \
-	'i'
+zstyle ':e4czmod:module:history-substring-search' globbing-flags 'i'
 
 # Toggle search case-sensitivity.
 zstyle ':e4czmod:module:history-substring-search' case-sensitive 'yes'

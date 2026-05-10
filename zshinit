@@ -106,20 +106,20 @@ function pmodload {
 #  --- ${0:h} must be set before pmodload ---
 ZDOTDIR=${0:h}
 
-# --- Load Zsh modules ---
+# --- e4czmod modules ---
+zstyle -a ':e4czmod:load' pmodule 'pmodules'
+pmodload "$pmodules[@]"
+unset pmodules
+
+# --- Zsh built-in modules ---
 zstyle -a ':e4czmod:load' zmodule 'zmodules'
 for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
 unset zmodules zmodule
 
-# --- Load Autoload functions ---
+# --- Zsh built-in functions ---
 zstyle -a ':e4czmod:load' zfunction 'zfunctions'
 for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
 unset zfunctions zfunction
 
 # --- Load more specific 'run-help' function from $fpath ---
 (( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
-
-# --- Load modules ---
-zstyle -a ':e4czmod:load' pmodule 'pmodules'
-pmodload "$pmodules[@]"
-unset pmodules

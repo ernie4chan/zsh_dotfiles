@@ -12,11 +12,11 @@
 # (1) -x, export to parameter;
 # (2) -U, keey array values unique;
 # (3) -T, tie scalar to array.
-typeset -UT CDPATH cdpath=(
+typeset -xUT CDPATH cdpath=(
 	$cdpath
 )
 
-typeset -UT FPATH fpath=(
+typeset -xUT FPATH fpath=(
 	$fpath
 )
 
