@@ -26,7 +26,7 @@ zstyle ':e4czmod:load' pmodule \
 	'autosuggestions'
 	# Modules not loaded:
 	#'tmux'
-	#'spectrum' p10k handles all the colors.
+	#'spectrum'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ -r "$zshinit" ]] && source "$zshinit"
