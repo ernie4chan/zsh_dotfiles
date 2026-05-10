@@ -70,7 +70,7 @@ zstyle ':e4czmod:module:editor' ps-context 'no'
 
 # }}}
 
-# {{{ --- Utility ---
+# {{{ --- Utilities ---
 
 # Toggle some spelling corrections.
 zstyle ':e4czmod:module:utilities' correct 'no'
@@ -81,11 +81,11 @@ zstyle ':e4czmod:module:utilities' safe-ops 'yes'
 # Toggle 'grep' highlighting.
 zstyle ':e4czmod:module:utilities:grep' color 'yes'
 
-# Toggle GNU coreutils 'ls' to list directories grouped first.
-zstyle ':e4czmod:module:utilities:ls' dirs-first 'yes'
-
 # Toggle 'ls' color.
 zstyle ':e4czmod:module:utilities:ls' color 'yes'
+
+# Toggle GNU coreutils 'ls' to list directories grouped first.
+zstyle ':e4czmod:module:utilities:ls' dirs-first 'yes'
 
 # }}}
 
