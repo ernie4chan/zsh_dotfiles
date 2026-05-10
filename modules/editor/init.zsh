@@ -12,7 +12,7 @@
 # Return if requirements are not found.
 [[ "$TERM" == 'dumb' ]] && return 1
 
-# {{{ --- Overwrite default identifiers. ---
+# {{{ --- Overwrite default identifiers ---
 
 # Use human-friendly identifiers.
 zmodload zsh/terminfo
@@ -60,7 +60,7 @@ done
 
 # }}}
 
-# {{{ --- Custom keybindings. ---
+# {{{ --- Custom keybindings ---
 
 # Treat these characters as part of a word.
 zstyle -s ':e4czmod:module:editor' wordchars 'WORDCHARS' \
@@ -216,7 +216,7 @@ done
 
 # }}}
 
-# {{{ --- Layout. ---
+# {{{ --- Layout ---
 
 # Set the key layout.
 bindkey -v
