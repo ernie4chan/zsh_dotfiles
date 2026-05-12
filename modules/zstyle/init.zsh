@@ -65,12 +65,12 @@ zstyle ':e4czmod:module:prompt' theme 'p10k-1'
 
 # {{{ --- Editor ---
 
+# Set the characters that are considered to be part of a word.
+zstyle ':e4czmod:module:editor' wordchars '*?_-.[]~&;!#$%^(){}<>'
+
 # Toggle the zsh prompt context to be shown.
 # If p10k is enabled, it will be overwritten anywyas.
 zstyle ':e4czmod:module:editor' ps-context 'yes'
-
-# Set the characters that are considered to be part of a word.
-zstyle ':e4czmod:module:editor' wordchars '*?_-.[]~&;!#$%^(){}<>'
 
 # Toggle auto convert .... to ../..
 zstyle ':e4czmod:module:editor' dot-expansion 'yes'
@@ -100,19 +100,6 @@ zstyle ':e4czmod:module:utilities:ls' dirs-first 'yes'
 
 # SSH.
 zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_ed25519' 'id_github'
-
-# }}}
-
-# {{{ --- Tmux ---
-
-# Launch Tmux.
-zstyle ':e4czmod:module:tmux:auto-start' local 'no'
-
-# Launch Tmux in SSH connections.
-zstyle ':e4czmod:module:tmux:auto-start' remote 'no'
-
-# Default session name.
-zstyle ':e4czmod:module:tmux:session' name 'tmux'
 
 # }}}
 
