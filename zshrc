@@ -26,6 +26,7 @@ zstyle ':e4czmod:load' pmodule \
 	'suggestions'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
+
 [[ -r "$zshinit" ]] && source "$zshinit"
 
-unset zshinit zshstyle
+unset zsh{style,init}
