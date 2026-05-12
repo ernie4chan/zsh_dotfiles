@@ -33,15 +33,7 @@ if [[ -S "$SSH_AUTH_SOCK" && "$SSH_AUTH_SOCK" != "$_ssh_agent_sock" ]]; then
 fi
 
 # Load identities.
-# ssh-add has strange requirements for running SSH_ASKPASS, so we duplicate
-# them here. Essentially, if the other requirements are met, we redirect stdin
-# from /dev/null in order to meet the final requirement.
-# From ssh-add(0):
-# If ssh-add needs a passphrase, it will read the passphrase from the current
-# terminal if it was run from a terminal. If ssh-add does not have a terminal
-# associated with it but DISPLAY and SSH_ASKPASS are set, it will execute the
-# program specified by SSH_ASKPASS and open an X10 window to read the
-# passphrase.
+# Reference ssh-add(1).
 if ssh-add -l 2>&1 | grep -q 'The agent has no identities'; then
   zstyle -a ':e4czmod:module:ssh:load' identities '_ssh_identities'
   ssh-add ${_ssh_identities:+$_ssh_dir/${^_ssh_identities[@]}} 2>/dev/null
