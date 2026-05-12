@@ -1,9 +1,16 @@
+*.zwc
+.zcompdump
+.zsh_history
+
 .iterm2/
+.iterm2_shell_integration*
 .zcompcache/
 .zsh_session/
 prezto/
 
-.iterm2_shell_integration*
-.zsh_history
+# GPG/SSH cache
+.cache/
 
-*.zwc
+# Zsh dump files
+.zsh_sessions/
+zsh_error.log
