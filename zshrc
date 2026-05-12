@@ -24,9 +24,9 @@ zstyle ':e4czmod:load' pmodule \
 	#'tmux'
 	# --- order matters ---
 	#'completions'
-	#'syn_highlight'
-	#'hist_sub_search'
-	#'autosuggestions'
+	#'highlight'
+	#'subsearch'
+	#'suggestions'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ -r "$zshinit" ]] && source "$zshinit"
