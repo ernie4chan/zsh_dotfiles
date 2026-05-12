@@ -8,59 +8,59 @@
 #   20260509
 # ---------------------------------------------------------
 
-# {{{ --- Pager & Editors. ---
-
-# Override settings for dumb/linux/bsd terminals
-[[ "$TERM" == (dumb|linux|*bsd*) ]] && {
-    zstyle ':e4czmod:*:*' color 'no'
-    zstyle ':e4czmod:module:prompt' theme 'off'
-}
-
-# Shell language.
-export LANG=${LANG:-en_US.UTF-8}
-export LC_ALL=${LC_ALL:-$LANG}
-
-# Less Preferences.
-export LESSHISTFILE="$HOME/.less_history"
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-export LESS=${LESS:-'-g -i -M -R -S -w -X -z-4'}
-export LESSEDIT='vim "+%lm" "%f"'
+# {{{ --- Pager, editors and Zsh ---
 
 # Set the default applications.
 export PAGER="${PAGER:-less}"
 export EDITOR="${EDITOR:-vim}"
 export VISUAL="${VISUAL:-vim}"
 
+# Less Preferences.
+# The path to the Zsh history file.
+zstyle -s ':e4czmod:environment:history' lesshistfile 'LESSHISTFILE'
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+export LESS=${LESS:-'-g -i -M -R -S -w -X -z-4'}
+export LESSEDIT='vim "+%lm" "%f"'
+
 # Check if color support is enabled via the zstyle configuration.
-# Set the terminal capability variables for LESS to manage text formatting
+# Set the terminal capability variables for LESS to manage text formatting.
 zstyle -t ':e4czmod:environment:termcap' color && export \
     LESS_TERMCAP_mb=$'\E[01;31m'            # Begins blinking.
-    LESS_TERMCAP_md=$'\E[01;31m'                # Begins bold.
-    LESS_TERMCAP_me=$'\E[0m'                    # Ends mode.
-    LESS_TERMCAP_se=$'\E[0m'                    # Ends standout-mode.
-    LESS_TERMCAP_so=$'\E[00;47;30m'             # Begins standout-mode.
-    LESS_TERMCAP_ue=$'\E[0m'                    # Ends underline.
-    LESS_TERMCAP_us=$'\E[01;32m'                # Begins underline.
+    LESS_TERMCAP_md=$'\E[01;31m'            # Begins bold.
+    LESS_TERMCAP_me=$'\E[0m'                # Ends mode.
+    LESS_TERMCAP_se=$'\E[0m'                # Ends standout-mode.
+    LESS_TERMCAP_so=$'\E[00;47;30m'         # Begins standout-mode.
+    LESS_TERMCAP_ue=$'\E[0m'                # Ends underline.
+    LESS_TERMCAP_us=$'\E[01;32m'            # Begins underline.
 
-# Allow mapping Ctrl+S and Ctrl+Q shortcuts.
-[[ -r $TTY && -w $TTY && -n $TTY && $+commands[stty] ]] && stty -ixon <"$TTY" >"$TTY"
+# The path to the Zsh history file.
+zstyle -s ':e4czmod:environment:history' histfile 'HISTFILE' \
+    || HISTFILE="${ZDOTDIR:+$ZDOTDIR/zsh_history}"
+# Maximum history events in mem.
+zstyle -s ':e4czmod:environment:history' histsize 'HISTSIZE' \
+    || HISTSIZE=10000
+# Maximum history file size.
+zstyle -s ':e4czmod:environment:history' savehist 'SAVEHIST' \
+    || SAVEHIST=$HISTSIZE
 
 # }}}
 
-# {{{ --- Zsh History. ---
+# {{{ --- Dumb terminal overrides ---
 
-# Preferences.
-HISTFILE="${HOME}/.zsh_history"
+# This must come last to override above:
+[[ "$TERM" == (dumb|linux|*bsd*) ]] && {
+    zstyle ':e4czmod:*:*' color 'no'
+    zstyle ':e4czmod:module:prompt' theme 'off'
+}
 
-zstyle -s ':e4czmod:environment:history' histsize 'HISTSIZE' \
-    || HISTSIZE=10000       # Maximum history events in mem.
-zstyle -s ':e4czmod:environment:history' savehist 'SAVEHIST' \
-    || SAVEHIST=$HISTSIZE   # Maximum history file size.
+# }}}
+
+# {{{ --- Shell behavior ---
 
 # History options.
 setopt BANG_HIST            # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY     # History file format as ':start:elapsed;command'.
-setopt HIST_BEEP            # Beep when accessing non-existent history.
+unsetopt HIST_BEEP            # Beep when accessing non-existent history.
 setopt HIST_EXPIRE_DUPS_FIRST   # Expire a duplicate event first when trimming history.
 setopt HIST_FIND_NO_DUPS    # Do not display a previously found event.
 setopt HIST_IGNORE_ALL_DUPS # Delete an old recorded event if a new event is a duplicate.
@@ -70,10 +70,6 @@ setopt HIST_SAVE_NO_DUPS    # Do not write a duplicate event to the history file
 setopt HIST_VERIFY          # Do not execute immediately upon history expansion.
 setopt INC_APPEND_HISTORY   # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY        # Share history between all sessions.
-
-# }}}
-
-# {{{ --- Shell Behavior. ---
 
 # Behaviour.
 setopt COMBINING_CHARS      # Combine zero-length punctuation characters (accents) with the base character.

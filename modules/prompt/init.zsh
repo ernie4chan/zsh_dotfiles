@@ -14,7 +14,7 @@ autoload -Uz promptinit && promptinit
 # Load the prompt theme.
 zstyle -a ':e4czmod:module:prompt' theme 'prompt_argv'
 
-[[ "$TERM" != (dumb|linux|*bsd*) ]] && (( $#prompt_argv )) \
+[[ $TERM != (dumb|linux|*bsd*) ]] && (( $#prompt_argv )) \
     && prompt "$prompt_argv[@]" || prompt off
 
 unset prompt_argv

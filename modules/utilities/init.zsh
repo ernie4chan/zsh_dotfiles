@@ -23,14 +23,12 @@ alias dd='nocorrect dd'
 alias git='nocorrect git'
 alias grep='nocorrect grep'
 alias ln='nocorrect ln'
-alias man='nocorrect man'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 alias scp='nocorrect scp'
 alias ssh='nocorrect ssh'
 alias sudo='nocorrect sudo'
-alias vim='nocorrect vim'
 
 # Disable globbing.
 alias ftp='noglob ftp'
@@ -39,16 +37,18 @@ alias sftp='noglob sftp'
 # Safe ops: ask the user before doing anything destructive.
 if zstyle -T ':e4czmod:module:utilities' safe-ops; then
     safe_cmds=(dd cp ln mv rm shred truncate)
+
     for cmd in $safe_cmds; do
         alias "$cmd"="${aliases[$cmd]:-$cmd} -i"
     done
+
     unset safe_cmds cmd
 fi
 
 # Conditional aliases (only if command exists).
 typeset -A cmd_aliases=(
-    lynx  'lynx -cfg=$HOME/.config/lynx/lynx.cfg'
-    tree  'tree -N -L 2'
+    lynx  "lynx -cfg=$HOME/.config/lynx/lynx.cfg"
+    tree  "tree -N -L 2"
 )
 
 for cmd alias_cmd in ${(kv)cmd_aliases}; do
@@ -80,32 +80,7 @@ unset index
 
 # }}}
 
-# {{{ --- Copy & Paste ---
-
-if [[ "$OSTYPE" == darwin* ]]; then
-    alias oo='open'
-elif [[ "$OSTYPE" == cygwin* ]]; then
-    alias oo='cygstart'
-    alias pbcopy='tee > /dev/clipboard'
-    alias pbpaste='cat /dev/clipboard'
-elif [[ "$OSTYPE" == linux-android ]]; then
-    alias oo='termux-open'
-    alias pbcopy='termux-clipboard-set'
-    alias pbpaste='termux-clipboard-get'
-else
-    (( $+commands[xdg-open] )) && alias oo='xdg-open'
-    (( $+commands[xclip] )) && {
-        alias pbcopy='xclip -selection clipboard -in'
-        alias pbpaste='xclip -selection clipboard -out'
-    } || (( $+commands[xsel] )) && {
-        alias pbcopy='xsel --clipboard --input'
-        alias pbpaste='xsel --clipboard --output'
-    }
-fi
-
-# }}}
-
-# {{{ --- ANSI escape code numbers: style;foreground;background
+# {{{ --- ANSI escape code numbers: style;foreground;background ---
 
 #   style:      0=normal  1=bold/bright
 #   foreground: 30=black  31=red     32=green  33=yellow
@@ -117,21 +92,26 @@ fi
 
 # {{{ --- Re-defining 'grep' ---
 
-# Edit to customize grep match highlight color (ANSI: text;background)
+# Edit to customize grep match highlight color (ANSI: text;background).
 GREP_MATCH_COLOR='1;32;40'  # bright green on black — matches Andromeda's brightGreen.
 
-if zstyle -t ':e4czmod:module:utilities:grep' color; then
-    export GREP_COLORS=${GREP_COLORS:-"mt=$GREP_MATCH_COLOR"}
+zstyle -t ':e4czmod:module:utilities:grep' color && {
+    if [[ "$(grep --version 2>&1)" == *GNU* ]]; then
+        export GREP_COLORS="mt=${GREP_MATCH_COLOR:-$GREP_COLORS}"   # GNU 'grep'.
+    else
+        export GREP_COLOR="${GREP_MATCH_COLOR:-$GREP_COLOR}"        # BSD 'grep'.
+    fi
     alias grep="${aliases[grep]:-grep} --color=auto"
-fi
+}
 
 unset GREP_MATCH_COLOR
+
 
 # }}}
 
 # {{{ --- Re-defining 'ls' ---
 
-# Edit these to customize ls output colors
+# Edit these to customize ls output colors.
 GNU_LS_COLORS=(
     'di=34'         # directory — blue
     'ln=35'         # symlink — magenta
@@ -163,7 +143,7 @@ BSD_LS_COLORS=(
 BSD_LS_COLORS=${(j..)BSD_LS_COLORS}
 
 if [[ "$(ls --version 2>&1)" == *GNU* ]]; then
-    # GNU coreutils ls
+    # GNU 'ls'.
     zstyle -T ':e4czmod:module:utilities:ls' dirs-first && \
         alias ls="${aliases[ls]:-ls} --group-directories-first"
     zstyle -t ':e4czmod:module:utilities:ls' color && {
@@ -175,7 +155,7 @@ if [[ "$(ls --version 2>&1)" == *GNU* ]]; then
         alias ls="${aliases[ls]:-ls} --color=auto"
     } || alias ls="${aliases[ls]:-ls} -F"
 else
-    # BSD ls
+    # BSD 'ls'.
     zstyle -t ':e4czmod:module:utilities:ls' color && {
         (( ! $+LSCOLORS )) && export LSCOLORS="$BSD_LS_COLORS"
         alias ls="${aliases[ls]:-ls} -G"
@@ -184,17 +164,17 @@ fi
 
 unset GNU_LS_COLORS BSD_LS_COLORS
 
-alias l='ls -F1'    # One column, hidden files.
-alias ll='ls -lh'   # Human readable sizes.
-alias la='ls -lhA'  # Human readable, hidden files.
-alias lr='ls -lhR'  # Human readable, recursive.
-alias lm='la | "$PAGER"'  # Through pager.
-alias lk='ll -Sr'   # Sorted by size, largest last.
-alias lt='ll -tr'   # Sorted by date, newest last.
-alias lc='ll -trc'  # Sorted by date, shows change time.
-alias lu='ll -tru'  # Sorted by date, shows access time.
+alias l='ls -1F'            # One column, no hidden files.
+alias ll='ls -lh'           # Human readable sizes.
+alias la='ll -A'            # Human readable sizes, hidden files.
+alias lr='ll -R'            # Human readable sizes, recursive.
+alias lm='ll -A | "$PAGER"' # Human readable sizes, hidden files through pager.
+alias lk='ll -Sr'           # Sort by size, largest last.
+alias lt='ll -tr'           # Sort by date, newest last.
+alias lc='ll -trc'          # Sort by date, shows change time.
+alias lu='ll -tru'          # Sort by date, shows access time.
 
-# GNU only: sort by extension.
+# Sort by extension (GNU only).
 [[ "$(ls --version 2>&1)" == *GNU* ]] && alias lx='ll -XB'
 
 # }}}

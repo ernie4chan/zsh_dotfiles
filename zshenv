@@ -8,6 +8,10 @@
 #	20260501
 # ---------------------------------------------------------
 
+# Shell language.
+export LANG=${LANG:-en_US.UTF-8}
+export LC_ALL=${LC_ALL:-$LANG}
+
 # Ensure the data are:
 # (1) -x, export to parameter;
 # (2) -U, keey array values unique;

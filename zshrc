@@ -15,18 +15,18 @@
 zstyle ':e4czmod:load' pmodule \
 	'zstyle' \
 	'environment' \
-	'prompt' \
 	'editor' \
 	'utilities' \
 	'fzf' \
 	'gpg' \
-	'completions' \
-	'syn_highlight' \
-	'hist_sub_search' \
-	'autosuggestions'
+	'prompt'
 	# Modules not loaded:
 	#'tmux'
-	#'spectrum'
+	# --- order matters ---
+	#'completions'
+	#'syn_highlight'
+	#'hist_sub_search'
+	#'autosuggestions'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ -r "$zshinit" ]] && source "$zshinit"
