@@ -19,14 +19,11 @@ zstyle ':e4czmod:load' pmodule \
 	'utilities' \
 	'fzf' \
 	'gpg' \
-	'prompt'
-	# Modules not loaded:
-	#'tmux'
-	# --- order matters ---
-	#'completions'
-	#'highlight'
-	#'subsearch'
-	#'suggestions'
+	'prompt' \
+	'completions' \
+	'highlighting' \
+	'subsearch' \
+	'suggestions'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
 [[ -r "$zshinit" ]] && source "$zshinit"
