@@ -1,14 +1,14 @@
 [submodule "zsh-completions"]
-	path = zsh-completions
+	path = addons/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "zsh-syntax-highlighting"]
-	path = zsh-syntax-highlighting
+	path = addons/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "zsh-autosuggestions"]
-	path = zsh-autosuggestions
+	path = addons/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "zsh-history-substring-search"]
-	path = zsh-history-substring-search
+	path = addons/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
 [submodule "powerlevel10k"]
 	path = powerlevel10k
