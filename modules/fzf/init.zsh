@@ -19,10 +19,10 @@ case "$(uname -s)" in
 esac
 
 # Optional: set your preferred fzf defaults here.
-_fzf_opts="--height=50% --layout=default --border=rounded"
+_fzf_opts="--height=70% --layout=default --border=rounded"
 export FZF_CTRL_T_OPTS="$_fzf_opts"
 export FZF_CTRL_R_OPTS="$_fzf_opts"
-export FZF_ALT_C_OPTS="--height=10% --margin=0,40%,0,5% --layout=default --border=rounded --info=hidden"
+export FZF_ALT_C_OPTS="--height=20% --margin=0,40%,0,5% --layout=default --border=rounded --info=hidden"
 unset _fzf_opts
 
 # Source fzf tab completion if the file exists and is readable.
