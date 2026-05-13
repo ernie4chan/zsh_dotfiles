@@ -50,7 +50,7 @@ zstyle ':e4czmod:environment:history' savehist 50000
 # {{{ --- Prompt ---
 
 # Set the prompt theme to load.
-zstyle ':e4czmod:module:prompt' theme 'p10k-1'
+zstyle ':e4czmod:module:prompt' theme 'p10k'
 
 # Set the working directory prompt display length.
 # By default, it is set to 'short'. Set it to 'long' (without '~' expansion)

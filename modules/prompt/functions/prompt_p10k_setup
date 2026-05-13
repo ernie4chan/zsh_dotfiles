@@ -10,7 +10,7 @@
 _promptpath="${ZDOTDIR:-$HOME/.zsh}/modules/prompt/external"
 
 [[ ! -f "${_promptpath}/powerlevel10k/powerlevel10k.zsh-theme" ]] \
-	|| source "${_promptpath}/powerlevel10k/powerlevel10k.zsh-theme"
+    || source "${_promptpath}/powerlevel10k/powerlevel10k.zsh-theme"
 
 [[ ! -f "${_promptpath}/p10k/p10k.zsh" ]] || source "${_promptpath}/p10k/p10k.zsh"
 
