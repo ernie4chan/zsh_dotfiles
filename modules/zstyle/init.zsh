@@ -83,7 +83,7 @@ zstyle ':e4czmod:module:editor' dot-expansion 'yes'
 zstyle ':e4czmod:module:utilities' correct 'no'
 
 # Toggle safe operations
-zstyle ':e4czmod:module:utilities' safe-ops 'yes'
+zstyle ':e4czmod:module:utilities' safe-ops 'no'
 
 # Toggle 'grep' highlighting.
 zstyle ':e4czmod:module:utilities:grep' color 'yes'

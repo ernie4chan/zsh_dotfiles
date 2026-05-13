@@ -23,9 +23,9 @@ done
 }
 
 # Optional: set your preferred fzf defaults here.
-_fzf_opts="--height=70% --layout=default --border=rounded"
+_fzf_opts="--layout=default --border=rounded --height=70%"
 export FZF_CTRL_T_OPTS="$_fzf_opts"
 export FZF_CTRL_R_OPTS="$_fzf_opts"
-export FZF_ALT_C_OPTS="--height=20% --margin=0,40%,0,5% --layout=default --border=rounded --info=hidden"
+export FZF_ALT_C_OPTS="$_fzf_opts --height=20% --margin=0,40%,0,5% --info=hidden"
 
 unset _fzf_shell_path _fzf_opts
