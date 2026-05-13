@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
 # File: ~/.zsh/modules/subsearch/init.zsh
-# Title: Integrating History-Substring-Search.
+# Title: zsh-history-substring-search
 # Maintainer: Ernie Lin
 # Update:
 #   20220610
@@ -9,8 +9,8 @@
 # ---------------------------------------------------------
 
 # Source module files.
-[[ -f "${0:h}/external/zsh-history-substring-search.zsh" ]] && \
-    source "${0:h}/external/zsh-history-substring-search.zsh" || return 1
+(( ! $+functions[history-substring-search-up] )) && \
+    source "${0:h}/external/zsh-history-substring-search.zsh"
 
 # Search.
 zstyle -s ':e4czmod:module:history-substring-search:color' found \
@@ -40,7 +40,7 @@ zstyle -t ':e4czmod:module:history-substring-search' unique && \
 zstyle -t ':e4czmod:module:history-substring-search' prefixed && \
     HISTORY_SUBSTRING_SEARCH_PREFIXED=1
 
-# Keybindings.
+# Vim key bindings.
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 if (( $+key_info )); then
