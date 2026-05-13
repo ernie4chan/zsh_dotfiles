@@ -10,18 +10,19 @@
 
 # Set fzf shell scripts path based on the current OS.
 case "$(uname -s)" in
-    Linux)  _fzf_shell_path="/usr/share/fzf" ;;
-    Darwin) _fzf_shell_path="/usr/local/opt/fzf/shell" ;;
-    *)      return 1 ;;
-esac
-
-case "$(uname -s)" in
     Linux)  _fzf_shell_path="/usr/share/fzf"
             [[ -d "$_fzf_shell_path" ]] \
                 || _fzf_shell_path="/usr/share/doc/fzf/examples" ;;
     Darwin) _fzf_shell_path="/usr/local/opt/fzf/shell" ;;
     *)      return 1 ;;
 esac
+
+# Source fzf tab completion and key bindings if not already loaded.
+(( ! $+functions[fzf-completion] )) && {
+for f in completion.zsh key-bindings.zsh; do
+    [[ -r "$_fzf_shell_path/$f" ]] && source "$_fzf_shell_path/$f"
+done
+}
 
 # Optional: set your preferred fzf defaults here.
 _fzf_opts="--layout=default --border=rounded --height=70%"
