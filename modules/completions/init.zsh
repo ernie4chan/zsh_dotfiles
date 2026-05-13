@@ -15,7 +15,7 @@
 
 # }}}
 
-# {{{ --- Setup ---
+# {{{ --- Pre-configuration ---
 
 # Options
 setopt COMPLETE_IN_WORD     # Complete from both ends of a word.
@@ -31,27 +31,32 @@ fpath+=(${0:h}/external/src)
 
 # }}}
 
-# {{{ --- Initialize ---
+# {{{ --- Initialize completion ---
 
 # Load and initialize the completion system ignoring insecure directories
 # with a cache time of 20 hours, so it should almost always regenerate
 # the first time a shell is opened each day.
-autoload -Uz compinit
 
 _comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
-# #q expands globs in conditional expressions.
-# -C (skip function check) implies -i (skip security check).
-[[ $_comp_path(#qNmh-20) ]] && compinit -C -d "$_comp_path" || {
-    mkdir -p "$_comp_path:h"
-    compinit -i -d "$_comp_path"
-    touch "$_comp_path"
+
+_compinit_setup() {
+    setopt LOCAL_OPTIONS EXTENDED_GLOB
+	autoload -Uz compinit
+    [[ $_comp_path(#qNmh-20) ]] && compinit -C -d "$_comp_path" || {
+        mkdir -p "$_comp_path:h"
+        compinit -i -d "$_comp_path"
+        touch "$_comp_path"
+    }
 }
 
+_compinit_setup
+
+unset -f _compinit_setup
 unset _comp_path
 
 # }}}
 
-# {{{ --- Zsh Style Table for Completion ---
+# {{{ --- Styles for completion ---
 
 # Colorize completions using LS_COLORS (defined in utilities module).
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
@@ -157,12 +162,6 @@ zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):
 zstyle ':completion:*:*:mpg123:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
 zstyle ':completion:*:*:mpg321:*' file-patterns '*.(mp3|MP3):mp3\ files *(-/):directories'
 zstyle ':completion:*:*:ogg123:*' file-patterns '*.(ogg|OGG|flac):ogg\ files *(-/):directories'
-
-# Mutt client.
-if [[ -s "$HOME/.mutt/aliases" ]]; then
-    zstyle ':completion:*:*:mutt:*' menu yes select
-    zstyle ':completion:*:mutt:*' users ${${${(f)"$(<"$HOME/.mutt/aliases")"}#alias[[:space:]]}%%[[:space:]]*}
-fi
 
 # SSH/SCP/RSYNC.
 zstyle ':completion:*:(ssh|scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
