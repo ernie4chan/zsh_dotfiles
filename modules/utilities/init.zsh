@@ -47,8 +47,8 @@ fi
 
 # Conditional aliases (only if command exists).
 typeset -A cmd_aliases=(
-    lynx  "lynx -cfg=$HOME/.config/lynx/lynx.cfg"
-    tree  "tree -N -L 2"
+    lynx    "lynx -cfg=$HOME/.config/lynx/lynx.cfg"
+    tree    "tree -N -L 2"
 )
 
 for cmd alias_cmd in ${(kv)cmd_aliases}; do
@@ -56,6 +56,15 @@ for cmd alias_cmd in ${(kv)cmd_aliases}; do
 done
 
 unset cmd_aliases cmd alias_cmd
+
+# trash-cli shortcuts
+if (( $+commands[trash-put] )); then
+    alias tp="trash-put"
+    alias empty="trash-empty"
+    alias tpl="trash-list"
+    alias tpp="trash-restore"
+    alias tprm="trash-rm"
+fi
 
 # Lists the ten most used commands.
 alias keystats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
