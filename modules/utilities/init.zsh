@@ -80,20 +80,53 @@ unset index
 
 # }}}
 
-# {{{ --- ANSI escape code numbers: style;foreground;background ---
+# {{{ --- Source the color table ---
 
-#   style:      0=normal  1=bold/bright
-#   foreground: 30=black  31=red     32=green  33=yellow
-#               34=blue   35=magenta 36=cyan   37=white
-#   background: 40=black  41=red     42=green  43=yellow
-#               44=blue   45=magenta 46=cyan   47=white
+_zshcolors_load() {
+    [[ -f ~/.zsh/zshcolors ]] && source ~/.zsh/zshcolors || {
+        # --- Re-defining 'grep' ---
+        typeset -A _GREP=(
+            fit  '1;32;40'
+        )
+        # --- Re-defining 'ls' (GNU) ---
+        typeset -A _GNU_LS=(
+            di  '1;34'        # directory — brightBlue    #2472C8
+            ln  '1;33'        # symlink — brightYellow    #E5E512
+            so  '1;32'        # socket — brightGreen      #05BC79
+            pi  '1;35'        # pipe — brightPurple       #BC3FBC
+            ex  '1;36'        # executable — brightCyan   #0FA8CD
+            bd  '1;31'        # block device — brightRed  #CD3131
+            cd  '1;35'        # char device — brightPurple #BC3FBC
+            su  '1;31;40;07'  # setuid — brightRed on black, reverse
+            sg  '1;36;40;07'  # setgid — brightCyan on black, reverse
+            tw  '1;32;40;07'  # sticky+writable — brightGreen on black
+            ow  '1;33;40;07'  # other-writable — brightYellow on black
+        )
+        # --- Re-defining 'ls' (BSD) ---
+        typeset -A _BSD_LS=(
+            di  'ex'  ln  'fx'  so  'cx'  pi  'dx'  ex  'bx'
+            bd  'Gx'  cd  'Dx'  su  'ab'  sg  'ag'
+            tw  'ac'  ow  'ad'
+        )
+    }
+
+    # Collapse — always runs after source or fallback
+    local k v _gnu
+    for k v in "${(kv)_GNU_LS[@]}"; do _gnu+="${k}=${v}:"; done
+    typeset -g GREP_MATCH_COLOR="${_GREP[fit]}"
+    typeset -g GNU_LS_COLORS="${_gnu%:}"
+    typeset -g BSD_LS_COLORS="${_BSD_LS[di]}${_BSD_LS[ln]}${_BSD_LS[so]}${_BSD_LS[pi]}${_BSD_LS[ex]}${_BSD_LS[bd]}${_BSD_LS[cd]}${_BSD_LS[su]}${_BSD_LS[sg]}${_BSD_LS[tw]}${_BSD_LS[ow]}"
+}
+
+_zshcolors_load
+
+unset -f _zshcolors_load
 
 # }}}
 
 # {{{ --- Re-defining 'grep' ---
 
 # Edit to customize grep match highlight color (ANSI: text;background).
-GREP_MATCH_COLOR='1;32;40'  # bright green on black — matches Andromeda's brightGreen.
 
 zstyle -t ':e4czmod:module:utilities:grep' color && {
     if [[ "$(grep --version 2>&1)" == *GNU* ]]; then
@@ -104,46 +137,14 @@ zstyle -t ':e4czmod:module:utilities:grep' color && {
     alias grep="${aliases[grep]:-grep} --color=auto"
 }
 
-unset GREP_MATCH_COLOR
-
+#unset GREP_MATCH_COLOR
 
 # }}}
 
-# {{{ --- Re-defining 'ls' ---
-
-# Edit these to customize ls output colors.
-GNU_LS_COLORS=(
-    'di=34'         # directory — blue
-    'ln=35'         # symlink — magenta
-    'so=32'         # socket — green
-    'pi=33'         # pipe — yellow
-    'ex=31'         # executable — red
-    'bd=36;01'      # block device — bold cyan
-    'cd=33;01'      # char device — bold yellow
-    'su=31;40;07'   # setuid — red on black, reverse
-    'sg=36;40;07'   # setgid — cyan on black, reverse
-    'tw=32;40;07'   # sticky+writable — green on black, reverse
-    'ow=33;40;07'   # other-writable — yellow on black, reverse
-)
-GNU_LS_COLORS=${(j.:.)GNU_LS_COLORS}
-
-BSD_LS_COLORS=(
-    'ex'            # directory — blue
-    'fx'            # symlink — magenta
-    'cx'            # socket — green
-    'dx'            # pipe — yellow
-    'bx'            # executable — red
-    'Gx'            # block device — bold cyan
-    'Dx'            # char device — bold yellow
-    'ab'            # setuid — red on black, reverse
-    'ag'            # setgid — cyan on black, reverse
-    'ac'            # sticky+writable — green on black, reverse
-    'ad'            # other-writable — yellow on black, reverse
-)
-BSD_LS_COLORS=${(j..)BSD_LS_COLORS}
+# {{{ --- Re-definingza 'ls' ---
 
 if [[ "$(ls --version 2>&1)" == *GNU* ]]; then
-    # GNU 'ls'.
+    # ls (GNU).
     zstyle -T ':e4czmod:module:utilities:ls' dirs-first && \
         alias ls="${aliases[ls]:-ls} --group-directories-first"
     zstyle -t ':e4czmod:module:utilities:ls' color && {
@@ -155,14 +156,14 @@ if [[ "$(ls --version 2>&1)" == *GNU* ]]; then
         alias ls="${aliases[ls]:-ls} --color=auto"
     } || alias ls="${aliases[ls]:-ls} -F"
 else
-    # BSD 'ls'.
+    # ls (BSD).
     zstyle -t ':e4czmod:module:utilities:ls' color && {
         (( ! $+LSCOLORS )) && export LSCOLORS="$BSD_LS_COLORS"
         alias ls="${aliases[ls]:-ls} -G"
     } || alias ls="${aliases[ls]:-ls} -F"
 fi
 
-unset GNU_LS_COLORS BSD_LS_COLORS
+#unset GNU_LS_COLORS BSD_LS_COLORS
 
 alias l='ls -1F'            # One column, no hidden files.
 alias ll='ls -lh'           # Human readable sizes.
