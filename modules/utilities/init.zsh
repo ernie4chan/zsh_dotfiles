@@ -82,8 +82,8 @@ unset index
 
 # {{{ --- Source the color table ---
 
-_zshcolors_load() {
-    [[ -f ~/.zsh/zshcolors ]] && source ~/.zsh/zshcolors || {
+_zshcol_load() {
+    [[ -f ~/.zsh/zshcol ]] && source ~/.zsh/zshcol || {
         # --- Re-defining 'grep' ---
         typeset -A _GREP=(
             fit  '1;32;40'
@@ -118,9 +118,9 @@ _zshcolors_load() {
     typeset -g BSD_LS_COLORS="${_BSD_LS[di]}${_BSD_LS[ln]}${_BSD_LS[so]}${_BSD_LS[pi]}${_BSD_LS[ex]}${_BSD_LS[bd]}${_BSD_LS[cd]}${_BSD_LS[su]}${_BSD_LS[sg]}${_BSD_LS[tw]}${_BSD_LS[ow]}"
 }
 
-_zshcolors_load
+_zshcol_load
 
-unset -f _zshcolors_load
+unset -f _zshcol_load
 
 # }}}
 
