@@ -19,9 +19,9 @@ esac
 
 # Source fzf tab completion and key bindings if not already loaded.
 (( ! $+functions[fzf-completion] )) && {
-for f in completion.zsh key-bindings.zsh; do
-    [[ -r "$_fzf_shell_path/$f" ]] && source "$_fzf_shell_path/$f"
-done
+	for f in completion.zsh key-bindings.zsh; do
+		[[ -r "$_fzf_shell_path/$f" ]] && source "$_fzf_shell_path/$f"
+	done
 }
 
 # Optional: set your preferred fzf defaults here.

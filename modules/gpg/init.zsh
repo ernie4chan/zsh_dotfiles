@@ -1,11 +1,11 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
 # File: ~/.zsh/modules/gpg/init.zsh
-# Title: Provides an easier use of GPG.
+# Title: Provides an easier use of GPG
 # Maintainer: Ernie Lin
 # Update:
-#	20220610
-#	20260512
+#   20220610
+#   20260512
 # ---------------------------------------------------------
 
 # Abort if gnupg is not installed/available.
@@ -20,32 +20,27 @@ _gpg_agent_env="${XDG_CACHE_HOME:-$HOME/.cache}/gpg/gpg-agent.env"
 
 # Resume gpg-agent if started.
 [[ -S "$HOME/.gnupg/S.gpg-agent" || -S "/run/user/$(id -u)/gnupg/S.gpg-agent" ]] || {
-  mkdir -p "${_gpg_agent_env:h}"
-  eval "$(gpg-agent --daemon | tee "$_gpg_agent_env")"
+    mkdir -p "${_gpg_agent_env:h}"
+    eval "$(gpg-agent --daemon | tee "$_gpg_agent_env")"
 }
 
 # Inform gpg-agent of the current TTY for user prompts.
 export GPG_TTY=$TTY
 
 # SSH integration.
-if grep -qs '^enable-ssh-support' "$_gpg_agent_conf"; then
-
-	# Load required functions.
-	autoload -Uz add-zsh-hook
-
-	# Point SSH_AUTH_SOCK to gpg-agent's SSH socket
-	export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-
-	# Load SSH module if not already loaded
-	(( ! ${pmodules[(Ie)ssh]} )) && pmodload 'ssh'
-
-	# Update GPG-Agent TTY before every command since SSH does not set it.
-	function _gpg-agent-update-tty {
-		gpg-connect-agent UPDATESTARTUPTTY /bye >/dev/null
-	}
-	add-zsh-hook preexec _gpg-agent-update-tty
-
-fi
+grep -qs '^enable-ssh-support' "$_gpg_agent_conf" && {
+    # Load required functions.
+    autoload -Uz add-zsh-hook
+    # Point SSH_AUTH_SOCK to gpg-agent's SSH socket.
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    # Load SSH module if not already loaded.
+    (( ! ${pmodules[(Ie)ssh]} )) && pmodload 'ssh'
+    # Update GPG-Agent TTY before every command since SSH does not set it.
+    function _gpg-agent-update-tty {
+        gpg-connect-agent UPDATESTARTUPTTY /bye >/dev/null
+    }
+    add-zsh-hook preexec _gpg-agent-update-tty
+}
 
 # Disable GUI prompts over SSH.
 [[ -n "$SSH_CONNECTION" ]] && export PINENTRY_USER_DATA='USE_CURSES=1'
