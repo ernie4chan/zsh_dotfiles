@@ -177,15 +177,15 @@ fi
 alias l='ls -1F'            # One column, no hidden files.
 alias ll='ls -lh'           # Human readable sizes.
 alias lf='ls -1A'           # One column, hidden files.
-alias la='ll -A'            # Human readable sizes, hidden files.
-alias lr='ll -R'            # Human readable sizes, recursive.
-alias lm='ll -A | "$PAGER"' # Human readable sizes, hidden files through pager.
-alias lk='ll -Sr'           # Sort by size, largest last.
-alias lt='ll -tr'           # Sort by date, newest last.
-alias lc='ll -trc'          # Sort by date, shows change time.
-alias lu='ll -tru'          # Sort by date, shows access time.
+alias la='ls -lhA'          # Human readable sizes, hidden files.
+alias lr='ls -lhR'          # Human readable sizes, recursive.
+alias lm='ls -lhA | "$PAGER"' # Human readable sizes, hidden files through pager.
+alias lk='ls -lhSr'         # Sort by size, largest last.
+alias lt='ls -lhtr'         # Sort by date, newest last.
+alias lc='ls -lhtrc'        # Sort by date, shows change time.
+alias lu='ls -lhtru'        # Sort by date, shows access time.
 
 # Sort by extension (GNU only).
-[[ "$(ls --version 2>&1)" == *GNU* ]] && alias lx='ll -XB'
+[[ "$(ls --version 2>&1)" == *GNU* ]] && alias lx='ls -lhXB'
 
 # }}}
