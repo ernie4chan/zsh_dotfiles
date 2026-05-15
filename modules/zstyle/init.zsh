@@ -36,6 +36,9 @@ zstyle ':e4czmod:load' zfunction 'zargs' 'zmv'
 # Set the file to save the history in when an interactive shell exits.
 zstyle ':e4czmod:environment:history' lesshistfile "$HOME/.less_history"
 
+# Set the maximum number of events stored in the less history list.
+zstyle ':e4czmod:environment:history' lesshistsize 1000
+
 # Set the file to save the history in when an interactive shell exits.
 zstyle ':e4czmod:environment:history' histfile "$HOME/.zsh_history"
 

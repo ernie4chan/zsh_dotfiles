@@ -17,7 +17,14 @@ export VISUAL="${VISUAL:-vim}"
 
 # Less Preferences.
 # The path to the Zsh history file.
-zstyle -s ':e4czmod:environment:history' lesshistfile 'LESSHISTFILE'
+zstyle -s ':e4czmod:environment:history' lesshistfile 'LESSHISTFILE' \
+    || LESSHISTFILE="$HOME/.less_history"
+export LESSHISTFILE
+
+# Less history size.
+zstyle -s ':e4czmod:environment:history' lesshistsize 'LESSHISTSIZE' \
+    || LESSHISTSIZE=100
+export LESSHISTSIZE
 
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
 export LESS=${LESS:-'-g -i -M -R -S -w -X -z-4'}

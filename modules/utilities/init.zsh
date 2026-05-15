@@ -176,6 +176,7 @@ fi
 
 alias l='ls -1F'            # One column, no hidden files.
 alias ll='ls -lh'           # Human readable sizes.
+alias lf='ls -1A'           # One column, hidden files.
 alias la='ll -A'            # Human readable sizes, hidden files.
 alias lr='ll -R'            # Human readable sizes, recursive.
 alias lm='ll -A | "$PAGER"' # Human readable sizes, hidden files through pager.
