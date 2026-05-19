@@ -26,8 +26,6 @@ alias ln='nocorrect ln'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
-alias scp='nocorrect scp'
-alias ssh='nocorrect ssh'
 alias sudo='nocorrect sudo'
 
 # Disable globbing.
@@ -47,6 +45,7 @@ fi
 
 # Conditional aliases (only if command exists).
 typeset -A cmd_aliases=(
+    vir     "vim -R"
     lynx    "lynx -cfg=$HOME/.config/lynx/lynx.cfg"
     tree    "tree -N -L 2"
 )
@@ -56,15 +55,6 @@ for cmd alias_cmd in ${(kv)cmd_aliases}; do
 done
 
 unset cmd_aliases cmd alias_cmd
-
-# trash-cli shortcuts
-if (( $+commands[trash-put] )); then
-    alias tp="trash-put"
-    alias empty="trash-empty"
-    alias tpl="trash-list"
-    alias tpp="trash-restore"
-    alias tprm="trash-rm"
-fi
 
 # Lists the ten most used commands.
 alias keystats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
@@ -78,6 +68,14 @@ alias ptt='ssh bbsu@ptt.cc'                     # Connect to PTT BBS.
 alias po='popd'                                 # Pop directory stack.
 alias pu='pushd'                                # Push directory stack.
 alias 0='dirs -v'                               # List directory stack.
+
+(( $+commands[trash-put] )) && alias \
+	tp='trash-put' \
+	tpl='trash-list' \
+	tpp='trash-restore' \
+	tprm='trash-rm'
+
+(( $+commands[vim] )) && alias vir='vim -R'
 
 # Surfing directory on steroids.
 for index in {1..9}; do
