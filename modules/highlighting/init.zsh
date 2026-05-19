@@ -31,7 +31,6 @@ _zsh_hl_apply() {
     }
 }
 
-_zsh_hl_apply styles   ZSH_HIGHLIGHT_STYLES
 _zsh_hl_apply pattern  ZSH_HIGHLIGHT_PATTERNS
-
+_zsh_hl_apply styles   ZSH_HIGHLIGHT_STYLES
 unfunction _zsh_hl_apply

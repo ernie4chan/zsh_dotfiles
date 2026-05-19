@@ -4,8 +4,8 @@
 # Tilte: Zsh Style Table.
 # Maintainer: Ernie Lin
 # Update:
-#	20250401
-#	20260509
+#   20250401
+#   20260509
 # ---------------------------------------------------------
 
 # {{{ --- General ---
@@ -110,7 +110,7 @@ zstyle ':e4czmod:module:ssh:load' identities 'id_rsa' 'id_ed25519' 'id_github'
 
 # Set the entries to ignore in static */etc/hosts* for host completions.
 zstyle ':e4czmod:module:completion:*:hosts' etc-host-ignores \
-	'0.0.0.0' '127.0.0.1'
+    '0.0.0.0' '127.0.0.1'
 
 # }}}
 
@@ -118,17 +118,44 @@ zstyle ':e4czmod:module:completion:*:hosts' etc-host-ignores \
 
 #  By default, only the main highlighter is enabled.
 zstyle ':e4czmod:module:syntax-highlighting' highlighters \
-	'main' 'brackets' 'pattern' 'line' 'cursor' 'root'
-
-#  Set syntax highlighting styles.
-zstyle ':e4czmod:module:syntax-highlighting' styles \
-	'builtin' 'fg=green' \
-	'command' 'fg=green' \
-	'function' 'fg=green'
+    'main' 'brackets' 'pattern' 'line' 'cursor' 'root'
 
 #  Set syntax pattern styles.
 zstyle ':e4czmod:module:syntax-highlighting' pattern \
-	'rm*-rf*' 'fg=white,bold,bg=red'
+    'rm*-rf*'            'fg=white,bold,bg=red' \
+    'mkfs*'              'fg=white,bold,bg=red' \
+    'chmod*-R*777*'      'fg=white,bold,bg=red'
+
+#  Set syntax highlighting styles.
+zstyle ':e4czmod:module:syntax-highlighting' styles \
+    'builtin'                    'fg=green' \
+    'command'                    'fg=green' \
+    'function'                   'fg=green' \
+    'alias'                      'fg=cyan' \
+    'suffix-alias'               'fg=cyan,bold' \
+    'precommand'                 'fg=cyan,italic' \
+    'command-substitution'       'fg=cyan' \
+    \
+    'path'                       'fg=blue,bold' \
+    'path_prefix'                'fg=blue' \
+    'path_approx'                'fg=blue,underline' \
+    \
+    'single-quoted-argument'     'fg=yellow' \
+    'double-quoted-argument'     'fg=yellow' \
+    'dollar-quoted-argument'     'fg=yellow,bold' \
+    'back-quoted-argument'       'fg=magenta' \
+    \
+    'globbing'                   'fg=magenta,bold' \
+    'history-expansion'          'fg=magenta,bold' \
+    'process-substitution'       'fg=magenta' \
+    \
+    'redirection'                'fg=yellow,bold' \
+    'assign'                     'fg=cyan,bold' \
+    'named-fd'                   'fg=yellow,bold' \
+    \
+    'comment'                    'fg=8' \
+    'unknown-token'              'fg=red,bold' \
+    'reserved-word'              'fg=green,bold'
 
 # }}}
 
@@ -136,11 +163,11 @@ zstyle ':e4czmod:module:syntax-highlighting' pattern \
 
 # Set the query found color.
 zstyle ':e4czmod:module:history-substring-search:color' found \
-	'bg=magenta,fg=white,bold'
+    'bg=magenta,fg=white,bold'
 
 # Set the query not-found color.
 zstyle ':e4czmod:module:history-substring-search:color' not-found \
-	'bg=red,fg=white,bold'
+    'bg=red,fg=white,bold'
 
 # Set search globbing flags.
 zstyle ':e4czmod:module:history-substring-search' globbing-flags 'i'
@@ -163,6 +190,6 @@ zstyle ':e4czmod:module:history-substring-search' unique 'yes'
 
 # Set the query found color.
 zstyle ':e4czmod:module:autosuggestions:color' found \
-	'fg=8'
+    'fg=8'
 
 # }}}
