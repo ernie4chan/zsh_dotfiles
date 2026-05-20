@@ -72,10 +72,11 @@ alias 0='dirs -v'                               # List directory stack.
 
 if (( $+commands[trash-put] )); then
     alias \
-        tp='trash-put'    \
-        tpl='trash-list'  \
+        tp='trash-put'      \
+        tpl='trash-list'    \
         tpp='trash-restore' \
-        tprm='trash-rm'
+        tprm='trash-rm'     \
+        empty='trash-empty'
 fi
 
 if (( $+commands[vim] )); then

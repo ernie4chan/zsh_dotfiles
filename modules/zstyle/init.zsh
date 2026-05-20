@@ -122,9 +122,10 @@ zstyle ':e4czmod:module:syntax-highlighting' highlighters \
 
 #  Set syntax pattern styles.
 zstyle ':e4czmod:module:syntax-highlighting' pattern \
-    'rm*-rf*'            'fg=white,bold,bg=red' \
-    'mkfs*'              'fg=white,bold,bg=red' \
-    'chmod*-R*777*'      'fg=white,bold,bg=red'
+    'rm*-rf*'               'fg=white,bold,bg=red' \
+    'empty'                 'fg=white,bold,bg=red' \
+    'mkfs*'                 'fg=white,bold,bg=red' \
+    'chmod*-R*777*'         'fg=white,bold,bg=red'
 
 #  Set syntax highlighting styles.
 zstyle ':e4czmod:module:syntax-highlighting' styles \
