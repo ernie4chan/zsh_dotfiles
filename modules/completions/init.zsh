@@ -41,7 +41,7 @@ _comp_path="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 
 _compinit_setup() {
     setopt LOCAL_OPTIONS EXTENDED_GLOB
-	autoload -Uz compinit
+    autoload -Uz compinit
     [[ $_comp_path(#qNmh-20) ]] && compinit -C -d "$_comp_path" || {
         mkdir -p "$_comp_path:h"
         compinit -i -d "$_comp_path"
@@ -50,7 +50,6 @@ _compinit_setup() {
 }
 
 _compinit_setup
-
 unset -f _compinit_setup
 unset _comp_path
 
@@ -70,10 +69,15 @@ zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh
 
 # Case-insensitive matching when case-sensitive style is not set.
 zstyle -t ':e4czmod:module:completion:*' case-sensitive && {
-    zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+    zstyle ':completion:*' matcher-list \
+        'r:|[._-]=* r:|=*'              \
+        'l:|=* r:|=*'
     setopt CASE_GLOB
 } || {
-    zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+    zstyle ':completion:*' matcher-list \
+        'm:{a-zA-Z}={A-Za-z}'           \
+        'r:|[._-]=* r:|=*'              \
+        'l:|=* r:|=*'
     unsetopt CASE_GLOB
 }
 

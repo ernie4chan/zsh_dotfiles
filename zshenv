@@ -1,11 +1,11 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
 # File: ~/.zsh/zshenv
-# Title: Shell environment variables, executed before ".zshrc".
+# Title: Environment Variables (before ".zshrc")
 # Maintainer: Ernie Lin
 # Update:
-#	20250401
-#	20260501
+#   20250401
+#   20260501
 # ---------------------------------------------------------
 
 # Shell language.
@@ -17,16 +17,16 @@ export LC_ALL=${LC_ALL:-$LANG}
 # (2) -U, keey array values unique;
 # (3) -T, tie scalar to array.
 typeset -xUT CDPATH cdpath=(
-	$cdpath
+    $cdpath
 )
 
 typeset -xUT FPATH fpath=(
-	$fpath
+    $fpath
 )
 
 typeset -xUT PATH path=(
-	$HOME/.local/bin
-	/{usr/{local/,},}{,s}bin
-	/{,s}bin
-	$path
+    $HOME/.local/bin
+    /{usr/{local/,},}{,s}bin
+    /{,s}bin
+    $path
 )

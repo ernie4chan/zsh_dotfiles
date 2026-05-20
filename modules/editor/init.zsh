@@ -153,11 +153,14 @@ zle -N expand-or-complete-with-indicator
 
     # Reset the prompt if ps-context is unset, or if we are not
     # in a select or cont context.
-    function zle-reset-prompt {
-        ! zstyle -t ':e4czmod:module:editor' ps-context || \
-            [[ $CONTEXT != (select|cont) ]] && { zle reset-prompt; zle -R }
-    }
-    zle -N zle-reset-prompt
+	function zle-reset-prompt {
+    if ! zstyle -t ':e4czmod:module:editor' ps-context || \
+        [[ $CONTEXT != (select|cont) ]]; then
+        zle reset-prompt
+        zle -R
+    fi
+	}
+	zle -N zle-reset-prompt
 
     # --- ZLE lifecycle hooks ---
 
@@ -208,11 +211,9 @@ bindkey -v
 # Expand .... to ../..
 if zstyle -t ':e4czmod:module:editor' dot-expansion; then
     bindkey -M viins '.' expand-dot-to-parent-directory-path
-fi
-
-# Do not expand .... to ../.. during incremental search.
-zstyle -t ':e4czmod:module:editor' dot-expansion && \
+    # Do not expand .... to ../.. during incremental search.
     bindkey -M isearch . self-insert 2>/dev/null
+fi
 
 # Expand aliases.
 bindkey -M viins "$key_info[Control] " glob-alias

@@ -10,10 +10,13 @@
 
 # --- Version guard ---
 min_zsh_version='4.3.11'
-autoload -Uz is-at-least && is-at-least "$min_zsh_version" || {
-    printf "Old zsh detected, minimum required: %s " "$min_zsh_version" >&2
+autoload -Uz is-at-least
+
+if ! is-at-least "$min_zsh_version"; then
+    printf "Old zsh detected, minimum required: %s" "$min_zsh_version" >&2
     return 1
-}
+fi
+
 unset min_zsh_version
 
 # --- The Heart Module Loader ---
@@ -41,18 +44,27 @@ function pmodload {
     # Load pmodules.
     for pmodule in ${pmodules}; do
         # Skip if module is already loaded.
-        zstyle -t ":e4czmod:module:$pmodule" loaded 'yes' 'no' && continue
+        if zstyle -t ":e4czmod:module:$pmodule" loaded 'yes' 'no'; then
+            continue
+        fi
 
         # Find module locations.
         locations=(${pmodule_dirs:+${^pmodule_dirs}/$pmodule(-/FN)})
 
         # Handle module location cases.
         case ${#locations} in
-            0) print "$0: no such module: $pmodule"; continue ;;
-            1) ;;
-            *) zstyle -t ':e4czmod:load' pmodule-allow-overrides 'yes' || {
-                    print "$0: conflicting module locations: $locations"; continue
-                } ;;
+            0)
+                print "$0: no such module: $pmodule"
+                continue
+                ;;
+            1)
+                ;;
+            *)
+                if ! zstyle -t ':e4czmod:load' pmodule-allow-overrides 'yes'; then
+                    print "$0: conflicting module locations: $locations"
+                    continue
+                fi
+                ;;
         esac
 
         # Grab the full path to this module.
@@ -65,25 +77,22 @@ function pmodload {
         () {
             # Extended globbing is needed for listing autoloadable function directories.
             setopt LOCAL_OPTIONS EXTENDED_GLOB
-            # Load functions.
             for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
                 autoload -Uz "$pfunction"
             done
         }
 
         # Source initialization file.
-        {
-            [[ -s "${pmodule_location}/init.zsh" ]] && \
-                source "${pmodule_location}/init.zsh"
-        } || {
-            [[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]] && \
-                source "${pmodule_location}/${pmodule}.plugin.zsh"
-        }
+        if [[ -s "${pmodule_location}/init.zsh" ]]; then
+            source "${pmodule_location}/init.zsh"
+        elif [[ -s "${pmodule_location}/${pmodule}.plugin.zsh" ]]; then
+            source "${pmodule_location}/${pmodule}.plugin.zsh"
+        fi
 
         # Handle success or failure based on last command status.
-        (( $? == 0 )) && {
+        if (( $? == 0 )); then
             zstyle ":e4czmod:module:$pmodule" loaded 'yes'
-        } || {
+        else
             # Clean up on failure.
             fpath[(r)${pmodule_location}/functions]=()
 
@@ -91,15 +100,13 @@ function pmodload {
             () {
                 # Extended globbing is needed for listing autoloadable function directories.
                 setopt LOCAL_OPTIONS EXTENDED_GLOB
-                # Load functions.
                 for pfunction in ${pmodule_location}/functions/$~pfunction_glob; do
                     autoload -Uz "$pfunction"
                 done
             }
 
             zstyle ":e4czmod:module:$pmodule" loaded 'no'
-
-        }
+        fi
     done
 }
 
@@ -109,17 +116,23 @@ ZDOTDIR=${0:h}
 # --- e4czmod modules ---
 zstyle -a ':e4czmod:load' pmodule 'pmodules'
 pmodload "$pmodules[@]"
+
 unset pmodules
 
 # --- Zsh built-in modules ---
 zstyle -a ':e4czmod:load' zmodule 'zmodules'
 for zmodule ("$zmodules[@]") zmodload "zsh/${(z)zmodule}"
-unset zmodules zmodule
+
+unset zmodule{s,}
 
 # --- Zsh built-in functions ---
 zstyle -a ':e4czmod:load' zfunction 'zfunctions'
 for zfunction ("$zfunctions[@]") autoload -Uz "$zfunction"
-unset zfunctions zfunction
+
+unset zfunction{s,}
 
 # --- Load more specific 'run-help' function from $fpath ---
-(( $+aliases[run-help] )) && unalias run-help && autoload -Uz run-help
+if (( $+aliases[run-help] )); then
+    unalias run-help
+    autoload -Uz run-help
+fi

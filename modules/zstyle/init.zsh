@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
 # File: ~/.zsh/modules/zstyle/init.zsh
-# Tilte: Zsh Style Table.
+# Tilte: Zsh Style Table
 # Maintainer: Ernie Lin
 # Update:
 #   20250401

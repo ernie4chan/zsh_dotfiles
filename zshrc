@@ -4,8 +4,8 @@
 # Title: The Master Mind of Zsh!
 # Maintainer: Ernie Lin
 # Update:
-#	20250330
-#	20260509
+#   20250330
+#   20260509
 # ---------------------------------------------------------
 
 # Failsafe test purposes and debugging.
@@ -13,20 +13,19 @@
 
 # Load Modules. The order matters!
 zstyle ':e4czmod:load' pmodule \
-	'zstyle' \
-	'environment' \
-	'editor' \
-	'utilities' \
-	'fzf' \
-	'gpg' \
-	'prompt' \
-	'completions' \
-	'highlighting' \
-	'subsearch' \
-	'suggestions'
+    'zstyle' \
+    'environment' \
+    'editor' \
+    'utilities' \
+    'fzf' \
+    'gpg' \
+    'prompt' \
+    'completions' \
+    'highlighting' \
+    'subsearch' \
+    'suggestions'
 
 zshinit="${ZDOTDIR:-$HOME/.zsh}/zshinit"
-
 [[ -r "$zshinit" ]] && source "$zshinit"
 
 unset zsh{style,init}

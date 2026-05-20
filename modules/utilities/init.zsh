@@ -1,7 +1,7 @@
 # ---------------------------------------------------------
 # vim: ft=zsh
 # File: ~/.zsh/modules/utilities/init.zsh
-# Title: Define Utilities.
+# Title: Defining Utilities
 # Maintainer: Ernie Lin
 # Update:
 #   20250406
@@ -45,13 +45,14 @@ fi
 
 # Conditional aliases (only if command exists).
 typeset -A cmd_aliases=(
-    vir     "vim -R"
     lynx    "lynx -cfg=$HOME/.config/lynx/lynx.cfg"
     tree    "tree -N -L 2"
 )
 
 for cmd alias_cmd in ${(kv)cmd_aliases}; do
-    (( $+commands[$cmd] )) && alias "$cmd"="$alias_cmd"
+    if (( $+commands[$cmd] )); then
+        alias "$cmd"="$alias_cmd"
+    fi
 done
 
 unset cmd_aliases cmd alias_cmd
@@ -61,7 +62,7 @@ alias keystats="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | he
 
 alias diffu='diff --unified'                    # Diff in unified format.
 alias fixtty='stty sane'                        # Restore terminal settings.
-alias gra='alias | grep -i'                     # Search aliases.
+alias gral='alias | grep -i'                     # Search aliases.
 alias myip='echo "The current IP is $(curl -s ifconfig.co)"'  # Public IP.
 alias mkdir="${aliases[mkdir]:-mkdir} -p"       # Always create parent dirs.
 alias ptt='ssh bbsu@ptt.cc'                     # Connect to PTT BBS.
@@ -69,28 +70,30 @@ alias po='popd'                                 # Pop directory stack.
 alias pu='pushd'                                # Push directory stack.
 alias 0='dirs -v'                               # List directory stack.
 
-(( $+commands[trash-put] )) && alias \
-	tp='trash-put' \
-	tpl='trash-list' \
-	tpp='trash-restore' \
-	tprm='trash-rm'
+if (( $+commands[trash-put] )); then
+    alias \
+        tp='trash-put'    \
+        tpl='trash-list'  \
+        tpp='trash-restore' \
+        tprm='trash-rm'
+fi
 
-(( $+commands[vim] )) && alias vir='vim -R'
+if (( $+commands[vim] )); then
+    alias vir='vim -R'
+fi
 
 # Surfing directory on steroids.
-for index in {1..9}; do
-    alias "${index}"="cd +${index}"
-    alias ".${index}"="cd ${(l:$index*3::../:)}"
-done
-
-unset index
+for i ({1..9}) alias "$i"="cd +$i"
+for i ({1..9}) alias ".$i"="cd ${(l:i*3::../:)}"
 
 # }}}
 
 # {{{ --- Source the color table ---
 
 _zshcol_load() {
-    [[ -f ~/.zsh/zshcol ]] && source ~/.zsh/zshcol || {
+    if [[ -f ~/.zsh/zshcol ]]; then
+        source ~/.zsh/zshcol
+    else
         # --- Re-defining 'grep' ---
         typeset -A _GREP=(
             fit  '1;32;40'
@@ -115,62 +118,72 @@ _zshcol_load() {
             bd  'Gx'  cd  'Dx'  su  'ab'  sg  'ag'
             tw  'ac'  ow  'ad'
         )
-    }
+    fi
 
     # Collapse — always runs after source or fallback
     local k v _gnu
     for k v in "${(kv)_GNU_LS[@]}"; do _gnu+="${k}=${v}:"; done
     typeset -g GREP_MATCH_COLOR="${_GREP[fit]}"
     typeset -g GNU_LS_COLORS="${_gnu%:}"
-    typeset -g BSD_LS_COLORS="${_BSD_LS[di]}${_BSD_LS[ln]}${_BSD_LS[so]}${_BSD_LS[pi]}${_BSD_LS[ex]}${_BSD_LS[bd]}${_BSD_LS[cd]}${_BSD_LS[su]}${_BSD_LS[sg]}${_BSD_LS[tw]}${_BSD_LS[ow]}"
+    typeset -g BSD_LS_COLORS="\
+        ${_BSD_LS[di]}${_BSD_LS[ln]}${_BSD_LS[so]}${_BSD_LS[pi]}${_BSD_LS[ex]}\
+        ${_BSD_LS[bd]}${_BSD_LS[cd]}${_BSD_LS[su]}${_BSD_LS[sg]}${_BSD_LS[tw]}\
+        ${_BSD_LS[ow]}"
 }
 
 _zshcol_load
-
 unset -f _zshcol_load
 
 # }}}
 
 # {{{ --- Re-defining 'grep' ---
 
-# Edit to customize grep match highlight color (ANSI: text;background).
-
-zstyle -t ':e4czmod:module:utilities:grep' color && {
+# Edit to customize GNU or BSD 'grep' match highlight color (ANSI: text;background).
+if zstyle -t ':e4czmod:module:utilities:grep' color; then
     if [[ "$(grep --version 2>&1)" == *GNU* ]]; then
-        export GREP_COLORS="mt=${GREP_MATCH_COLOR:-$GREP_COLORS}"   # GNU 'grep'.
+        export GREP_COLORS="mt=${GREP_MATCH_COLOR:-$GREP_COLORS}"
     else
-        export GREP_COLOR="${GREP_MATCH_COLOR:-$GREP_COLOR}"        # BSD 'grep'.
+        export GREP_COLOR="${GREP_MATCH_COLOR:-$GREP_COLOR}"
     fi
     alias grep="${aliases[grep]:-grep} --color=auto"
-}
+fi
 
-#unset GREP_MATCH_COLOR
+unset GREP_MATCH_COLOR
 
 # }}}
 
-# {{{ --- Re-definingza 'ls' ---
+# {{{ --- Re-defining 'ls' ---
 
+# GNU or BSD 'ls'.
 if [[ "$(ls --version 2>&1)" == *GNU* ]]; then
-    # ls (GNU).
-    zstyle -T ':e4czmod:module:utilities:ls' dirs-first && \
+    if zstyle -T ':e4czmod:module:utilities:ls' dirs-first; then
         alias ls="${aliases[ls]:-ls} --group-directories-first"
-    zstyle -t ':e4czmod:module:utilities:ls' color && {
-        (( ! $+LS_COLORS )) && {
-            [[ -f $HOME/.dir_colors ]] \
-                && eval "$(dircolors --sh $HOME/.dir_colors)" \
-                || export LS_COLORS="$GNU_LS_COLORS"
-        }
+    fi
+
+    if zstyle -t ':e4czmod:module:utilities:ls' color; then
+        if (( ! $+LS_COLORS )); then
+            if [[ -f $HOME/.dir_colors ]]; then
+                eval "$(dircolors --sh $HOME/.dir_colors)"
+            else
+                export LS_COLORS="$GNU_LS_COLORS"
+            fi
+        fi
         alias ls="${aliases[ls]:-ls} --color=auto"
-    } || alias ls="${aliases[ls]:-ls} -F"
+    else
+        alias ls="${aliases[ls]:-ls} -F"
+    fi
 else
-    # ls (BSD).
-    zstyle -t ':e4czmod:module:utilities:ls' color && {
-        (( ! $+LSCOLORS )) && export LSCOLORS="$BSD_LS_COLORS"
+    if zstyle -t ':e4czmod:module:utilities:ls' color; then
+        if (( ! $+LSCOLORS )); then
+            export LSCOLORS="$BSD_LS_COLORS"
+        fi
         alias ls="${aliases[ls]:-ls} -G"
-    } || alias ls="${aliases[ls]:-ls} -F"
+    else
+        alias ls="${aliases[ls]:-ls} -F"
+    fi
 fi
 
-#unset GNU_LS_COLORS BSD_LS_COLORS
+unset {GNU,BSD}_LS_COLORS
 
 alias l='ls -1F'            # One column, no hidden files.
 alias ll='ls -lh'           # Human readable sizes.
@@ -184,6 +197,8 @@ alias lc='ls -lhtrc'        # Sort by date, shows change time.
 alias lu='ls -lhtru'        # Sort by date, shows access time.
 
 # Sort by extension (GNU only).
-[[ "$(ls --version 2>&1)" == *GNU* ]] && alias lx='ls -lhXB'
+if [[ "$(ls --version 2>&1)" == *GNU* ]]; then
+    alias lx='ls -lhXB'
+fi
 
 # }}}
